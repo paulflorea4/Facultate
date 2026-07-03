@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="ro">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Rezervare</title>
+    <link rel="stylesheet" href="../Styles/style-responsive.css">
+</head>
+
+<body>
+    <header>
+        <h1>Rezervare</h1>
+    </header>
+    <nav id="menu">
+        <ul>
+            <li><a class="menu-home" href="home.html"><span class="menu-icon" aria-hidden="true"></span>Acasă</a></li>
+            <li><a class="menu-rooms" href="rooms.html"><span class="menu-icon" aria-hidden="true"></span>Camere</a></li>
+            <li><a class="menu-reservation" href="reservation.html"><span class="menu-icon" aria-hidden="true"></span>Rezervare</a></li>
+            <li><a class="menu-dashboard" href="dashboard.html"><span class="menu-icon" aria-hidden="true"></span>Dashboard</a></li>
+            <li><a class="menu-contact" href="contact.html"><span class="menu-icon" aria-hidden="true"></span>Contact</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <p class="reservation-intro">Completați formularul pentru rezervare.</p>
+
+        <form id="reservationForm" novalidate>
+            <fieldset>
+                <legend>Informații personale</legend>
+                <label for="last_name">Nume <span class="required">*</span>:</label>
+                <input type="text" id="last_name" name="last_name" placeholder="Ex: Popescu" required><br>
+                
+                <label for="first_name">Prenume <span class="required">*</span>:</label>
+                <input type="text" id="first_name" name="first_name" placeholder="Ex: Ion" required><br>
+                
+                <label for="age">Vârsta <span class="required">*</span>:</label>
+                <input type="number" id="age" name="age" min="18" max="120" placeholder="18-120" required><br>
+
+                <label for="gender">Genul <span class="required">*</span>:</label>
+                <div class="form-group">
+                    <label><input type="radio" name="gender" value="masculin" required> Masculin</label>
+                    <label><input type="radio" name="gender" value="feminin"> Feminin</label>
+                    <label><input type="radio" name="gender" value="altul"> Altul</label>
+                </div>
+                
+                <label for="email">Email <span class="required">*</span>:</label>
+                <input type="email" id="email" name="email" placeholder="contact@example.com" required><br>
+                
+                <label for="phone">Telefon:</label>
+                <input type="tel" id="phone" name="phone" placeholder="0700 000 000"><br>
+
+                <label for="birthdate">Data nașterii:</label>
+                <input type="date" id="birthdate" name="birthdate"><br>
+            </fieldset>
+
+            <fieldset>
+                <legend>Detalii sejur</legend>
+                <label for="check_in">Check-in <span class="required">*</span>:</label>
+                <input type="date" id="check_in" name="check_in" required><br>
+                <label for="check_out">Check-out <span class="required">*</span>:</label>
+                <input type="date" id="check_out" name="check_out" required><br>
+
+                <label for="guest_count">Număr de persoane <span class="required">*</span>:</label>
+                <select id="guest_count" name="guest_count" required>
+                    <option value="">-- Selectați --</option>
+                    <option value="1">1 persoană</option>
+                    <option value="2">2 persoane</option>
+                    <option value="3">3 persoane</option>
+                    <option value="4">4 persoane</option>
+                    <option value="5">5+ persoane</option>
+                </select><br>
+
+                <label style="font-weight: 500; color: #425466; display: block; margin-top: 12px;">Tip cameră <span class="required">*</span>:</label>
+                <div class="form-group">
+                    <label><input type="radio" name="room_type" value="twin" required checked> Double Twin</label>
+                    <label><input type="radio" name="room_type" value="standard"> Double Standard</label>
+                    <label><input type="radio" name="room_type" value="apartament"> Apartament</label>
+                    <label><input type="radio" name="room_type" value="deluxe"> Apartament Deluxe</label>
+                </div>
+
+                <label for="breakfast_type">Tip mic dejun:</label>
+                <select id="breakfast_type" name="breakfast_type">
+                    <option value="">-- Fără mic dejun --</option>
+                    <option value="continental">Continental</option>
+                    <option value="buffet">Buffet</option>
+                    <option value="in-room">În cameră</option>
+                </select><br>
+            </fieldset>
+
+            <fieldset>
+                <legend>Opțiuni extra</legend>
+                <div class="form-group">
+                    <label><input type="checkbox" name="extras" value="breakfast"> Mic dejun zilnic</label>
+                    <label><input type="checkbox" name="extras" value="spa"> Acces Spa</label>
+                    <label><input type="checkbox" name="extras" value="parcare"> Parcare privată</label>
+                    <label><input type="checkbox" name="extras" value="laundry"> Serviciu spălătorie</label>
+                </div>
+            </fieldset>
+
+            <fieldset>
+                <legend>Facilități dorite în cameră</legend>
+                <p style="margin-top: 0; color: #5a6b7c;">Facilitățile de mai jos corespund celor prezentate la pagina Camere.</p>
+                <div class="form-group">
+                    <label><input type="checkbox" name="requested_facilities" value="wifi"> Wi-Fi gratuit</label>
+                    <label><input type="checkbox" name="requested_facilities" value="tv"> TV</label>
+                    <label><input type="checkbox" name="requested_facilities" value="aer_conditionat"> Aer condiționat</label>
+                    <label><input type="checkbox" name="requested_facilities" value="minibar"> Minibar</label>
+                    <label><input type="checkbox" name="requested_facilities" value="seif"> Seif (Apartament / Deluxe)</label>
+                    <label><input type="checkbox" name="requested_facilities" value="frigider"> Frigider (Apartament / Deluxe)</label>
+                    <label><input type="checkbox" name="requested_facilities" value="balcon"> Balcon (Deluxe)</label>
+                    <label><input type="checkbox" name="requested_facilities" value="jacuzzi"> Jacuzzi (Deluxe)</label>
+                    <label><input type="checkbox" name="requested_facilities" value="mic_dejun_inclus"> Mic dejun inclus (Deluxe)</label>
+                </div>
+            </fieldset>
+
+            <fieldset>
+                <legend>Securitate și documente</legend>
+                <label for="identity_document">Încarcă copia documentului de identitate:</label>
+                <input type="file" id="identity_document" name="identity_document" accept=".pdf,.jpg,.jpeg,.png"><br>
+
+                <label for="confirm_password">Confirmă cu parolă <span class="required">*</span>:</label>
+                <input type="password" id="confirm_password" name="confirm_password" placeholder="Introduceți o parolă de confirmare" required><br>
+
+                <label for="notes">Observații și solicitări speciale:</label>
+                <textarea id="notes" name="notes" rows="4" placeholder="Ex: doresc cameră la etaj superior, check-in după ora 18:00"></textarea><br>
+            </fieldset>
+
+            <fieldset>
+                <legend>Preferințe și acord</legend>
+                <label><input type="checkbox" id="newsletter" name="newsletter"> Doresc să primesc newsletter și oferte speciale</label><br>
+                <label><input type="checkbox" id="marketing" name="marketing"> Accept contactarea pentru scop de marketing</label><br>
+                <label><input type="checkbox" id="terms" name="terms" required> Sunt de acord cu <a href="">termenii și condițiile</a> <span class="required">*</span></label><br>
+            </fieldset>
+
+            <button type="submit">Trimite rezervarea</button>
+            <button type="reset">Șterge formularul</button>
+        </form>
+
+    </main>
+
+    <footer>
+        <p>© 2026 Hotel Victoria</p>
+    </footer>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="../Script/dependencies-data.js"></script>
+    <script src="../Script/validation.js"></script>
+</body>
+
+</html>

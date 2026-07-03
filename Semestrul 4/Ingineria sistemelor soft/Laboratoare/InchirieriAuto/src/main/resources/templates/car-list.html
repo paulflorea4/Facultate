@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="ro" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista Mașini - Rent A Car</title>
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --secondary: #3498db;
+            --success: #27ae60;
+            --danger: #e74c3c;
+            --light: #ecf0f1;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f7f6;
+            margin: 0;
+            color: #333;
+        }
+
+        nav {
+            background-color: var(--primary);
+            color: white;
+            padding: 1rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .logout-btn {
+            background-color: var(--danger);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .logout-btn:hover {
+            background-color: #c0392b;
+        }
+
+        .nav-action {
+            background: white;
+            color: var(--primary);
+            text-decoration: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 30px auto;
+        }
+
+        .filter-card {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            margin-bottom: 40px;
+        }
+
+        .filter-card h2 {
+            margin-top: 0;
+            font-size: 1.2rem;
+            color: var(--primary);
+            border-bottom: 2px solid var(--light);
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+
+        .filter-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .form-group label {
+            font-size: 0.85rem;
+            font-weight: bold;
+            color: #666;
+        }
+
+        .form-group input {
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            outline-color: var(--secondary);
+        }
+
+        .input-invalid {
+            border-color: var(--danger) !important;
+            background: #fff5f5;
+        }
+
+        .field-error {
+            color: var(--danger);
+            font-size: 0.8rem;
+        }
+
+        .button-group {
+            display: flex;
+            align-items: flex-end;
+            gap: 10px;
+        }
+
+        .btn-search {
+            background-color: var(--secondary);
+            color: white;
+            border: none;
+            padding: 11px 25px;
+            border-radius: 6px;
+            cursor: pointer;
+            flex: 2;
+            font-weight: bold;
+        }
+
+        .btn-reset {
+            background-color: #95a5a6;
+            color: white;
+            text-decoration: none;
+            padding: 11px 15px;
+            border-radius: 6px;
+            text-align: center;
+            flex: 1;
+            font-size: 0.9rem;
+        }
+
+        .car-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        .car-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+            transition: transform 0.3s ease;
+        }
+
+        .car-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .car-content {
+            padding: 20px;
+        }
+
+        .car-title {
+            margin: 0;
+            font-size: 1.4rem;
+            color: var(--primary);
+        }
+
+        .car-year {
+            color: #7f8c8d;
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+        }
+
+        .car-price {
+            font-size: 1.5rem;
+            color: var(--success);
+            font-weight: bold;
+            margin: 15px 0;
+        }
+
+        .car-price span {
+            font-size: 0.9rem;
+            color: #999;
+        }
+
+        .btn-view {
+            display: block;
+            width: 100%;
+            text-align: center;
+            background-color: var(--primary);
+            color: white;
+            text-decoration: none;
+            padding: 12px 0;
+            border-radius: 6px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .btn-view:hover {
+            background-color: #1a252f;
+        }
+
+        .no-results {
+            text-align: center;
+            grid-column: 1 / -1;
+            padding: 50px;
+            color: #7f8c8d;
+        }
+
+        .alert {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+            padding: 12px 16px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<nav>
+    <div style="font-size: 1.5rem; font-weight: bold; letter-spacing: 1px;">
+        🚗 RENT<span style="color: var(--secondary);">AUTO</span>
+    </div>
+
+    <div class="user-info">
+        <span>Salut, <strong th:text="${fullName != null ? fullName : #authentication.name}">Utilizator</strong></span>
+
+        <a sec:authorize="hasRole('CLIENT')" th:href="@{/rents/history}" class="nav-action">Istoric rezervări</a>
+        <a sec:authorize="hasRole('ADMIN')" th:href="@{/admin}" class="nav-action">Dashboard admin</a>
+
+        <form th:action="@{/logout}" method="post" style="margin: 0;" onsubmit="return confirm('Ești sigur că vrei să te deloghezi?');">
+            <button type="submit" class="logout-btn">Ieșire</button>
+        </form>
+    </div>
+</nav>
+
+<div class="container">
+
+    <div th:if="${errorMessage}" class="alert" th:text="${errorMessage}"></div>
+
+    <div class="filter-card">
+        <h2>Caută Mașina Potrivită</h2>
+        <form th:action="@{/cars}" th:object="${filter}" method="get">
+            <div class="filter-grid">
+
+                <div class="form-group">
+                    <label for="brand">Marcă</label>
+                    <input id="brand" type="text" th:field="*{brand}" placeholder="ex: BMW"
+                           th:classappend="${#fields.hasErrors('brand') ? 'input-invalid' : ''}">
+                    <div class="field-error" th:if="${#fields.hasErrors('brand')}" th:errors="*{brand}"></div>
+                </div>
+
+                <div class="form-group">
+                    <label for="model">Model</label>
+                    <input id="model" type="text" th:field="*{model}" placeholder="ex: Seria 3"
+                           th:classappend="${#fields.hasErrors('model') ? 'input-invalid' : ''}">
+                    <div class="field-error" th:if="${#fields.hasErrors('model')}" th:errors="*{model}"></div>
+                </div>
+
+                <div class="form-group">
+                    <label for="year">An Fabricație</label>
+                    <input id="year" type="number" th:field="*{year}" placeholder="2022"
+                           th:classappend="${#fields.hasErrors('year') ? 'input-invalid' : ''}">
+                    <div class="field-error" th:if="${#fields.hasErrors('year')}" th:errors="*{year}"></div>
+                </div>
+
+                <div class="form-group">
+                    <label for="minPrice">Preț Min (EUR)</label>
+                    <input id="minPrice" type="number" th:field="*{minPrice}" placeholder="0"
+                           th:classappend="${#fields.hasErrors('minPrice') ? 'input-invalid' : ''}">
+                    <div class="field-error" th:if="${#fields.hasErrors('minPrice')}" th:errors="*{minPrice}"></div>
+                </div>
+
+                <div class="form-group">
+                    <label for="maxPrice">Preț Max (EUR)</label>
+                    <input id="maxPrice" type="number" th:field="*{maxPrice}" placeholder="200"
+                           th:classappend="${#fields.hasErrors('maxPrice') ? 'input-invalid' : ''}">
+                    <div class="field-error" th:if="${#fields.hasErrors('maxPrice')}" th:errors="*{maxPrice}"></div>
+                </div>
+
+                <div class="form-group">
+                    <label for="startDate">Data Ridicare</label>
+                    <input id="startDate" type="datetime-local" th:field="*{startDate}"
+                           th:classappend="${#fields.hasErrors('startDate') || #fields.hasErrors('dateRangeValid') ? 'input-invalid' : ''}">
+                    <div class="field-error" th:if="${#fields.hasErrors('startDate')}" th:errors="*{startDate}"></div>
+                </div>
+
+                <div class="form-group">
+                    <label for="endDate">Data Returnare</label>
+                    <input id="endDate" type="datetime-local" th:field="*{endDate}"
+                           th:classappend="${#fields.hasErrors('endDate') || #fields.hasErrors('dateRangeValid') ? 'input-invalid' : ''}">
+                    <div class="field-error" th:if="${#fields.hasErrors('endDate')}" th:errors="*{endDate}"></div>
+                </div>
+
+                <div class="form-group" style="grid-column: 1 / -1;">
+                    <div class="field-error" th:if="${#fields.hasErrors('dateRangeValid')}" th:errors="*{dateRangeValid}"></div>
+                    <div class="field-error" th:if="${#fields.hasErrors('priceRangeValid')}" th:errors="*{priceRangeValid}"></div>
+                </div>
+
+                <div class="button-group">
+                    <button type="submit" class="btn-search">Filtrează</button>
+                    <a th:href="@{/cars}" class="btn-reset">Reset</a>
+                </div>
+
+            </div>
+        </form>
+    </div>
+
+    <div class="car-grid">
+
+        <div th:each="car : ${cars}" class="car-card">
+            <div class="car-content">
+                <h3 class="car-title" th:text="${car.brand} + ' ' + ${car.model}">Marca Model</h3>
+                <div class="car-year" th:text="'An ' + ${car.year}">An 2022</div>
+
+                <div class="car-price">
+                    <span th:text="${car.pricePerDay}">0</span> € <span>/ zi</span>
+                </div>
+
+                <div style="margin-bottom: 20px;">
+                    <span th:if="${car.status.name() == 'AVAILABLE'}" style="color: var(--success); font-size: 0.85rem; font-weight: bold;">● Disponibilă</span>
+                    <span th:if="${car.status.name() != 'AVAILABLE'}" style="color: var(--danger); font-size: 0.85rem; font-weight: bold;">● Indisponibilă</span>
+                </div>
+
+                <a th:href="@{/cars/{id}(id=${car.id})}" class="btn-view">Vezi detalii</a>
+            </div>
+        </div>
+
+        <div th:if="${#lists.isEmpty(cars)}" class="no-results">
+            <h3>Ne pare rău, nu am găsit nicio mașină conform filtrelor selectate.</h3>
+            <p>Încearcă să resetezi filtrele sau să alegi o altă perioadă.</p>
+        </div>
+
+    </div>
+</div>
+
+</body>
+</html>

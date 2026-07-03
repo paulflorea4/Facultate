@@ -1,0 +1,14 @@
+sequenceDiagram
+    participant C as Client
+    participant API as FastAPI Server
+    participant A as Auth Middleware
+    participant R as RAG Engine
+    participant D as Diagram Agent
+    C->>API: POST /generate {text_description, diagram_type}
+    API->>A: Validate authentication
+    A-->>API: Auth valid
+    API->>D: Generate diagram
+    D->>R: Fetch data
+    R-->>D: Data retrieved
+    D-->>API: Return mermaid_code
+    API-->>C: 200 OK {mermaid_code}

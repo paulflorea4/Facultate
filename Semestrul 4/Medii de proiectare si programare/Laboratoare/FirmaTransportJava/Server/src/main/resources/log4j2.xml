@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="info">
+    <Appenders>
+        <Console name="Console" target="SYSTEM_OUT">
+
+            <PatternLayout pattern="%d{DATE} %-5level %class{36} %L %M - %msg%n"/>
+        </Console>
+        <File name="log" fileName="target/MPP_BD.log" append="true">
+            <PatternLayout pattern="%d{DATE} %-5level %class{36} %L %M - %msg%n"/>
+        </File>
+    </Appenders>
+    <Loggers>
+        <!-- Reduce noisy framework logs by default -->
+        <Logger name="io.grpc" level="warn" additivity="false">
+            <AppenderRef ref="log"/>
+            <AppenderRef ref="Console"/>
+        </Logger>
+        <Logger name="io.netty" level="warn" additivity="false">
+            <AppenderRef ref="log"/>
+            <AppenderRef ref="Console"/>
+        </Logger>
+
+        <!-- Hibernate: keep important warnings/errors only; enable SQL logging only when needed -->
+        <Logger name="org.hibernate.SQL" level="warn" additivity="false">
+            <AppenderRef ref="log"/>
+            <AppenderRef ref="Console"/>
+        </Logger>
+        <Logger name="org.hibernate.orm.jdbc.bind" level="warn" additivity="false">
+            <AppenderRef ref="log"/>
+            <AppenderRef ref="Console"/>
+        </Logger>
+
+        <!-- Application loggers: show normal info-level messages -->
+        <Logger name="transport" level="info" additivity="false">
+            <AppenderRef ref="log"/>
+            <AppenderRef ref="Console"/>
+        </Logger>
+
+        <!-- Root defaults to INFO so only important messages show up -->
+        <Root level="info">
+            <AppenderRef ref="log"/>
+            <AppenderRef ref="Console"/>
+        </Root>
+    </Loggers>
+</Configuration>

@@ -1,0 +1,29 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="
+        http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="5" author="student">
+
+        <createIndex indexName="idx_employees_department"
+                     tableName="employees">
+            <column name="department_id"/>
+        </createIndex>
+
+        <createIndex indexName="idx_employees_email"
+                     tableName="employees">
+            <column name="email"/>
+        </createIndex>
+
+        <rollback>
+            <dropIndex indexName="idx_employees_department"
+                       tableName="employees"/>
+            <dropIndex indexName="idx_employees_email"
+                       tableName="employees"/>
+        </rollback>
+
+    </changeSet>
+
+</databaseChangeLog>

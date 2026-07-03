@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="ro" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>Istoric rezervări</title>
+    <style>
+        body { font-family: Arial, sans-serif; background: #f4f7f6; margin: 0; padding: 40px; }
+        .container { max-width: 1100px; margin: auto; }
+        .topbar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; }
+        .card { background: white; padding: 24px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.08); margin-bottom: 18px; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; }
+        .badge { display: inline-block; padding: 6px 12px; border-radius: 14px; background: #ecf0f1; font-size: 0.85rem; }
+        .badge.pending { background: #fff3cd; color: #856404; }
+        .badge.canceled { background: #f8d7da; color: #721c24; }
+        .badge.confirmed { background: #d4edda; color: #155724; }
+        .actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 16px; }
+        .btn { text-decoration: none; border: none; padding: 10px 14px; border-radius: 6px; font-weight: bold; cursor: pointer; }
+        .btn-primary { background: #3498db; color: white; }
+        .btn-danger { background: #e74c3c; color: white; }
+        .btn-secondary { background: #2c3e50; color: white; }
+        .alert { background: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; padding: 12px 16px; border-radius: 8px; margin-bottom: 18px; }
+        .success { background: #d4edda; color: #155724; border-color: #c3e6cb; }
+        .empty { text-align: center; color: #7f8c8d; padding: 50px; }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="topbar">
+        <h1>Istoric rezervări</h1>
+        <a th:href="@{/cars}" class="btn btn-secondary">Înapoi la mașini</a>
+    </div>
+
+    <div th:if="${successMessage}" class="alert success" th:text="${successMessage}"></div>
+    <div th:if="${errorMessage}" class="alert" th:text="${errorMessage}"></div>
+
+    <div th:if="${#lists.isEmpty(rents)}" class="card empty">
+        Nu ai rezervări înregistrate.
+    </div>
+
+    <div th:each="rent : ${rents}" class="card">
+        <div class="grid">
+            <div>
+                <strong>Mașină</strong><br>
+                <span th:text="${rent.car.brand} + ' ' + ${rent.car.model}">Marca Model</span>
+            </div>
+            <div>
+                <strong>Ridicare</strong><br>
+                <span th:text="${rent.startDate}">Start</span>
+            </div>
+            <div>
+                <strong>Returnare</strong><br>
+                <span th:text="${rent.endDate}">End</span>
+            </div>
+            <div>
+                <strong>Status</strong><br>
+                <span class="badge"
+                      th:classappend="${rent.status.name() == 'PENDING' ? ' pending' : (rent.status.name() == 'CANCELED' ? ' canceled' : ' confirmed')}"
+                      th:text="${rent.status}">PENDING</span>
+            </div>
+        </div>
+
+        <div class="actions">
+            <a th:href="@{/cars/{id}(id=${rent.car.id})}" class="btn btn-primary">Vezi mașina</a>
+
+            <a th:if="${rent.status.name() == 'PENDING' and rent.startDate.toLocalDateTime().isAfter(currentTime)}"
+               th:href="@{/rents/{id}/edit(id=${rent.id})}" class="btn btn-secondary">Editează</a>
+
+            <form th:if="${rent.status.name() == 'PENDING' and rent.startDate.toLocalDateTime().isAfter(currentTime)}"
+                  th:action="@{/rents/{id}/cancel(id=${rent.id})}"
+                  method="post"
+                  onsubmit="return confirm('Ești sigur că vrei să anulezi această rezervare?');"
+                  style="margin: 0;">
+                <button type="submit" class="btn btn-danger">Anulează</button>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>
+

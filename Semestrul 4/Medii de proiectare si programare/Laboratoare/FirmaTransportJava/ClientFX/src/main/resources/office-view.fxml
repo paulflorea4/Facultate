@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="606.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="transport.client.gui.OfficeController">
+   <children>
+      <TableView fx:id="tripsTable" layoutX="116.0" layoutY="59.0" prefHeight="200.0" prefWidth="369.0">
+        <columns>
+            <TableColumn fx:id="tripsDestinationColumn" prefWidth="75.0" text="Destination" />
+            <TableColumn fx:id="tripsDateColumn" prefWidth="81.0" text="Date" />
+            <TableColumn fx:id="tripsHourColumn" prefWidth="89.0" text="Hour" />
+            <TableColumn fx:id="tripsAvailableSeatsColumn" prefWidth="97.0" text="Available Seats" />
+        </columns>
+         <columnResizePolicy>
+            <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+         </columnResizePolicy>
+      </TableView>
+      <DatePicker fx:id="tripDatePicker" layoutX="369.0" layoutY="275.0" prefHeight="25.0" prefWidth="116.0" />
+      <TextField fx:id="tripHourField" layoutX="285.0" layoutY="275.0" prefHeight="25.0" prefWidth="64.0" promptText="hour" />
+      <Button layoutX="275.0" layoutY="314.0" mnemonicParsing="false" onAction="#onSearchButton" text="Search" />
+      <TextField fx:id="destinationField" layoutX="116.0" layoutY="275.0" promptText="destination" />
+      <Button layoutX="32.0" layoutY="353.0" mnemonicParsing="false" onAction="#onResetButton" text="Refresh" />
+      <Button layoutX="527.0" layoutY="353.0" mnemonicParsing="false" text="Logout" onAction="#onLogoutButton"/>
+   </children>
+</AnchorPane>

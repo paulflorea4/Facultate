@@ -1,0 +1,63 @@
+﻿syntax = "proto3";
+
+package transport.protocol;
+
+option java_package = "transport.protocol";
+option java_outer_classname = "TransportProtobufs";
+
+option csharp_namespace = "Transport.Network.Protobuf";
+
+message User {
+  int64 id = 1;
+  string username = 2;
+  string password = 3;
+}
+
+message Trip {
+  int64 id = 1;
+  string destination = 2;
+  string date = 3;
+  string hour = 4;
+  int32 availableSeats = 5;
+}
+
+message Seat {
+  int64 id = 1;
+  int32 number = 2;
+  int64 reservationId = 3;
+  int64 tripId = 4;
+  string clientName = 5;
+}
+
+message Reservation {
+  int64 id = 1;
+  string clientName = 2;
+  int64 tripId = 3;
+  int32 numberOfSeats = 4;
+}
+
+message Empty {}
+
+message TripsResponse {
+  repeated Trip trips = 1;
+}
+
+message SeatsResponse {
+  repeated Seat seats = 1;
+}
+
+
+service TransportService {
+  rpc login(User) returns (stream TripsResponse);
+
+  rpc logout(User) returns (Empty);
+
+  rpc getAllTrips(Empty) returns (TripsResponse);
+  rpc searchTrips(Trip) returns (TripsResponse);
+
+  rpc getSeatsForTrip(Trip) returns (SeatsResponse);
+
+  rpc makeReservation(Reservation) returns (Empty);
+  rpc cancelReservation(Reservation) returns (Empty);
+}
+

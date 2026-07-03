@@ -1,0 +1,19 @@
+Raport Proiect SGBD – Gestiune Echipe NBA
+
+	1. Decizii de design
+Pentru acest proiect, am optat pentru o arhitectură pe patru niveluri logice, pentru a separa responsabilitățile și a facilita mentenanța codului.
+•	Interfața Grafică (UI): Am folosit Windows Forms (TeamPage și PlayerPage). Pentru afișarea datelor am utilizat controale de tip DataGridView, completate cu câmpuri de filtrare și sortare. Aceasta a permis afișarea filtrată a jucătorilor în funcție de echipa selectată, cu posibilitatea de a căuta după nume și de a sorta după Id, Name sau Salary, în ordine crescătoare sau descrescătoare.
+•	Nivelul de Servicii (Service Layer): Am introdus interfețele IPlayerService și ITeamService, implementate în clasele playerService și teamService. Acest nivel intermediar separă logica de afaceri de accesul brut la date și de interfața grafică.
+•	Nivelul de Validare: Am extras toată logica de validare a parametrilor într-o clasă dedicată, playerValidator, care implementează interfața IValidator. Aceasta validează câmpurile individuale (id, name, salary, teamId) și agregă erorile, aruncând o excepție cu toate problemele găsite, nu doar prima.
+•	Nivelul de Acces la Date (Repository Layer): Am implementat pattern-ul Repository prin interfețele IPlayerRepository și ITeamRepository. Metoda GetByFilter(Filter filter) construiește dinamic interogarea SQL pe baza unui DTO Filter, care suportă căutare după text, filtrare după interval de salariu, filtrare după echipă și sortare configurabilă.
+•	Gestionarea Conexiunii: Am creat clasa DatabaseManager ca factory de conexiuni Npgsql (PostgreSQL) și am externalizat credențialele în clasa statică DatabaseConfig, eliminând hardcodarea în codul sursă. Toate interogările SQL folosesc parametri (@name, @salary, @teamId etc.) pentru protecție împotriva SQL Injection.
+
+	2. Provocări întâmpinate și soluții
+•	Sincronizarea interfeței după modificarea datelor: O provocare a fost actualizarea tabelului din PlayerPage imediat după ce utilizatorul adăuga, edita sau ștergea un jucător. Soluția a fost re-apelarea metodei LoadPlayers(BuildPlayerFilter()) după fiecare operațiune CRUD, astfel încât filtrele și sortarea active să fie păstrate și după reîncărcare.
+•	Validarea datelor la nivel de UI: Exista riscul ca utilizatorul să introducă un salariu non-numeric sau un câmp gol, ceea ce ar fi generat excepții la parsare sau la baza de date. Soluția a fost implementarea unor verificări (guard clauses) direct în handlerele butoanelor, cu afișarea unui MessageBox informativ înainte ca datele să fie trimise spre Service.
+•	Confirmarea ștergerii: Pentru a preveni ștergerea accidentală, am adăugat un dialog de confirmare MessageBox.Show(...) cu opțiunile Yes/No înainte de apelul playerService.Delete(), afișând explicit numele jucătorului ce urmează să fie șters.
+•	Selectarea corectă a rândurilor: Identificarea jucătorului selectat în DataGridView a necesitat citirea valorilor din celulele rândului curent (CurrentRow.Cells[0] pentru Id). Am adăugat verificări pentru CurrentRow == null și TryParse pe valorile citite, prevenind crash-urile în cazul selecțiilor invalide.
+
+
+	3. Ce am învățat
+Dezvoltarea acestui proiect mi-a consolidat cunoștințele despre interacțiunea dintre aplicațiile C# și bazele de date relaționale PostgreSQL prin intermediul driverului Npgsql. Am înțeles în practică avantajele arhitecturii în straturi (UI → Service → Repository), care menține formularele curate, fără logică SQL sau de validare îngropată în handlere de evenimente. De asemenea, am conștientizat importanța extragerii validărilor într-o clasă separată, ceea ce face codul mai ușor de testat și de extins.

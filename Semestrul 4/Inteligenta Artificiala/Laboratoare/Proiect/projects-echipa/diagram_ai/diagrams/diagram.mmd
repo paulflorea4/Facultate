@@ -1,0 +1,48 @@
+classDiagram
+    class FastAPI {
+        +title: str
+        +description: str
+        +version: str
+    }
+    class GenerateRequest {
+        +text_description: Optional[str]
+        +source_code: Optional[str]
+        +diagram_type: Optional[str]
+        +context: Optional[str]
+    }
+    class GenerateResponse {
+        +mermaid_code: str
+        +diagram_type: str
+    }
+    class DiagramAgent {
+        +generate_diagram(request: GenerateRequest) GenerateResponse
+    }
+    class RAGEngine {
+        +db_path: str
+        +analyze_code(request: AnalyzeRequest) AnalyzeResponse
+    }
+    class PythonASTAnalyzer {
+        +analyze(source_code: str) dict
+    }
+    class AnalyzeRequest {
+        +source_code: str
+    }
+    class AnalyzeResponse {
+        +structure: dict
+    }
+    class HealthCheck {
+        +health() bool
+    }
+    class Stats {
+        +stats() dict
+    }
+    
+    FastAPI --> GenerateRequest : handles
+    FastAPI --> GenerateResponse : returns
+    FastAPI --> HealthCheck : checks
+    FastAPI --> Stats : retrieves
+    FastAPI --> DiagramAgent : uses
+    FastAPI --> RAGEngine : uses
+    DiagramAgent --> RAGEngine : depends
+    RAGEngine --> PythonASTAnalyzer : uses
+    GenerateRequest ..> GenerateResponse : creates

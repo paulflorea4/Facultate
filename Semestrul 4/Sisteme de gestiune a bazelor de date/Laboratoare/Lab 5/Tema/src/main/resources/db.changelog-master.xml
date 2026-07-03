@@ -1,0 +1,18 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="
+        http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <include file="V1_initial.xml"/>
+    <include file="V2_add_phone.xml"/>
+    <include file="V3_create_projects.xml"/>
+    <include file="V4_modify_salary.xml"/>
+    <include file="V5_indexes.xml"/>
+    <include file="V6_add_audit_columns.xml"/>
+    <include file="V7_seed_default_department.xml"/>
+    <include file="V8_seed_projects.xml"/>
+    <include file="V9_seed_employees.xml"/>
+
+</databaseChangeLog>

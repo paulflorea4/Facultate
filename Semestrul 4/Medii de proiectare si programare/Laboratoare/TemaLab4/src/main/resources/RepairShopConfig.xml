@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+
+    <util:properties id="jdbcProps1">
+        <prop key="tasks.jdbc.url">jdbc:sqlite:D:/Facultate/Semestrul 4/Medii de proiectare si programare/Laboratoare/Lab4/RepairShopDB.db</prop>
+    </util:properties>
+
+    <util:properties id="jdbcProps" location="classpath:bd.config"/>
+
+    <bean id="requestsRepoFile" class="org.example.lab4.repository.file.ComputerRepairRequestFileRepository">
+        <constructor-arg value="D:\Facultate\Semestrul 4\Medii de proiectare si programare\Laboratoare\Lab4\ComputerRequests.txt"/>
+    </bean>
+
+    <bean id="requestsRepoJDBC" class="org.example.lab4.repository.jdbc.ComputerRepairRequestJdbcRepository">
+        <constructor-arg ref="jdbcProps"/>
+    </bean>
+
+    <bean id="formsRepoFile" class="org.example.lab4.repository.file.ComputerRepairedFormFileRepository">
+        <constructor-arg value="D:\Facultate\Semestrul 4\Medii de proiectare si programare\Laboratoare\Lab4\RepairedForms.txt"/>
+        <constructor-arg ref="requestsRepoFile"/>
+    </bean>
+
+    <bean id="formsRepoJDBC" class="org.example.lab4.repository.jdbc.ComputerRepairedFormJdbcRepository">
+        <constructor-arg ref="jdbcProps"/>
+    </bean>
+
+    <bean id="shopService" class="org.example.lab4.services.ComputerRepairServices">
+        <constructor-arg ref="requestsRepoFile"/>
+        <constructor-arg ref="formsRepoFile"/>
+    </bean>
+</beans>

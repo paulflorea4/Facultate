@@ -1,0 +1,55 @@
+# Core AI / LLM
+openai>=1.30.0
+sentence-transformers>=2.7.0
+transformers>=4.40.0
+torch>=2.2.0
+
+# Vector DB / RAG
+chromadb>=0.5.0
+faiss-cpu>=1.8.0
+
+# AST / Code analysis
+tree-sitter>=0.22.0
+astunparse>=1.6.3
+networkx>=3.3
+
+# Diagram validation & rendering
+mermaid-py>=0.3.0
+
+# Data processing
+pandas>=2.2.0
+numpy>=1.26.0
+scikit-learn>=1.4.0
+datasets>=2.19.0
+
+# NLP metrics
+nltk>=3.8.1
+rouge-score>=0.1.2
+sacrebleu>=2.4.0
+
+# API / CLI
+fastapi>=0.111.0
+uvicorn>=0.29.0
+click>=8.1.7
+python-dotenv>=1.0.1
+httpx>=0.27.0
+
+# GitHub integration
+pygithub>=2.3.0
+gitpython>=3.1.43
+
+# Visualization / Notebooks
+matplotlib>=3.8.0
+seaborn>=0.13.2
+plotly>=5.22.0
+ipywidgets>=8.1.0
+jupyter>=1.0.0
+
+# Testing
+pytest>=8.2.0
+pytest-asyncio>=0.23.0
+
+# Utilities
+tqdm>=4.66.0
+pyyaml>=6.0.1
+rich>=13.7.0

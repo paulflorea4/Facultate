@@ -55,3 +55,11 @@ Thumbs.db
 
 # ===== Logs =====
 *.log
+
+# Machine Learning models and datasets
+*.safetensors
+*.pt
+*.parquet
+
+# Ignore environment variables
+.env

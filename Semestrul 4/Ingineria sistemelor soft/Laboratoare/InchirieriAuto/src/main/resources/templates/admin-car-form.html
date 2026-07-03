@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="ro" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Formular mașină</title>
+    <style>
+        body { font-family: Arial, sans-serif; background: #f4f7f6; margin: 0; padding: 40px; }
+        .container { max-width: 800px; margin: auto; background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+        .alert { background: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; padding: 12px 16px; border-radius: 8px; margin-bottom: 20px; }
+        .form-group { margin-bottom: 15px; display: flex; flex-direction: column; }
+        label { font-weight: bold; margin-bottom: 6px; }
+        input, select { padding: 10px; border: 1px solid #ddd; border-radius: 6px; }
+        .input-invalid { border-color: #c0392b; background: #fff5f5; }
+        .field-error { color: #c0392b; font-size: 0.85rem; margin-top: 4px; }
+        .features { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 10px; }
+        .feature-item { background: #f8f9fa; padding: 10px; border-radius: 8px; }
+        .actions { display: flex; gap: 10px; margin-top: 20px; }
+        .btn { border: none; padding: 12px 18px; border-radius: 6px; font-weight: bold; cursor: pointer; text-decoration: none; display: inline-block; }
+        .btn-primary { background: #3498db; color: white; }
+        .btn-secondary { background: #2c3e50; color: white; }
+    </style>
+</head>
+<body>
+<div class="container">
+    <a th:href="@{/admin}" class="btn btn-secondary">&larr; Înapoi la dashboard</a>
+    <h1 th:text="${carFormDTO.id == null ? 'Adaugă mașină' : 'Editează mașina'}">Formular mașină</h1>
+
+    <div th:if="${errorMessage}" class="alert" th:text="${errorMessage}"></div>
+
+    <form th:action="@{/admin/cars}" th:object="${carFormDTO}" method="post">
+        <input type="hidden" th:field="*{id}">
+
+        <div class="form-group">
+            <label for="brand">Marcă</label>
+            <input id="brand" type="text" th:field="*{brand}" th:classappend="${#fields.hasErrors('brand') ? 'input-invalid' : ''}">
+            <div class="field-error" th:if="${#fields.hasErrors('brand')}" th:errors="*{brand}"></div>
+        </div>
+
+        <div class="form-group">
+            <label for="model">Model</label>
+            <input id="model" type="text" th:field="*{model}" th:classappend="${#fields.hasErrors('model') ? 'input-invalid' : ''}">
+            <div class="field-error" th:if="${#fields.hasErrors('model')}" th:errors="*{model}"></div>
+        </div>
+
+        <div class="form-group">
+            <label for="year">An</label>
+            <input id="year" type="number" th:field="*{year}" th:classappend="${#fields.hasErrors('year') ? 'input-invalid' : ''}">
+            <div class="field-error" th:if="${#fields.hasErrors('year')}" th:errors="*{year}"></div>
+        </div>
+
+        <div class="form-group">
+            <label for="pricePerDay">Preț pe zi</label>
+            <input id="pricePerDay" type="number" step="0.01" th:field="*{pricePerDay}" th:classappend="${#fields.hasErrors('pricePerDay') ? 'input-invalid' : ''}">
+            <div class="field-error" th:if="${#fields.hasErrors('pricePerDay')}" th:errors="*{pricePerDay}"></div>
+        </div>
+
+        <div class="form-group">
+            <label for="status">Status</label>
+            <select id="status" th:field="*{status}" th:classappend="${#fields.hasErrors('status') ? 'input-invalid' : ''}">
+                <option value="" disabled>-- Alege status --</option>
+                <option th:each="status : ${statuses}" th:value="${status}" th:text="${status}"></option>
+            </select>
+            <div class="field-error" th:if="${#fields.hasErrors('status')}" th:errors="*{status}"></div>
+        </div>
+
+        <div class="form-group">
+            <label>Dotări</label>
+            <div class="features">
+                <label class="feature-item" th:each="feature : ${features}">
+                    <input type="checkbox" th:field="*{featureIds}" th:value="${feature.id}">
+                    <span th:text="${feature.name}">Feature</span>
+                </label>
+            </div>
+        </div>
+
+        <div class="actions">
+            <button type="submit" class="btn btn-primary">Salvează</button>
+        </div>
+    </form>
+</div>
+</body>
+</html>
+

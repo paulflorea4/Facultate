@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+    <session-factory>
+        <!-- SQLite connection -->
+        <property name="hibernate.connection.driver_class">org.sqlite.JDBC</property>
+        <property name="hibernate.connection.url">jdbc:sqlite:MutariMPP.db</property>
+        <property name="hibernate.dialect">org.hibernate.community.dialect.SQLiteDialect</property>
+
+        <!-- Show generated SQL -->
+        <property name="hibernate.show_sql">true</property>
+        <property name="hibernate.format_sql">true</property>
+
+        <!-- Auto-create/update tables -->
+        <property name="hibernate.hbm2ddl.auto">update</property>
+
+        <property name="hibernate.globally_quoted_identifiers">true</property>
+
+        <!-- Entity classes -->
+        <mapping class="Domain.Configuratie"/>
+        <mapping class="Domain.Joc"/>
+        <mapping class="Domain.Jucator"/>
+        <mapping class="Domain.Runda"/>
+    </session-factory>
+</hibernate-configuration>

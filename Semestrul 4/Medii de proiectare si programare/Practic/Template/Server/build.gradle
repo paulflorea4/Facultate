@@ -1,0 +1,55 @@
+plugins {
+    id 'java'
+    id 'application'
+    id 'org.springframework.boot' version '3.2.0'
+    id 'io.spring.dependency-management' version '1.1.4'
+}
+
+group = 'org.example'
+version = '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation platform('org.junit:junit-bom:5.10.0')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
+    implementation 'org.hibernate.orm:hibernate-core:6.4.0.Final'
+    implementation 'org.xerial:sqlite-jdbc:3.44.1.0'
+    implementation 'org.hibernate.orm:hibernate-community-dialects:6.4.0.Final'
+
+    implementation project(':Common')
+    implementation("org.apache.logging.log4j:log4j-core:2.25.3")
+    implementation("org.apache.logging.log4j:log4j-api:2.25.3")
+    implementation 'org.xerial:sqlite-jdbc:3.45.1.0'
+
+    implementation('org.springframework.boot:spring-boot-starter-security') {
+        exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging'
+    }
+
+    implementation('org.springframework.boot:spring-boot-starter-web') {
+        exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging'
+    }
+    implementation 'org.springframework.boot:spring-boot-starter-log4j2'
+}
+
+tasks.register('startServer', JavaExec) {
+    group = 'application'
+    description = 'Starts the server'
+    classpath = sourceSets.main.runtimeClasspath
+    mainClass = 'Server.StartServer'
+}
+
+tasks.register('startRestServices', JavaExec) {
+    group = 'application'
+    description = 'Starts the REST server'
+    classpath = sourceSets.main.runtimeClasspath
+    mainClass = 'Rest.StartRestServices'
+}
+
+test {
+    useJUnitPlatform()
+}

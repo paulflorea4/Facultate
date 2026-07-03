@@ -1,0 +1,161 @@
+MIGRAREA SCHEMEI BD ȘI METODE AVANSATE (LIQUIBASE, LOCKING OPTIMIST, SOFT DELETE)
+
+STRATEGIA DE MIGRARE ALEASĂ ȘI RAȚIUNEA
+
+Pentru implementare a fost ales Liquibase, deoarece oferă control clar al versiunilor schemei, trasabilitate prin tabelul DATABASECHANGELOG și suport pentru rollback explicit la nivel de changeset.
+
+Strategia folosită în proiect:
+	Migrare incrementală, numerotată și ordonată (V1 → V9)
+	Separare între migrări de schemă și migrări de seed
+	Aplicare automată la pornirea aplicației Spring Boot
+	Rollback definit în fiecare fișier de migrare
+	Ordinea finală (db.changelog-master.xml):
+		V1_initial.xml
+		V2_add_phone.xml
+		V3_create_projects.xml
+		V4_modify_salary.xml
+		V5_indexes.xml
+		V6_add_audit_columns.xml
+		V7_seed_default_department.xml
+		V8_seed_projects.xml
+		V9_seed_employees.xml
+
+Această ordine respectă dependențele FK și permite aplicarea completă a schemei înaintea datelor de test.
+
+DOCUMENTAȚIE PAS CU PAS A EXECUȚIEI MIGRĂRILOR
+
+PAS 1 – V1_initial.xml
+	Creează tabelele de bază departments și employees.
+	Definește:
+		coloanele principale
+		version pentru optimistic locking
+		is_deleted, deleted_at, deleted_by pentru soft delete
+		FK: employees.department_id → departments.id
+
+PAS 2 – V2_add_phone.xml
+	Adaugă coloana phone în employees
+	Gestionează datele existente (fallback pentru valori lipsă)
+	Include rollback pentru eliminarea coloanei
+
+PAS 3 – V3_create_projects.xml
+	Creează tabelul projects
+	Definește FK: projects.department_id → departments.id
+
+PAS 4 – V4_modify_salary.xml
+	Modifică tipul coloanei salary la DECIMAL(12,2)
+	Permite valori mai mari și mai precise
+	Include rollback la tipul anterior
+
+PAS 5 – V5_indexes.xml
+	Index pe employees.department_id
+	Index pe employees.email
+
+Scop: creșterea performanței la căutări și join-uri
+
+PAS 6 – V6_add_audit_columns.xml
+	Se adaugă câmpuri de audit în employees:
+		created_at
+		created_by
+		updated_at
+		updated_by
+
+Se populează valorile inițiale acolo unde lipsesc.
+
+PAS 7 – V7_seed_default_department.xml
+	Inserează departamentul default (ID = 1, IT)
+	Servește ca punct de referință pentru proiecte și angajați
+
+PAS 8 – V8_seed_projects.xml
+	Introduce date demo în projects
+	Toate sunt legate de department_id = 1
+
+PAS 9 – V9_seed_employees.xml
+	Introduce angajați demo
+	Toți sunt legați de department_id = 1
+	Include și câmpul phone
+
+EXPLICAȚIA LOCKING-ULUI OPTIMIST ȘI REZULTATELE DEMONSTRATE
+Mecanism
+
+În entitatea Employee există:
+	@Version private Integer version;
+
+Comportament:
+	La citire, Hibernate preia versiunea curentă
+	La update, query-ul include:
+		WHERE id = ? AND version = ?
+	Dacă versiunea s-a schimbat între timp, update-ul eșuează
+
+Scenariu demonstrat:
+	Se încarcă același employee în două sesiuni (User A / User B)
+	User A salvează primul → versiunea crește
+	User B încearcă salvarea → eșuează
+Rezultat:
+	Se previne „lost update”
+	Integritatea datelor este menținută
+	Conflictul este tratat explicit la nivel de service
+
+COMPARAȚIE SOFT DELETE VS HARD DELETE
+Soft delete
+
+	Prin:
+		is_deleted
+		deleted_at
+		deleted_by
+		filtru @Where
+
+	Avantaje:
+		restaurare ușoară
+		audit complet
+		siguranță operațională
+
+	Dezavantaje:
+		query-uri mai complexe
+		consum mai mare de spațiu
+
+Hard delete
+	Avantaje:
+		eliminare definitivă
+		model simplu
+	Dezavantaje:
+		nu se poate restaura
+		pierdere istoric/audit
+
+Compromis adoptat:
+	Soft delete pentru operațiuni normale
+	Hard delete pentru operațiuni administrative controlate
+
+OBSERVAȚII DE IMPLEMENTARE
+	@Where filtrează automat soft-deleted records
+	Operațiile admin folosesc query-uri dedicate (inclusiv deleted)
+	Restaurarea necesită bypass al filtrului
+
+LECȚII ÎNVĂȚATE ȘI BEST PRACTICES
+	Fiecare migrare trebuie să aibă rollback
+	Schema și seed trebuie separate
+	Ordinea migrărilor este critică la FK-uri
+	Optimistic locking este esențial în concurență
+	Soft delete este util pentru audit și restore
+	Logarea SQL trebuie configurată corect (evitarea dublării)
+
+PROVOCĂRI ÎNTÂMPINATE
+	1. Rollback blocat de constrângeri FK
+		Problemă: ștergerea parent fără child cleanup
+		Soluție: ordonare corectă rollback + seed la final
+	2. Listare/restaurare soft-deleted
+		Problemă: @Where excludea și datele admin
+		Soluție: repository methods dedicate
+
+CONCLUZIE
+
+	Proiectul implementează corect:
+
+		migrări versionate Liquibase (V1–V9)
+		rollback pe fiecare changeset
+		optimistic locking prin versiune
+		soft delete + restore + hard delete administrativ
+		audit pentru create/update/delete
+		seed de date la finalul migrărilor
+Rezultat final:
+
+	O implementare stabilă, ușor de urmărit și potrivită pentru scenarii reale cu evoluție controlată a schemei bazei de date.

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Eroare - Rent A Car</title>
+    <style>
+        body { font-family: Arial, sans-serif; background: #f4f7f6; margin: 0; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
+        .card { background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); width: 90%; max-width: 600px; text-align: center; }
+        h1 { color: #c0392b; margin-top: 0; }
+        .message { background: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; padding: 15px; border-radius: 8px; margin: 20px 0; }
+        .links { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-top: 20px; }
+        .links a { text-decoration: none; background: #2c3e50; color: white; padding: 10px 16px; border-radius: 6px; }
+        .links a.primary { background: #3498db; }
+    </style>
+</head>
+<body>
+<div class="card">
+    <h1>A apărut o problemă</h1>
+    <div class="message" th:text="${errorMessage != null ? errorMessage : 'A apărut o eroare neașteptată. Încearcă din nou mai târziu.'}">Eroare</div>
+    <p>Poți încerca din nou sau te poți întoarce la una dintre paginile principale.</p>
+    <div class="links">
+        <a class="primary" th:href="@{/cars}">Lista mașinilor</a>
+        <a th:href="@{/login}">Login</a>
+        <a th:href="@{/register}">Înregistrare</a>
+    </div>
+</div>
+</body>
+</html>
+

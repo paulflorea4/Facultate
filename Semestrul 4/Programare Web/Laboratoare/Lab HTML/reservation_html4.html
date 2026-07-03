@@ -1,0 +1,259 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+    "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="ro">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Hotel Victoria - Formular Rezervare</title>
+</head>
+<body bgcolor="#f2f2f2">
+
+<center><h1>Hotel Victoria</h1></center>
+<center><h2>Formular de Rezervare</h2></center>
+
+<p>Completați formularul de mai jos pentru a efectua o rezervare. Câmpurile marcate cu <b>*</b> sunt obligatorii.</p>
+<p>Vă rugăm să utilizați diacriticele limbii române: <strong>ă, î, â, ș, ț</strong> acolo unde este necesar.</p>
+
+<form name="rezervare" action="submit.html" method="post">
+
+<fieldset>
+    <legend><strong>Informații personale</strong></legend>
+
+    <table border="0" width="90%" align="center">
+        <tr>
+            <td width="20%" valign="top"><b>Nume: *</b></td>
+            <td width="30%" valign="top">
+                <input type="text" name="nume" size="30" value="" title="Introduceți numele de familie">
+            </td>
+            <td width="20%" valign="top"><b>Prenume: *</b></td>
+            <td width="30%" valign="top">
+                <input type="text" name="prenume" size="30" title="Introduceți prenumele">
+            </td>
+        </tr>
+        <tr>
+            <td valign="top"><b>Email: *</b></td>
+            <td valign="top">
+                <input type="text" name="email" size="30" title="Adresa de email valida">
+            </td>
+            <td valign="top"><b>Telefon: *</b></td>
+            <td valign="top">
+                <input type="text" name="telefon" size="15" title="Număr de telefon">
+            </td>
+        </tr>
+        <tr>
+            <td valign="top"><b>Cetățenie:</b></td>
+            <td valign="top">
+                <select name="tara" size="1" title="Selectați țara">
+                    <option value="ro" selected>România</option>
+                    <option value="de">Germania</option>
+                    <option value="fr">Franța</option>
+                    <option value="uk">Marea Britanie</option>
+                    <option value="it">Italia</option>
+                </select>
+            </td>
+            <td valign="top"><b>Limbă preferată:</b></td>
+            <td valign="top">
+                <select name="limba" multiple size="3" title="Puteți selecta mai multe limbi">
+                    <option value="ro" selected>Română</option>
+                    <option value="en">Engleză</option>
+                    <option value="de">Germană</option>
+                    <option value="fr">Franceză</option>
+                </select>
+            </td>
+        </tr>
+    </table>
+</fieldset>
+
+<br>
+
+<fieldset>
+    <legend><strong>Detalii sejur</strong></legend>
+
+    <table border="1" width="90%" align="center" bgcolor="#ffffff">
+        <tr bgcolor="#003366">
+            <th colspan="4" align="center">
+                <font color="#ffffff">Selectați perioada și tipul camerei</font>
+            </th>
+        </tr>
+        <tr bgcolor="#cce6ff">
+            <th width="25%" align="center">Data check-in</th>
+            <th width="25%" align="center">Data check-out</th>
+            <th width="25%" align="center">Nr. nopți (max 30)</th>
+            <th width="25%" align="center">Nr. persoane</th>
+        </tr>
+        <tr align="center">
+            <td valign="top">
+                <input type="text" name="checkin" size="12" value="zz/ll/aaaa" title="Data de check-in">
+            </td>
+            <td valign="top">
+                <input type="text" name="checkout" size="12" value="zz/ll/aaaa" title="Data de check-out">
+            </td>
+            <td valign="top">
+                <input type="text" name="nopti" size="5" value="1" title="Numărul de nopți">
+            </td>
+            <td valign="top">
+                <select name="persoane" size="1">
+                    <option value="1">1 persoană</option>
+                    <option value="2" selected>2 persoane</option>
+                    <option value="3">3 persoane</option>
+                    <option value="4">4 persoane</option>
+                </select>
+            </td>
+        </tr>
+        <tr bgcolor="#f2f9ff">
+            <th colspan="2" align="center">Tip cameră</th>
+            <th colspan="2" align="center">Etaj preferat</th>
+        </tr>
+        <tr align="center">
+            <td colspan="2" valign="top">
+                <table border="1" width="95%" align="center" bgcolor="#fafafa">
+                    <tr bgcolor="#e0f0ff">
+                        <th colspan="3">Alegeți tipul camerei</th>
+                    </tr>
+                    <tr align="center">
+                        <td>
+                            <input type="radio" name="tip_camera" value="single" checked>
+                            <b>Single</b><br>150 RON/noapte
+                        </td>
+                        <td>
+                            <input type="radio" name="tip_camera" value="double">
+                            <b>Double</b><br>250 RON/noapte
+                        </td>
+                        <td>
+                            <input type="radio" name="tip_camera" value="suite">
+                            <b>Suite</b><br>400 RON/noapte
+                        </td>
+                    </tr>
+                </table>
+            </td>
+            <td colspan="2" valign="top">
+                <select name="etaj" size="1" title="Preferință etaj">
+                    <option value="any" selected>Fără preferință</option>
+                    <option value="1">Etaj 1</option>
+                    <option value="2">Etaj 2</option>
+                    <option value="3">Etaj 3 (vedere panoramică)</option>
+                </select>
+                <br><br>
+                Tip pat preferat:<br>
+                <input type="radio" name="pat" value="single" checked> Single
+                <input type="radio" name="pat" value="king"> King
+                <input type="radio" name="pat" value="queen"> Queen
+            </td>
+        </tr>
+    </table>
+</fieldset>
+
+<br>
+
+<fieldset>
+    <legend><strong>Servicii suplimentare și opțiuni</strong></legend>
+
+    <table border="0" width="90%" align="center">
+        <tr>
+            <td width="50%" valign="top">
+                <h5>Servicii incluse opțional:</h5>
+                <ul>
+                    <li><input type="checkbox" name="mic_dejun" value="da" checked> Mic dejun (30 RON/persoană)</li>
+                    <li><input type="checkbox" name="pranz" value="da"> Prânz (50 RON/persoană)</li>
+                    <li><input type="checkbox" name="cina" value="da"> Cină (60 RON/persoană)</li>
+                    <li><input type="checkbox" name="parcare" value="da"> Parcare (20 RON/zi)</li>
+                </ul>
+            </td>
+            <td width="50%" valign="top">
+                <h5>Facilități extra:</h5>
+                <ul>
+                    <li><input type="checkbox" name="wifi" value="da" checked> WiFi gratuit</li>
+                    <li><input type="checkbox" name="spa" value="da"> Acces Spa (80 RON/zi)</li>
+                    <li><input type="checkbox" name="piscina" value="da"> Acces piscină</li>
+                    <li><input type="checkbox" name="transport" value="da" disabled> Transfer aeroport (indisponibil)</li>
+                </ul>
+            </td>
+        </tr>
+    </table>
+
+    <table border="0" width="90%" align="center">
+        <tr>
+            <td width="30%" valign="top">
+                <b>Cod promoțional:</b><br>
+                <input type="text" name="promo" size="12" value="PROMO10" readonly title="Cod promoțional aplicat automat">
+            </td>
+            <td width="40%" valign="top">
+                <b>Scopul vizitei:</b><br>
+                <input type="radio" name="scop" value="vacanta" checked> Vacanță
+                <input type="radio" name="scop" value="afaceri"> Afaceri
+                <input type="radio" name="scop" value="eveniment"> Eveniment special
+            </td>
+            <td width="30%" valign="top">
+                <b>Sursa rezervării:</b><br>
+                <select name="sursa" size="1">
+                    <option value="site" selected>Site-ul nostru</option>
+                    <option value="telefon">Telefon</option>
+                    <option value="agentie">Agenție de turism</option>
+                </select>
+            </td>
+        </tr>
+    </table>
+</fieldset>
+
+<br>
+
+<fieldset>
+    <legend><strong>Cerințe speciale și comentarii</strong></legend>
+    <p>
+        <b>Solicitări speciale</b> (alergii, preferințe cameră, ocazii speciale etc.):<br>
+        <textarea name="comentarii" cols="80" rows="5">Doresc o cameră la un etaj superior cu vedere spre oraș, vă mulțumesc!</textarea>
+    </p>
+    <p>
+        <b>Observații privind accesibilitatea:</b><br>
+        <textarea name="accesibilitate" cols="80" rows="3"></textarea>
+    </p>
+</fieldset>
+
+<br>
+
+<center>
+    <p>
+        <input type="submit" name="trimite" value="Trimite rezervarea">
+        <input type="reset" name="reset" value="Resetează formularul" disabled>
+    </p>
+</center>
+
+</form>
+
+<hr>
+
+<div>
+    <h3>Instrucțiuni de completare a formularului:</h3>
+    <ol type="I">
+        <li>Completați toate câmpurile <b>obligatorii</b> marcate cu *.</li>
+        <li>Verificați cu atenție datele introduse înainte de trimitere:
+            <ol type="1">
+                <li>Verificați adresa de email - veți primi confirmarea pe această adresă.</li>
+                <li>Asigurați-vă că numărul de telefon este corect.</li>
+                <li>Verificați datele de check-in și check-out.</li>
+            </ol>
+        </li>
+        <li>Selectați serviciile suplimentare dorite.</li>
+        <li>Confirmarea rezervării va fi trimisă în maximum 24 de ore.</li>
+    </ol>
+</div>
+
+<div>
+    <h4>Politica de anulare:</h4>
+    <ul>
+        <li>Anulare <strong>gratuită</strong> cu mai mult de 48 de ore înainte de check-in.
+            <ul>
+                <li>Rambursare integrală în 5-7 zile lucrătoare.</li>
+                <li>Fără taxe administrative.</li>
+            </ul>
+        </li>
+        <li>Anulare cu mai puțin de 48 de ore - se reține <strong>50%</strong> din valoarea rezervării.</li>
+        <li>Neprezentare (no-show) - se reține <strong>100%</strong> din valoarea primei nopți.</li>
+    </ul>
+</div>
+
+<p><a href="index_html4.html" target="_self" title="Înapoi la pagina principală"> Înapoi la pagina principală</a></p>
+
+<p><small>© 2026 Hotel Victoria. Toate drepturile rezervate.</small></p>
+
+</body>
+</html>

@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="ro">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard - Hotel Victoria</title>
+    <link rel="stylesheet" href="../Styles/style-responsive.css">
+</head>
+
+<body>
+    <header>
+        <h1>Dashboard - Administrare rezervări</h1>
+    </header>
+    <nav id="menu">
+        <ul>
+            <li><a class="menu-home" href="home.html"><span class="menu-icon" aria-hidden="true"></span>Acasă</a></li>
+            <li><a class="menu-rooms" href="rooms.html"><span class="menu-icon" aria-hidden="true"></span>Camere</a>
+            </li>
+            <li><a class="menu-reservation" href="reservation.html"><span class="menu-icon"
+                        aria-hidden="true"></span>Rezervare</a></li>
+            <li><a class="menu-dashboard" href="dashboard.html"><span class="menu-icon"
+                        aria-hidden="true"></span>Dashboard</a></li>
+            <li><a class="menu-contact" href="contact.html"><span class="menu-icon"
+                        aria-hidden="true"></span>Contact</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <h2>Rezervări existente</h2>
+
+        <div class="table-container">
+            <table class="sortable-table" data-sortable-table="reservations">
+                <thead>
+                    <tr>
+                        <th class="sortable-header" data-sort-key="name">Nume</th>
+                        <th class="sortable-header" data-sort-key="email">Email</th>
+                        <th class="sortable-header" data-sort-key="roomType">Tip cameră</th>
+                        <th class="sortable-header" data-sort-key="checkIn">Check-in</th>
+                        <th class="sortable-header" data-sort-key="checkOut">Check-out</th>
+                        <th class="sortable-header" data-sort-key="status">Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+
+        <h2>Comparație camere</h2>
+        <p>Faceți click pe orice celulă din antetul vertical pentru a sorta coloanele tabelului.</p>
+
+        <div class="table-container vertical-table-container">
+            <table class="vertical-sortable-table" data-vertical-table="room-comparison">
+                <thead>
+                    <tr>
+                        <th class="vertical-header-cell">Atribut</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+
+        <h3>Statistici</h3>
+        <section class="stats-widgets" aria-label="Indicatori statistici hotel">
+            <div class="stat-widget">
+                <p class="stat-label">Camere ocupate</p>
+                <p class="stat-value">12</p>
+            </div>
+            <div class="stat-widget">
+                <p class="stat-label">Camere libere</p>
+                <p class="stat-value">8</p>
+            </div>
+            <div class="stat-widget">
+                <p class="stat-label">Rezervări în așteptare</p>
+                <p class="stat-value">3</p>
+            </div>
+        </section>
+
+        <hr>
+        <h2>Management rezervări făcute</h2>
+        
+        <form id="hotelAdminForm" novalidate>
+            <fieldset>
+                <legend>Operator rezervări</legend>
+                
+                <label for="admin_username">Utilizator <span class="required">*</span>:</label>
+                <input type="text" id="admin_username" name="admin_username" placeholder="ex: recepție_01" required><br>
+                
+                <label for="admin_password">Parolă <span class="required">*</span>:</label>
+                <input type="password" id="admin_password" name="admin_password" placeholder="Parolă de acces" required><br>
+
+                <label for="admin_email">Email operator <span class="required">*</span>:</label>
+                <input type="email" id="admin_email" name="admin_email" placeholder="receptie@hotelvictoria.ro" required><br>
+            </fieldset>
+
+            <fieldset>
+                <legend>Date rezervare existentă</legend>
+                
+                <label for="reservation_reference">Cod rezervare <span class="required">*</span>:</label>
+                <input type="text" id="reservation_reference" name="reservation_reference" placeholder="Ex: HV-2026-0142" required><br>
+
+                <label for="guest_name">Nume client <span class="required">*</span>:</label>
+                <input type="text" id="guest_name" name="guest_name" placeholder="Ex: Popescu Andrei" required><br>
+
+                <label for="reservation_phone">Telefon client:</label>
+                <input type="tel" id="reservation_phone" name="reservation_phone" placeholder="0700 000 000"><br>
+
+                <label for="reservation_room_type">Tip cameră <span class="required">*</span>:</label>
+                <select id="reservation_room_type" name="reservation_room_type" required>
+                    <option value="">-- Selectați --</option>
+                    <option value="twin">Standard Twin</option>
+                    <option value="standard">Standard Double</option>
+                    <option value="apartament">Apartament</option>
+                    <option value="deluxe">Apartament Deluxe</option>
+                </select><br>
+
+                <label for="reservation_status">Status rezervare <span class="required">*</span>:</label>
+                <select id="reservation_status" name="reservation_status" required>
+                    <option value="">-- Selectați --</option>
+                    <option value="pending">În așteptare</option>
+                    <option value="confirmed">Confirmată</option>
+                    <option value="checked-in">Check-in efectuat</option>
+                    <option value="checked-out">Finalizată</option>
+                    <option value="cancelled">Anulată</option>
+                </select><br>
+
+                <label for="check_in_update">Check-in <span class="required">*</span>:</label>
+                <input type="date" id="check_in_update" name="check_in_update" required><br>
+
+                <label for="check_out_update">Check-out <span class="required">*</span>:</label>
+                <input type="date" id="check_out_update" name="check_out_update" required><br>
+            </fieldset>
+
+            <fieldset>
+                <legend>Actualizare servicii și plată</legend>
+                
+                <label style="font-weight: 500; color: #425466; display: block; margin-top: 12px;">Facilități confirmate la rezervare:</label>
+                <div class="form-group">
+                    <label><input type="checkbox" name="reservation_facilities" value="wifi"> Wi-Fi gratuit</label>
+                    <label><input type="checkbox" name="reservation_facilities" value="tv"> TV</label>
+                    <label><input type="checkbox" name="reservation_facilities" value="aer_conditionat"> Aer condiționat</label>
+                    <label><input type="checkbox" name="reservation_facilities" value="minibar"> Minibar</label>
+                    <label><input type="checkbox" name="reservation_facilities" value="seif"> Seif</label>
+                    <label><input type="checkbox" name="reservation_facilities" value="jacuzzi"> Jacuzzi</label>
+                </div>
+
+                <label for="payment_status">Status plată <span class="required">*</span>:</label>
+                <select id="payment_status" name="payment_status" required>
+                    <option value="">-- Selectați --</option>
+                    <option value="pending">În așteptare</option>
+                    <option value="partial">Plată parțială</option>
+                    <option value="paid">Plătită integral</option>
+                    <option value="refunded">Rambursată</option>
+                </select><br>
+
+                <label for="reservation_notes">Notițe interne:</label>
+                <textarea id="reservation_notes" name="reservation_notes" rows="3" placeholder="Ex: clientul ajunge după ora 22:00, solicită etaj superior"></textarea><br>
+            </fieldset>
+
+            <fieldset>
+                <legend>Acțiuni management</legend>
+                
+                <label><input type="checkbox" name="send_update_email" checked> Trimite email clientului cu actualizarea rezervării</label><br>
+                <label><input type="checkbox" name="issue_invoice"> Generează factură automată</label><br>
+                <label><input type="checkbox" name="cancel_reservation"> Marchează rezervarea ca anulată</label><br>
+            </fieldset>
+
+            <fieldset>
+                <legend>Confirmare operațiune</legend>
+                
+                <label for="admin_charter">Document suport (opțional):</label>
+                <input type="file" id="admin_charter" name="admin_charter" accept=".pdf,.doc,.docx"><br>
+
+                <label><input type="checkbox" name="ownership_confirmation" required> Confirm verificarea identității clientului și a datelor rezervării <span class="required">*</span></label><br>
+                <label><input type="checkbox" name="privacy_compliance" required> Confirm că actualizarea respectă politicile GDPR <span class="required">*</span></label><br>
+            </fieldset>
+
+            <button type="submit">Salvează actualizarea rezervării</button>
+            <button type="reset">Anulează</button>
+        </form>
+    </main>
+
+    <footer>
+        <p>© 2026 Hotel Victoria</p>
+    </footer>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="../Script/dependencies-data.js"></script>
+    <script src="../Script/tables-data.js"></script>
+    <script src="../Script/tables.js"></script>
+    <script src="../Script/validation.js"></script>
+</body>
+
+</html>

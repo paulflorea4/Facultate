@@ -1,0 +1,222 @@
+:root {
+  --bg-page: #f6f3eb;
+  --bg-elevated: #fffdf8;
+  --bg-soft: #efe8d8;
+  --text-main: #2e2a24;
+  --text-muted: #6e675c;
+  --border: #d8cdb8;
+  --brand: #0f766e;
+  --brand-strong: #0a5953;
+  --danger: #c2410c;
+  --danger-strong: #9a3412;
+  --shadow: 0 16px 36px rgba(40, 30, 10, 0.15);
+  --radius-lg: 18px;
+  --radius-md: 12px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  color: var(--text-main);
+  background:
+    radial-gradient(circle at 10% 10%, rgba(15, 118, 110, 0.18), transparent 34%),
+    radial-gradient(circle at 90% 20%, rgba(194, 65, 12, 0.16), transparent 30%),
+    linear-gradient(180deg, #faf7f0 0%, var(--bg-page) 100%);
+  font-family: 'Trebuchet MS', 'Segoe UI', sans-serif;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+.app-shell {
+  width: min(980px, calc(100% - 2rem));
+  margin: 1.6rem auto;
+  padding: 1.4rem;
+  border: 1px solid var(--border);
+  border-radius: calc(var(--radius-lg) + 4px);
+  background: color-mix(in srgb, var(--bg-elevated) 88%, #fff 12%);
+  box-shadow: var(--shadow);
+}
+
+.app-header {
+  margin-bottom: 1rem;
+  padding: 1.2rem 1.2rem 0.8rem;
+  border-radius: var(--radius-lg);
+  background: linear-gradient(135deg, #ece4d4 0%, #f7f2e6 54%, #dce8e4 100%);
+  border: 1px solid var(--border);
+}
+
+.app-header h1 {
+  margin: 0;
+  font-size: clamp(1.6rem, 3.2vw, 2.4rem);
+  letter-spacing: 0.01em;
+}
+
+.app-header p {
+  margin: 0.55rem 0 0;
+  color: var(--text-muted);
+}
+
+.panel {
+  margin-top: 0.95rem;
+  padding: 1rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background: var(--bg-elevated);
+}
+
+.panel-filter {
+  background: linear-gradient(180deg, #f8f3e8 0%, #fffef9 100%);
+}
+
+.panel-form {
+  background: linear-gradient(180deg, #e9f3f1 0%, #fbfffe 100%);
+}
+
+.panel-list {
+  background: linear-gradient(180deg, #fffdfa 0%, #fdf8ef 100%);
+}
+
+.panel-title {
+  margin: 0 0 0.75rem;
+  font-size: 1.02rem;
+  font-weight: 700;
+  color: #22201b;
+}
+
+.form-grid {
+  display: grid;
+  gap: 0.65rem;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+input {
+  width: 100%;
+  border: 1px solid #cfc0a5;
+  border-radius: var(--radius-md);
+  padding: 0.62rem 0.72rem;
+  background: #fff;
+  color: var(--text-main);
+  font-size: 0.95rem;
+}
+
+input:focus {
+  outline: 2px solid color-mix(in srgb, var(--brand) 35%, white 65%);
+  border-color: var(--brand);
+}
+
+.button-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+  margin-top: 0.8rem;
+}
+
+.btn {
+  border: none;
+  border-radius: 999px;
+  padding: 0.56rem 0.95rem;
+  font-size: 0.89rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.15s ease, filter 0.15s ease;
+}
+
+.btn:hover {
+  transform: translateY(-1px);
+  filter: brightness(0.98);
+}
+
+.btn:active {
+  transform: translateY(0);
+}
+
+.btn-primary {
+  background: var(--brand);
+  color: #fff;
+}
+
+.btn-secondary {
+  background: #334155;
+  color: #fff;
+}
+
+.btn-ghost {
+  background: #ebe4d4;
+  color: #433e35;
+}
+
+.btn-danger {
+  background: var(--danger);
+  color: #fff;
+}
+
+.btn-danger:hover {
+  background: var(--danger-strong);
+}
+
+.btn-small {
+  padding: 0.36rem 0.72rem;
+  font-size: 0.82rem;
+}
+
+.table-wrap {
+  overflow-x: auto;
+}
+
+.trip-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 650px;
+}
+
+.trip-table th,
+.trip-table td {
+  text-align: left;
+  border-bottom: 1px solid #e8ddca;
+  padding: 0.72rem 0.56rem;
+}
+
+.trip-table th {
+  color: var(--text-muted);
+  text-transform: uppercase;
+  font-size: 0.77rem;
+  letter-spacing: 0.04em;
+}
+
+.trip-table tbody tr:hover {
+  background: color-mix(in srgb, var(--bg-soft) 46%, white 54%);
+}
+
+.actions-cell {
+  display: flex;
+  gap: 0.38rem;
+  flex-wrap: wrap;
+}
+
+@media (max-width: 900px) {
+  .app-shell {
+    width: calc(100% - 1rem);
+    margin: 0.75rem auto;
+    padding: 0.8rem;
+  }
+
+  .form-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 600px) {
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .panel {
+    padding: 0.85rem;
+  }
+}

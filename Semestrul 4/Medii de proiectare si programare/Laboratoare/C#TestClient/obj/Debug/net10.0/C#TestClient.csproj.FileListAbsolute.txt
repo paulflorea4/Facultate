@@ -1,0 +1,15 @@
+D:\Facultate\Semestrul 4\Medii de proiectare si programare\Laboratoare\C#TestClient\bin\Debug\net10.0\C#TestClient.exe
+D:\Facultate\Semestrul 4\Medii de proiectare si programare\Laboratoare\C#TestClient\bin\Debug\net10.0\C#TestClient.deps.json
+D:\Facultate\Semestrul 4\Medii de proiectare si programare\Laboratoare\C#TestClient\bin\Debug\net10.0\C#TestClient.runtimeconfig.json
+D:\Facultate\Semestrul 4\Medii de proiectare si programare\Laboratoare\C#TestClient\bin\Debug\net10.0\C#TestClient.dll
+D:\Facultate\Semestrul 4\Medii de proiectare si programare\Laboratoare\C#TestClient\bin\Debug\net10.0\C#TestClient.pdb
+D:\Facultate\Semestrul 4\Medii de proiectare si programare\Laboratoare\C#TestClient\obj\Debug\net10.0\C#TestClient.GeneratedMSBuildEditorConfig.editorconfig
+D:\Facultate\Semestrul 4\Medii de proiectare si programare\Laboratoare\C#TestClient\obj\Debug\net10.0\C#TestClient.AssemblyInfoInputs.cache
+D:\Facultate\Semestrul 4\Medii de proiectare si programare\Laboratoare\C#TestClient\obj\Debug\net10.0\C#TestClient.AssemblyInfo.cs
+D:\Facultate\Semestrul 4\Medii de proiectare si programare\Laboratoare\C#TestClient\obj\Debug\net10.0\C#TestClient.csproj.CoreCompileInputs.cache
+D:\Facultate\Semestrul 4\Medii de proiectare si programare\Laboratoare\C#TestClient\obj\Debug\net10.0\C#TestClient.sourcelink.json
+D:\Facultate\Semestrul 4\Medii de proiectare si programare\Laboratoare\C#TestClient\obj\Debug\net10.0\C#TestClient.dll
+D:\Facultate\Semestrul 4\Medii de proiectare si programare\Laboratoare\C#TestClient\obj\Debug\net10.0\refint\C#TestClient.dll
+D:\Facultate\Semestrul 4\Medii de proiectare si programare\Laboratoare\C#TestClient\obj\Debug\net10.0\C#TestClient.pdb
+D:\Facultate\Semestrul 4\Medii de proiectare si programare\Laboratoare\C#TestClient\obj\Debug\net10.0\C#TestClient.genruntimeconfig.cache
+D:\Facultate\Semestrul 4\Medii de proiectare si programare\Laboratoare\C#TestClient\obj\Debug\net10.0\ref\C#TestClient.dll

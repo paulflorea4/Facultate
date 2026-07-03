@@ -1,0 +1,25 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="
+        http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="2" author="student">
+
+        <addColumn tableName="employees">
+            <column name="phone" type="VARCHAR(20)"/>
+        </addColumn>
+
+        <update tableName="employees">
+            <column name="phone" value="N/A"/>
+            <where>phone IS NULL</where>
+        </update>
+
+        <rollback>
+            <dropColumn tableName="employees" columnName="phone"/>
+        </rollback>
+
+    </changeSet>
+
+</databaseChangeLog>

@@ -1,0 +1,32 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="
+        http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="8" author="student">
+
+        <insert tableName="projects">
+            <column name="name" value="Platform Upgrade"/>
+            <column name="description" value="Upgrade sistem intern"/>
+            <column name="start_date" valueDate="2025-01-01"/>
+            <column name="department_id" valueNumeric="1"/>
+        </insert>
+
+        <insert tableName="projects">
+            <column name="name" value="Mobile App"/>
+            <column name="description" value="Aplicatie mobila"/>
+            <column name="start_date" valueDate="2025-02-01"/>
+            <column name="department_id" valueNumeric="1"/>
+        </insert>
+
+        <rollback>
+            <delete tableName="projects">
+                <where>name IN ('Platform Upgrade','Mobile App')</where>
+            </delete>
+        </rollback>
+
+    </changeSet>
+
+</databaseChangeLog>

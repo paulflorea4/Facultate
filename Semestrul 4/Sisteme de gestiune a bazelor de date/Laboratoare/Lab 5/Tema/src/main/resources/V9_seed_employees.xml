@@ -1,0 +1,33 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="
+        http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="9" author="student">
+
+        <insert tableName="employees">
+            <column name="email" value="alice@example.com"/>
+            <column name="salary" valueNumeric="5000.00"/>
+            <column name="department_id" valueNumeric="1"/>
+            <column name="phone" value="000-000-0000"/>
+        </insert>
+
+        <insert tableName="employees">
+            <column name="email" value="bob@example.com"/>
+            <column name="salary" valueNumeric="5500.00"/>
+            <column name="department_id" valueNumeric="1"/>
+            <column name="phone" value="111-111-1111"/>
+        </insert>
+
+        <rollback>
+            <delete tableName="employees">
+                <where>email IN ('alice@example.com','bob@example.com')</where>
+            </delete>
+        </rollback>
+
+    </changeSet>
+
+</databaseChangeLog>
+

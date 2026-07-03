@@ -1,0 +1,19 @@
+@startuml
+
+class Animal {
+    +name: str
+    +age: int
+    +make_sound() void
+}
+class Dog {
+    +breed: str
+    +fetch() void
+}
+class Cat {
+    +color: str
+    +climb() void
+}
+Animal <|-- Dog
+Animal <|-- Cat
+
+@enduml

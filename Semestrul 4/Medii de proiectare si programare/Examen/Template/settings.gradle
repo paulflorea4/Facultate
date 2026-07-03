@@ -1,0 +1,4 @@
+rootProject.name = 'Examen'
+include 'Client'
+include 'Common'
+include 'Server'

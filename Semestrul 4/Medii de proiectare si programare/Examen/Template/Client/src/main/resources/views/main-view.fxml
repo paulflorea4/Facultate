@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<HBox prefHeight="520.0" spacing="20.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.MainController">
+    <padding>
+        <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+    </padding>
+
+    <VBox prefWidth="270.0" spacing="10.0">
+        <Label fx:id="labelAlias" style="-fx-font-weight: bold; -fx-font-size: 14;" text="Jucător: -" />
+        <Label fx:id="labelInfo1" text="Info 1: -" />
+        <Label fx:id="labelInfo2" text="Info 2: -" />
+        <Label fx:id="labelInfo3" text="Info 3: -" />
+      <Button fx:id="btnAlegeVarianta" mnemonicParsing="false" onAction="#handleAlegeVarianta" text="Alege" />
+      <ComboBox fx:id="configuratiiComboBox" prefWidth="150.0" />
+        <Separator />
+        <Label style="-fx-font-weight: bold;" text="Tablă de joc:" />
+      <Label fx:id="gameBoard" text="dsadas" />
+    </VBox>
+
+    <VBox prefWidth="480.0" spacing="10.0">
+        <Label style="-fx-font-size: 14; -fx-font-weight: bold;" text="Clasament" />
+        <TableView fx:id="tableClasament" prefHeight="430.0" prefWidth="480.0">
+            <columns>
+                <TableColumn fx:id="colAlias" prefWidth="160.0" text="Alias Jucător" />
+                <TableColumn fx:id="colPunctaj" prefWidth="160.0" text="Punctaj / Sumă" />
+                <TableColumn fx:id="colDurata" prefWidth="160.0" text="Durată / Încercări" />
+            </columns>
+        </TableView>
+        <Button onAction="#handleLogout" prefWidth="120.0" text="Logout" />
+    </VBox>
+</HBox>

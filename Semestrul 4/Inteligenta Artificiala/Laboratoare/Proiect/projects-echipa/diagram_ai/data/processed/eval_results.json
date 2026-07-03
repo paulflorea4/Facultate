@@ -1,0 +1,93 @@
+{
+  "report": {
+    "num_samples": 5,
+    "avg_syntax_validity": 1.0,
+    "avg_bleu": 0.4819965558954887,
+    "avg_node_f1": 0.8425396825396826,
+    "avg_edge_f1": 0.74,
+    "avg_exact_match": 0.0,
+    "avg_type_match": 1.0
+  },
+  "per_sample": [
+    {
+      "test_id": 1,
+      "description": "Simple login flow with JWT",
+      "diagram_type": "DiagramType.FLOWCHART",
+      "syntax_valid": true,
+      "bleu": 0.0505,
+      "node_f1": 0.8571,
+      "edge_f1": 0.4,
+      "type_match": true,
+      "retries": 0,
+      "rag_examples": 5,
+      "elapsed_s": 2.17,
+      "generated": "flowchart TD\n    A[User] -->|Enter credentials| B[Login Form]\n    B -->|Submit| C[Auth Server]\n    C --> D{Validate credentials}\n    D -->|Valid| E[Generate JWT]\n    D -->|Invalid| F[Return Error]\n    E --> G[Return JWT]\n    F --> H[Return 401 Unauthorized]",
+      "ground_truth": "flowchart TD\n    A[User] --> B[Enter credentials]\n    B --> C[POST /login]\n    C --> D{Valid?}\n    D -->|Yes| E[Return JWT]\n    D -->|No| F[Return 401 error]",
+      "errors": []
+    },
+    {
+      "test_id": 2,
+      "description": "Repository pattern class diagram",
+      "diagram_type": "DiagramType.CLASS_DIAGRAM",
+      "syntax_valid": true,
+      "bleu": 0.6432,
+      "node_f1": 1.0,
+      "edge_f1": 1.0,
+      "type_match": true,
+      "retries": 0,
+      "rag_examples": 5,
+      "elapsed_s": 1.59,
+      "generated": "classDiagram\n    class Repository {\n        +find_by_id(id)\n        +find_all()\n        +save(entity)\n        +delete(id)\n    }\n    class UserRepository {\n        +find_by_email(email)\n        +find_all_users()\n    }\n    class ProductRepository {\n        +find_by_category(category)\n        +find_all_products()\n    }\n    Repository <|-- UserRepository\n    Repository <|-- ProductRepository",
+      "ground_truth": "classDiagram\n    class Repository {\n        +find_by_id(id)\n        +save(entity)\n        +delete(id)\n    }\n    class UserRepository {\n        +find_by_email(email)\n    }\n    class ProductRepository {\n        +find_by_category(cat)\n    }\n    Repository <|-- UserRepository\n    Repository <|-- ProductRepository",
+      "errors": []
+    },
+    {
+      "test_id": 3,
+      "description": "Client-server sequence diagram",
+      "diagram_type": "DiagramType.SEQUENCE",
+      "syntax_valid": true,
+      "bleu": 0.4438,
+      "node_f1": 0.6667,
+      "edge_f1": 0.5,
+      "type_match": true,
+      "retries": 0,
+      "rag_examples": 5,
+      "elapsed_s": 1.27,
+      "generated": "sequenceDiagram\n    participant C as Client\n    participant S as Server\n    participant DB as Database\n    C->>S: Send request\n    S->>DB: Query data\n    DB-->>S: Return data\n    S-->>C: Send response",
+      "ground_truth": "sequenceDiagram\n    participant C as Client\n    participant S as Server\n    participant D as Database\n    C->>S: HTTP Request\n    S->>D: Query\n    D-->>S: Result\n    S-->>C: HTTP Response",
+      "errors": []
+    },
+    {
+      "test_id": 4,
+      "description": "Microservices with message queue",
+      "diagram_type": "DiagramType.FLOWCHART",
+      "syntax_valid": true,
+      "bleu": 0.6338,
+      "node_f1": 0.8889,
+      "edge_f1": 0.8,
+      "type_match": true,
+      "retries": 0,
+      "rag_examples": 5,
+      "elapsed_s": 0.91,
+      "generated": "flowchart TD\n    A[API Gateway] --> B[RabbitMQ Queue]\n    B --> C[Order Service]\n    B --> D[Notification Service]",
+      "ground_truth": "flowchart TD\n    A[API Gateway] --> B[RabbitMQ]\n    B --> C[Order Service]\n    B --> D[Notification Service]\n    C --> E[Database]",
+      "errors": []
+    },
+    {
+      "test_id": 5,
+      "description": "Observer pattern",
+      "diagram_type": "DiagramType.CLASS_DIAGRAM",
+      "syntax_valid": true,
+      "bleu": 0.6387,
+      "node_f1": 0.8,
+      "edge_f1": 1.0,
+      "type_match": true,
+      "retries": 0,
+      "rag_examples": 5,
+      "elapsed_s": 1.37,
+      "generated": "classDiagram\n    class Observable {\n        +observers: list\n        +subscribe(observer)\n        +unsubscribe(observer)\n        +notify(event)\n    }\n    class Observer {\n        +on_event(event)\n    }\n    class ConcreteObserver {\n        +state: str\n        +on_event(event)\n    }\n    Observable --> Observer : notifies\n    Observer <|-- ConcreteObserver",
+      "ground_truth": "classDiagram\n    class Observable {\n        +observers: list\n        +subscribe(observer)\n        +unsubscribe(observer)\n        +notify(event)\n    }\n    class Observer {\n        +on_event(event)\n    }\n    Observable --> Observer : notifies",
+      "errors": []
+    }
+  ]
+}

@@ -1,0 +1,124 @@
+1. INTRODUCERE
+Setul de date a constat din minim 15 de departamente și peste 10.000 de angajați generați automat.
+
+2. MĂSURĂTORI DE PERFORMANȚĂ ȘI ANALIZĂ
+A. PROBLEMA N+1 QUERY
+Tehnica: Am identificat problema N+1, generată de "Lazy Loading", unde interogarea părinților (Departamente) trage după sine N interogări separate pentru copii (Angajați). Optimizarea a constat în trecerea la "Eager Loading" folosind metoda .Include().
+
+Măsurători:
+
+Fără optimizare (Lazy Loading): Aprox. 16 interogări trimise bazei de date. Latență ridicată din cauza multiplelor apeluri pe rețea.
+
+Cu optimizare (Eager Loading): 1 singură interogare (prin clauza JOIN). Timpul de execuție redus semnificativ.
+
+Log SQL Reprezentativ (Eager Loading):
+SELECT d."Id", d."Name", e."Id", e."DepartmentId", e."Email", e."Salary"
+FROM "Departments" AS d
+LEFT JOIN "Employees" AS e ON d."Id" = e."DepartmentId"
+
+B. ANALIZA PERFORMANȚEI INDEXĂRII
+Tehnica: Am adăugat index-uri B-Tree pe coloanele utilizate frecvent în clauzele WHERE (Email, DepartmentId, Salary) pentru a evita scanările secvențiale (Sequential Scans).
+
+Tabel Rezultate (Timpi la nivel de DB - EXPLAIN ANALYZE):
+
+Interogare             | Fără Index (ms) | Cu Index (ms) | Îmbunătățire
+Căutare email          | 1.675 ms        | 0.098 ms      | ~17.0x mai rapid
+Căutare departament    | 2.746 ms        | 0.254 ms      | ~10.8x mai rapid
+Interval salariu       | 2.516 ms        | 1.100 ms      | ~2.2x mai rapid
+Multi-coloană          | 0.301 ms        | 0.203 ms      | ~1.4x mai rapid
+Analiză EXPLAIN ANALYZE (Căutare Email):
+[FĂRĂ INDEX]: Seq Scan on "Employees" (actual time=1.648..1.649 rows=0 loops=1)
+Buffers: shared hit=94
+[CU INDEX]: Index Scan using idx_employees_email (actual time=0.054..0.054 rows=0 loops=1)
+Buffers: shared hit=2
+-> Concluzie I/O: Prin indexare, baza de date a avut nevoie de doar 2 blocuri de memorie (buffers) comparativ cu 94 de blocuri la scanarea secvențială.
+
+C. STRATEGII DE PAGINARE
+Tehnica: Am comparat metoda clasică Offset/Limit cu metoda Cursor/Keyset la înregistrări de la coada tabelului (ex: primele 100 de rânduri după ID-ul 9900).
+
+Rezultate de performanță (EXPLAIN ANALYZE Pagina 100):
+
+Strategia A (Offset/Limit): 3.109 ms | Buffers citiți: 132
+
+Strategia B (Keyset):       0.407 ms | Buffers citiți: 4
+
+Output EXPLAIN (Paginare Offset - ineficientă):
+Limit (actual time=3.037..3.080 rows=100)
+Buffers: shared hit=132
+-> Index Scan on "Employees" (actual time=0.029..2.540 rows=10000 loops=1)
+
+Analiză: Paginarea Offset este ineficientă la volume mari deoarece motorul scanează și numără primele 9900 de rânduri doar pentru a le arunca. Keyset sare direct la ID-ul cerut folosind indexul Primary Key.
+
+D. CACHING (MEMORIE)
+Tehnica: Implementarea IMemoryCache pentru stocarea entităților read-heavy.
+
+Statistici obținute:
+
+Primul apel (Cache Miss): Timp citire DB (~15-20ms).
+
+Apeluri ulterioare (Cache Hit): Timp instant (<1ms).
+
+Invalidare (Eviction): La executarea unui Update pe Departament, cheia din cache a fost ștearsă automat, forțând următorul apel să genereze un Cache Miss legitim.
+
+E. OPERAȚII ÎN MASĂ (BULK OPERATIONS)
+Tehnica: Creșterea salariului cu 10% pentru angajații unui departament.
+
+Măsurători:
+
+Abordarea Individuală (Iterare): 47 ms
+
+Interogare ExecuteUpdate: 13 ms
+
+Batch Updates cu Flush: 15 ms
+
+Analiză: Abordarea 1 este lentă deoarece aduce obiectele în RAM și suprasolicită ChangeTracker-ul. ExecuteUpdate este cea mai rapidă (trimite un singur update SQL). Când am rulat din nou, Batch/Flush a fost extrem de aproape de ExecuteUpdate datorită încălzirii conexiunii (Warm-start) și lipsa timpului de recompilare a query-ului LINQ.
+
+================================================================================
+3. FIȘIERE DE CONFIGURARE ȘI BEST PRACTICES (appsettings.json)
+Pentru a asigura un mediu gata pentru producție și securizarea Connection String-ului, parola nu a fost hardcodată. S-au setat parametri de Connection Pooling:
+
+var dbHost = Environment.GetEnvironmentVariable("DB_HOST") ?? "localhost";
+var dbName = Environment.GetEnvironmentVariable("DB_NAME") ?? "SGBD";
+var dbUser = Environment.GetEnvironmentVariable("DB_USER");
+var dbPass = Environment.GetEnvironmentVariable("DB_PASSWORD");
+
+string connectionString = $"Host={dbHost};Database={dbName};Username={dbUser};Password={dbPass};Maximum Pool Size=10;Minimum Pool Size=5;Timeout=30;Command Timeout=300;";
+
+Analiză Pool: Limitarea Maximum Pool Size previne epuizarea memoriei serverului de baze de date la trafic intens, iar Minimum Pool Size asigură un timp de răspuns mic pentru primele conexiuni.
+
+================================================================================
+4. COMPROMISURI ȘI CÂND SĂ FOLOSIȚI FIECARE TEHNICĂ
+Paginare: Offset/Limit este utilă pentru tabele mici sau pentru aplicații unde utilizatorul trebuie să sară direct la pagina "50". Keyset este obligatorie pentru aplicații masive sau interfețe de tip "Infinite Scroll", unde se navighează exclusiv secvențial.
+
+Indecși: Accelerază masiv citirile (SELECT), dar încetinesc operațiile de scriere (INSERT, UPDATE) deoarece indexul trebuie reconstruit. Nu trebuie abuzat de ei pe tabele cu puține citiri.
+
+Eager vs Lazy Loading: Eager (Include) consumă mai mult RAM inițial pentru a aduce relațiile, dar salvează rețeaua. Lazy consumă puțin RAM, dar generează probleme N+1. În producție, Lazy Loading-ul trebuie evitat în bucle repetative.
+
+Bulk Ops: ExecuteUpdate este perfect pentru operații matematice/statice simple pe un set larg de date. Batching-ul este preferabil când trebuie rulată validare în cod (C#) înainte de salvarea fiecărei entități.
+
+================================================================================
+5. CHECKLIST PENTRU PRODUCȚIE
+[x] Date sensibile (Parole, Host) externalizate din cod.
+[x] Connection Pool configurat conform resurselor hardware.
+[x] Lazy Loading dezactivat implicit sau monitorizat cu interceptori.
+[x] Indecși aplicați pe coloanele de tip Foreign Key și pe cele de căutare.
+[x] Paginare Keyset implementată pe endpoint-urile publice/APIs.
+[x] Caching activat pentru entitățile read-heavy cu mecanism de Time-To-Live (TTL) și evicțiune on-update.
+
+================================================================================
+6. LECȚII ÎNVĂȚATE ȘI RECOMANDĂRI VIITOARE
+Lecții învățate empiric:
+
+"Seq Scan nu înseamnă mereu un query prost": Am observat că dacă o interogare returnează un procentaj mare de rânduri dintr-un tabel, sau dacă tabelul e în memoria RAM, baza de date alege intenționat un Sequential Scan pentru că este mai rapid decât I/O-ul generat de un Index Scan.
+
+Clauza LIKE distruge indecșii standard: Am învățat că o căutare de tipul .Contains() anulează utilitatea unui index B-Tree, forțând scanarea întregului tabel.
+
+Diferența uriașă de memorie (Buffers): Analiza EXPLAIN a demonstrat că un query ineficient consumă zeci de ori mai multă memorie (ex. 132 vs 4 buffers), o diferență invizibilă direct din C#.
+
+Recomandări pentru îmbunătățiri viitoare:
+
+Trecerea de la MemoryCache local la un sistem distribuit precum Redis, pentru a suporta scalarea orizontală a aplicației (mai multe servere).
+
+Adăugarea de indecși parțiali (Filtered Indexes) pe coloanele de tip boolean sau status, pentru a menține dimensiunea indexului mică.
+
+Implementarea unui "Read Replica" (separarea bazei de date de citire de cea de scriere) pentru rapoarte analitice pe datele angajaților.

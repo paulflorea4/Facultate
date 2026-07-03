@@ -1,0 +1,56 @@
+plugins {
+    id 'java'
+    id 'application'
+    id 'org.openjfx.javafxplugin' version '0.1.0'
+}
+
+group = 'org.example'
+version = '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+application {
+    mainClass = 'Client.StartClient'
+}
+
+javafx {
+    version = '21'
+    modules = ['javafx.controls', 'javafx.fxml']
+}
+
+dependencies {
+    testImplementation platform('org.junit:junit-bom:5.10.0')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
+    implementation project(':Common')
+    implementation("org.apache.logging.log4j:log4j-core:2.25.3")
+    implementation("org.apache.logging.log4j:log4j-api:2.25.3")
+    implementation 'org.openjfx:javafx-controls:21'
+    implementation 'org.openjfx:javafx-fxml:21'
+    implementation 'org.openjfx:javafx-base:21'
+    implementation 'org.openjfx:javafx-graphics:21'
+
+    implementation 'org.springframework:spring-web:6.1.2'
+    implementation 'org.apache.httpcomponents.client5:httpclient5:5.3'
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.16.1'
+
+    implementation 'jakarta.persistence:jakarta.persistence-api:3.1.0'
+}
+
+tasks.register('startClient', JavaExec) {
+    group = 'application'
+    description = 'Starts the client'
+    classpath = sourceSets.main.runtimeClasspath
+    mainClass = 'Client.StartClient'
+    jvmArgs = [
+            '--module-path', configurations.runtimeClasspath.asPath,
+            '--add-modules', 'javafx.controls,javafx.fxml'
+    ]
+}
+
+test {
+    useJUnitPlatform()
+}

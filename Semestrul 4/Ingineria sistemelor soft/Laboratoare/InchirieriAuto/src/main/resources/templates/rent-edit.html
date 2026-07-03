@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ro" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Editează rezervarea</title>
+    <style>
+        body { font-family: Arial, sans-serif; background: #f4f7f6; margin: 0; padding: 40px; }
+        .container { max-width: 700px; margin: auto; background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+        .alert { background: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; padding: 12px 16px; border-radius: 8px; margin-bottom: 20px; }
+        .info { background: #ecf0f1; padding: 15px; border-radius: 8px; margin-bottom: 20px; }
+        .form-group { margin-bottom: 15px; display: flex; flex-direction: column; }
+        label { font-weight: bold; margin-bottom: 6px; }
+        input { padding: 10px; border: 1px solid #ddd; border-radius: 6px; }
+        .input-invalid { border-color: #c0392b; background: #fff5f5; }
+        .field-error { color: #c0392b; font-size: 0.85rem; margin-top: 4px; }
+        .actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 20px; }
+        .btn { border: none; padding: 12px 18px; border-radius: 6px; font-weight: bold; cursor: pointer; text-decoration: none; display: inline-block; }
+        .btn-primary { background: #3498db; color: white; }
+        .btn-secondary { background: #2c3e50; color: white; }
+    </style>
+</head>
+<body>
+<div class="container">
+    <a th:href="@{/rents/history}" class="btn btn-secondary">&larr; Înapoi la istoric</a>
+    <h1>Editează rezervarea</h1>
+
+    <div th:if="${errorMessage}" class="alert" th:text="${errorMessage}"></div>
+
+    <div class="info">
+        <strong th:text="${rent.car.brand} + ' ' + ${rent.car.model}">Marca Model</strong><br>
+        <span th:text="'Status: ' + ${rent.status}">Status</span>
+    </div>
+
+    <form th:action="@{/rents/{id}/edit(id=${rent.id})}" th:object="${rentUpdateDTO}" method="post">
+        <input type="hidden" th:field="*{rentId}">
+
+        <div class="form-group">
+            <label for="startDate">Data ridicării</label>
+            <input id="startDate" type="datetime-local" th:field="*{startDate}" th:min="${#temporals.format(currentTime, 'yyyy-MM-dd''T''HH:mm')}" th:classappend="${#fields.hasErrors('startDate') ? 'input-invalid' : ''}">
+            <div class="field-error" th:if="${#fields.hasErrors('startDate')}" th:errors="*{startDate}"></div>
+        </div>
+
+        <div class="form-group">
+            <label for="endDate">Data returnării</label>
+            <input id="endDate" type="datetime-local" th:field="*{endDate}" th:min="${#temporals.format(currentTime, 'yyyy-MM-dd''T''HH:mm')}" th:classappend="${#fields.hasErrors('endDate') ? 'input-invalid' : ''}">
+            <div class="field-error" th:if="${#fields.hasErrors('endDate')}" th:errors="*{endDate}"></div>
+        </div>
+
+        <div class="field-error" th:if="${#fields.hasErrors('dateRangeValid')}" th:errors="*{dateRangeValid}"></div>
+
+        <div class="actions">
+            <button type="submit" class="btn btn-primary">Salvează modificările</button>
+        </div>
+    </form>
+</div>
+</body>
+</html>
+

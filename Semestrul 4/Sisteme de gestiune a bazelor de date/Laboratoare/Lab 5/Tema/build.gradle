@@ -1,0 +1,56 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '3.1.6'
+    id 'io.spring.dependency-management' version '1.1.0'
+    id 'org.liquibase.gradle' version '2.2.2'
+}
+
+group = 'org.example'
+version = '1.0-SNAPSHOT'
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
+    sourceCompatibility = JavaVersion.VERSION_21
+    targetCompatibility = JavaVersion.VERSION_21
+}
+
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.postgresql:postgresql:42.6.0'
+    implementation 'org.liquibase:liquibase-core:4.24.0'
+
+    liquibaseRuntime 'org.liquibase:liquibase-core:4.24.0'
+    liquibaseRuntime 'org.postgresql:postgresql:42.6.0'
+    liquibaseRuntime 'info.picocli:picocli:4.7.5'
+
+    testImplementation platform('org.junit:junit-bom:5.10.0')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+    liquibaseRuntime 'org.yaml:snakeyaml:2.0'
+}
+
+test {
+    useJUnitPlatform()
+}
+
+liquibase {
+    activities {
+        main {
+            searchPath 'src/main/resources'
+            changelogFile 'db.changelog-master.xml'
+            url 'jdbc:postgresql://localhost:5432/SGBD'
+            username 'postgres'
+            password 'flo'
+            driver 'org.postgresql.Driver'
+        }
+    }
+    runList = 'main'
+}

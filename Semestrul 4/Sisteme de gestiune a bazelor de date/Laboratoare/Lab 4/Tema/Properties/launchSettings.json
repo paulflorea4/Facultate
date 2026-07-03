@@ -1,0 +1,13 @@
+{
+  "profiles": {
+    "Tema": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "DB_HOST": "localhost",
+        "DB_NAME": "SGBD",
+        "DB_USER": "postgres",
+        "DB_PASSWORD": "flo"
+      }
+    }
+  }
+}

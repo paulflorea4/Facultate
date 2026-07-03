@@ -1,0 +1,10 @@
+<Solution>
+  <Project Path="../C#TestClient/C#TestClient.csproj" Id="e6e32397-c140-4649-95b1-2751ed4917da" />
+  <Project Path="Client/Client.csproj" Id="d4e36d09-a818-4f97-a380-f0603200e64a" />
+  <Project Path="FirmaTransportC#.csproj" />
+  <Project Path="Model/Model.csproj" Id="bf8d9403-3e41-4ed6-9b12-f6652dfa003f" />
+  <Project Path="Network/Network.csproj" Id="a5cecc3d-b2fc-44c8-847d-e620f73a0469" />
+  <Project Path="Persistence/Persistence.csproj" Id="c918383e-cd7b-433d-abe8-8c0f00a14768" />
+  <Project Path="Server/Server.csproj" Id="ff894d90-ed7f-4324-8491-fb0f4ce06e8a" />
+  <Project Path="Services/Services.csproj" Id="0c5388e4-892e-492a-ab3d-1a098ce635a1" />
+</Solution>

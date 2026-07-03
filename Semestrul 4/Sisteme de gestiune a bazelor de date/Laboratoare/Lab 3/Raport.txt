@@ -1,0 +1,100 @@
+1.COMPARATIE COD: INAINTE (ADO.NET) VS. DUPA (ORM)
+
+	A. Metoda de Adaugare (Insert)
+		ADO.NET: Necesita scrierea manuala a interogarii SQL "INSERT INTO...",gestionarea explicita a conexiunii (Open/Close) si adaugarea parametrilor unul cate unul pentru a 		preveni SQL Injection.
+
+		EF CORE: Obiectul este adaugat direct in contextul de date prin metoda .Add(entity), iar SaveChanges() genereaza automat SQL-ul.
+
+	B. Metoda de Citire (GetAll)
+		ADO.NET: Implica utilizarea unui DbDataReader, parcurgerea acestuia intr-o bucla while si maparea manuala a fiecarei coloane (ex: reader.GetInt64(0)) catre proprietatile 		obiectului C#.
+
+		EF CORE: Maparea este automata. Comanda context.Players.ToList() returneaza direct o lista de obiecte populate.
+
+
+Inainte
+public void Update(Player entity)
+    {
+        string sql = "UPDATE players SET name = @name, team_id = @teamId, salary = @salary WHERE id = @id";
+
+        try
+        {
+            using (var conn = DatabaseManager.GetConnection())
+            {
+                conn.Open();
+                using (var cmd = DatabaseManager.GetCommand(sql, conn))
+                {
+                    cmd.Parameters.AddWithValue("@id", entity.Id);
+                    cmd.Parameters.AddWithValue("@name", entity.Name);
+                    cmd.Parameters.AddWithValue("@teamId", entity.TeamId);
+                    cmd.Parameters.AddWithValue("@salary", entity.Salary);
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+        catch (NpgsqlException e)
+        {
+            Console.WriteLine("DB Error: " + e.Message);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine("General Error: " + e.Message);
+        }
+    }
+
+Dupa
+public void Update(Player entity)
+{
+    try
+    {
+        using var context = new ApplicationDbContext();
+        context.Players.Update(entity);
+        context.SaveChanges();
+    }
+    catch (Exception e)
+    {
+        HandleException(e);
+    }
+}
+
+2. ANALIZA REDUCERII LINIILOR DE COD
+	Functionalitate	      Linii ADO.NET	Linii EF Core	 Reducere
+    Citire Simpla (GetAll)	 ~25 linii	  3 linii	   -88%
+   Operatii CRUD (Add/Update)	 ~15 linii	  4 linii	   -73%
+     Filtrare Dinamica	         ~50 linii	  12 linii	   -76%
+
+3. REZULTATELE MASURARILOR DE PERFORMANTA
+
+	A. Overhead-ul Crearii Conexiunilor (Pooling)
+
+		Output:
+			--- Test Overhead Conexiuni ---
+			Fara Pooling: 2294ms (Avg: 22.94ms/conn)
+			Cu Pooling: 27ms (Avg: 0.27ms/conn)
+			Imbunatatire: 98.82%
+
+	B. Eager Loading vs. Lazy Loading
+		
+			Lazy Loading: A generat problema "N+1". O interogare pentru 10 echipe a declansat ulterior alte 10 interogari separate pentru jucatori.
+			Eager Loading (.Include): A generat un singur LEFT JOIN in SQL. Toate datele au venit intr-un singur pachet, optimizand traficul.
+
+4. AVANTAJE SI DEZAVANTAJE ORM OBSERVATE
+	AVANTAJE:
+
+		Viteza de dezvoltare: Implementarea filtrelor a fost mult mai rapida.
+
+		Securitate: Parametrizarea automata elimina riscul de SQL Injection.
+
+		Tipizare puternica: Erorile sunt detectate la compilare, nu la rulare.
+
+	DEZAVANTAJE:
+
+		Consum de Memorie: EF Core pastreaza copii ale obiectelor pentru tracking.
+
+		SQL Automat: Interogarile pot fi mai complexe decat un JOIN scris manual.
+
+5. PROVOCARI INTAMPINATE IN TIMPUL MIGRARII
+	Case Sensitivity (PostgreSQL): Maparea proprietatilor C# (PascalCase) la coloanele DB (lowercase) a necesitat utilizarea atributelor [Column].
+
+	Externalizarea Configuratiei: Mutarea string-ului de conexiune in appsettings.json a necesitat setarea manuala a fisierului ca "Copy to Output Directory" in Visual Studio.
+
+	Configurarea Proxies: Pentru Lazy Loading a fost necesara instalarea pachetului Microsoft.EntityFrameworkCore.Proxies si utilizarea cuvantului virtual pentru relatii.

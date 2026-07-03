@@ -1,0 +1,33 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="
+        http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="6" author="student">
+
+        <addColumn tableName="employees">
+            <column name="created_at" type="TIMESTAMP"/>
+            <column name="created_by" type="VARCHAR(100)"/>
+            <column name="updated_at" type="TIMESTAMP"/>
+            <column name="updated_by" type="VARCHAR(100)"/>
+        </addColumn>
+
+        <update tableName="employees">
+            <column name="created_at" valueDate="2025-01-01T00:00:00"/>
+            <column name="created_by" value="migration"/>
+            <where>created_at IS NULL</where>
+        </update>
+
+        <rollback>
+            <dropColumn tableName="employees" columnName="created_at"/>
+            <dropColumn tableName="employees" columnName="created_by"/>
+            <dropColumn tableName="employees" columnName="updated_at"/>
+            <dropColumn tableName="employees" columnName="updated_by"/>
+        </rollback>
+
+    </changeSet>
+
+</databaseChangeLog>
+

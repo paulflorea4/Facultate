@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox spacing="10" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.ducksocialnetworkui.controller.NotificationsController">
+
+    <TableView fx:id="tableRequests">
+        <columns>
+            <TableColumn fx:id="colFrom" prefWidth="126.0" text="From" />
+            <TableColumn fx:id="colStatus" prefWidth="121.0" text="Status" />
+        </columns>
+    </TableView>
+
+    <HBox alignment="CENTER" spacing="10">
+        <Button fx:id="acceptButton" onAction="#onAccept" text="Accept" />
+        <Button fx:id="rejectButton" onAction="#onReject" text="Reject" />
+      <padding>
+         <Insets bottom="10.0" />
+      </padding>
+    </HBox>
+</VBox>

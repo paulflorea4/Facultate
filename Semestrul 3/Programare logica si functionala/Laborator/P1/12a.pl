@@ -1,0 +1,32 @@
+%substituie(L:lista,E:element,ENou:element,R:lista)
+%model de flux (i,i,i,o),(i,i,i,i)
+
+/*
+12a. substituie(l1,...,ln, e, eNou)= - lista vida , daca  n=0
+				   - eNou (+) substituie(l2,...,ln , e, eNou), daca l1=e
+				   - l1 (+) substituie(l2,...,ln, e , eNou), altfel
+*/
+
+substituie([], _, _, []):-!.
+
+substituie([E|L], E, ENou, [ENou|R]) :- !,substituie(L, E, ENou, R).
+
+substituie([H|L], E, ENou, [H|R]) :- H \= E, substituie(L, E, ENou, R).
+
+/*
+substituie([],3,4,R).
+R=[]
+
+substituie([1,2,3,2,1,5,2],2,4,R).
+R=[1,4,3,4,1,5,4]
+
+substituie([1,2,3,2],2,[4,5],R).
+R=[1,[4,5],3,[4,5]]
+
+substituie([a,b,c,d],a,e,R).
+R=[e,b,c,d]
+
+substituie([1,2,3,4],5,6,R).
+R=[1,2,3,4]
+*/
+

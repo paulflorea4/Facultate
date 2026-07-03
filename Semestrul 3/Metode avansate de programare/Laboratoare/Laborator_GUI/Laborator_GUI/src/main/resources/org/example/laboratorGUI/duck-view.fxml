@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox alignment="CENTER" prefHeight="378.0" prefWidth="493.0" spacing="20.0" xmlns="http://javafx.com/javafx/17.0.12"
+      xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.laboratorGUI.controller.DuckController">
+    <padding>
+        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
+    </padding>
+    <TableView fx:id="tableView" prefHeight="300.0" prefWidth="454.0">
+        <columns>
+            <TableColumn fx:id="tableColumnID" prefWidth="75.0" text="ID"/>
+            <TableColumn fx:id="tableColumnUsername" prefWidth="75.0" text="Username"/>
+            <TableColumn fx:id="tableColumnType" prefWidth="75.0" text="Type"/>
+            <TableColumn fx:id="tableColumnSpeed" prefWidth="75.0" text="Speed"/>
+            <TableColumn fx:id="tableColumnResistance" prefWidth="75.0" text="Resistance"/>
+            <TableColumn fx:id="tableColumnFlockID" prefWidth="75.0" text="FlockID"/>
+        </columns>
+    </TableView>
+    <HBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="200.0" spacing="75.0">
+        <Button fx:id="prevBtn" mnemonicParsing="false" prefWidth="80" text="Previous"/>
+        <ComboBox fx:id="filterBox" prefWidth="150.0" promptText="Choose duck type..."/>
+        <Button fx:id="nextBtn" mnemonicParsing="false" prefWidth="80" text="Next"/>
+    </HBox>
+</VBox>

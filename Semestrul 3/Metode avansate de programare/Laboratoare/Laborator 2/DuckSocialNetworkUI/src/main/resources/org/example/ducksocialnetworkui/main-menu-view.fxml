@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="261.0" prefWidth="457.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.ducksocialnetworkui.controller.MainMenuController">
+   <children>
+      <Label layoutX="127.0" layoutY="35.0" text="DuckSocialNetwork">
+         <font>
+            <Font name="System Bold" size="22.0" />
+         </font>
+      </Label>
+      <Button layoutX="186.0" layoutY="99.0" mnemonicParsing="false" onAction="#onLogin" prefHeight="32.0" prefWidth="85.0" text="Login" />
+      <Button layoutX="186.0" layoutY="153.0" mnemonicParsing="false" onAction="#onAdmin" prefHeight="32.0" prefWidth="85.0" text="Admin" />
+   </children>
+</AnchorPane>

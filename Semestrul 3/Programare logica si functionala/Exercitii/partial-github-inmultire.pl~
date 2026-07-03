@@ -1,0 +1,19 @@
+invers_aux(Col,[],Col):-!.
+invers_aux(Col,[H|T],R):-
+	invers_aux([H|Col],T,R).
+
+invers(L,R):-
+	invers_aux([],L,R).
+
+%inmultire(L,Nr,C,R)
+inmultire([],_,C,[C]):-!.
+inmultire([H|T],Nr,C,[R1|R]):-
+	R1 is (H*Nr+C) mod 10,
+	C1 is (H*Nr+C) div 10,
+	inmultire(T,Nr,C1,R).
+
+
+main(L,Nr,R):-
+	invers(L,R2),
+	inmultire(R2,Nr,0,R3),
+	invers(R3,R).

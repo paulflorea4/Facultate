@@ -1,0 +1,68 @@
+/*
+lungime(l1...ln) = 0 , daca n=0
+                 =  1+lungime(l2...ln),altfel
+
+coliniar(l1...ln) = true , daca n=1 sau n=2
+		  = coliniar_aux(l1,l2,l3...ln),altfel
+
+coliniar_aux(x,y,l1...ln)=true, daca n=0
+			 =coliniar_aux(x,y,l2...ln), daca x,y,l1 sunt coliniare
+			 =false, altfel
+
+submultime(l1...ln)=[], daca n=0
+		   =1. l1 (+) submultime(l2...ln), altfel
+		    2. submultime(l2...ln), altfel
+
+backtracking(l1...ln) =[], daca n=0
+		      =submultime(l1...ln),daca
+		          lungime(submultime(l1...ln)>2 si
+			  coliniar(submultime(l1...ln)=true
+
+main(l1...ln)=U backtracking(l1...ln)
+*/
+%lungime(L:list,Nr:integer)
+%model de flux: (i,o),(i,i)
+lungime([],0):-!.
+lungime([_|T],Nr):-
+	lungime(T,Nr1),
+	Nr is Nr1+1.
+%coliniar(L:list of lists)
+%model de flux: (i)
+coliniar([[_,_]]):-!.
+coliniar([[X1,Y1],[X2,Y2]|Rest]):-
+	coliniar_aux([X1,Y1],[X2,Y2],Rest).
+
+%coliniar_aux(X:list,Y:list,L:list of lists)
+%model de flux: (i,i,i)
+coliniar_aux(_,_,[]):-!.
+coliniar_aux([X1,Y1],[X2,Y2],[[X3,Y3]|Rest]):-
+	(Y3-Y1)*(X2-X1)=:=(Y2-Y1)*(X3-X1),
+	coliniar_aux([X1,Y1],[X2,Y2],Rest).
+
+%submultime(L:list,R:List)
+%model de flux: (i,i),(i,o)
+submultime([],[]).
+submultime([H|T],[H|R]):-
+	submultime(T,R).
+submultime([_|T],R):-
+	submultime(T,R).
+
+%backtracking(L:list,R:list)
+%model de flux: (i,i),(i,o)
+backtracking([],[]).
+backtracking(L,K):-
+	submultime(L,K),
+	lungime(K,Len),
+	Len > 2,
+	coliniar(K).
+
+%main(L:list,R:list of lists)
+%model de flux: (i,i),(i,o)
+main(L,R):-
+	findall(R1,backtracking(L,R1),R).
+
+/*
+main([[1,1],[0,1],[1,2],[0,2],[2,2],[0,0]],R).
+
+main([[1,1],[0,1],[1,2],[0,2],[2,2],[0,0],[3,3]],R).
+*/

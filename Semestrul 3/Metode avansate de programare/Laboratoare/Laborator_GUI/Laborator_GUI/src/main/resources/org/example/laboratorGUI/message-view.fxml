@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.laboratorGUI.controller.MessageController">
+    <Label layoutX="22.0" layoutY="26.0" text="Friends">
+        <font>
+          <Font size="16.0" />
+        </font>
+    </Label>
+    <ListView fx:id="listViewFriends" layoutX="22.0" layoutY="61.0" prefHeight="320.0" prefWidth="200.0" />
+    <ListView fx:id="listViewMessages" layoutX="300.0" layoutY="61.0" prefHeight="280.0" prefWidth="278.0" />
+    <Label fx:id="usernameLbl" layoutX="300.0" layoutY="26.0" text="Username">
+        <font>
+          <Font size="16.0" />
+        </font>
+    </Label>
+    <TextField fx:id="sendMessageTxt" layoutX="300.0" layoutY="356.0" prefHeight="26.0" prefWidth="200.0" />
+    <Button fx:id="sendMessageBtn" layoutX="527.0" layoutY="356.0" mnemonicParsing="false" text="Send" />
+    <Button fx:id="toProfilePage" layoutX="236.0" layoutY="69.0" mnemonicParsing="false" text="Profile" />
+    <Button fx:id="toEventsPage" layoutX="235.0" layoutY="103.0" mnemonicParsing="false" text="Events" />
+</AnchorPane>

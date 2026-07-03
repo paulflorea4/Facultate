@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="444.0" prefWidth="638.0" style="-fx-background-color: #464646;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.ducksocialnetworkui.controller.PersonController">
+
+    <children>
+        <TableView fx:id="tableView" layoutX="39.0" layoutY="99.0" prefHeight="200.0" prefWidth="561.0">
+            <columns>
+                <TableColumn fx:id="tableColumnId" prefWidth="51.0" text="Id" />
+                <TableColumn fx:id="tableColumnUsername" prefWidth="109.0" text="Username" />
+                <TableColumn fx:id="tableColumnLastName" prefWidth="70.0" text="Nume" />
+                <TableColumn fx:id="tableColumnFirstName" prefWidth="75.0" text="Prenume" />
+                <TableColumn fx:id="tableColumnOcupation" prefWidth="75.0" text="Ocupatie" />
+                <TableColumn fx:id="tableColumnBirthDate" prefWidth="90.0" text="Data nasterii" />
+                <TableColumn fx:id="tableColumnEmpathyLevel" prefWidth="90.0" text="Nivel empatie" />
+            </columns>
+        </TableView>
+
+        <Button fx:id="buttonNext" layoutX="527.0" layoutY="299.0" onAction="#onNextPage" prefHeight="25.0" prefWidth="73.0" style="-fx-background-color: blue;" text="Next" textFill="WHITE" />
+
+        <Button fx:id="buttonPrevious" layoutX="39.0" layoutY="299.0" onAction="#onPreviousPage" prefHeight="25.0" prefWidth="73.0" style="-fx-background-color: blue;" text="Previous" textFill="WHITE" />
+
+        <Label fx:id="labelPage" layoutX="289.0" layoutY="303.0" text="Page 0 of 0" textFill="WHITE" />
+    </children>
+</AnchorPane>

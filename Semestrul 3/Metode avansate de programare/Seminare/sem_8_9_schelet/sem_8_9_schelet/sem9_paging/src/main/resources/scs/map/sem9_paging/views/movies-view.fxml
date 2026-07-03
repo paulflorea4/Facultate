@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="400.0" prefWidth="488.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="scs.map.sem9_paging.controller.MovieController">
+   <children>
+      <TableView fx:id="tableView" layoutX="85.0" layoutY="100.0" prefHeight="200.0" prefWidth="303.0">
+        <columns>
+          <TableColumn fx:id="tableColumnId" prefWidth="75.0" text="id" />
+          <TableColumn fx:id="tableColumnTitle" prefWidth="75.0" text="title" />
+            <TableColumn fx:id="tableColumnDirector" prefWidth="75.0" text="director" />
+            <TableColumn fx:id="tableColumnYear" prefWidth="75.0" text="year" />
+        </columns>
+      </TableView>
+      <Button layoutX="211.0" layoutY="359.0" mnemonicParsing="false" onAction="#onDelete" text="Delete" />
+      <Button layoutX="151.0" layoutY="359.0" mnemonicParsing="false" onAction="#onEdit" text="Add/Edit" />
+      <Button fx:id="buttonNext" layoutX="347.0" layoutY="299.0" mnemonicParsing="false" onAction="#onNextPage" text="Next" />
+      <Button fx:id="buttonPrevious" layoutX="85.0" layoutY="299.0" mnemonicParsing="false" onAction="#onPreviousPage" text="Previous" />
+      <Label fx:id="labelPage" layoutX="206.0" layoutY="303.0" text="Page 0 of 0" />
+      <ComboBox fx:id="comboBoxfilterYear" layoutX="85.0" layoutY="24.0" prefHeight="25.0" prefWidth="149.0" promptText="Year" />
+      <TextField fx:id="textFieldfilterYearAfter" layoutX="288.0" layoutY="24.0" prefHeight="25.0" prefWidth="98.0" />
+      <Label layoutX="253.0" layoutY="28.0" text="Year &gt;" />
+      <Label layoutX="85.0" layoutY="66.0" text="Director" />
+      <Label layoutX="261.0" layoutY="66.0" text="Title" />
+      <TextField fx:id="textFieldfilterDirector" layoutX="137.0" layoutY="62.0" prefHeight="25.0" prefWidth="98.0" />
+      <TextField fx:id="textFieldfilterTitle" layoutX="288.0" layoutY="62.0" prefHeight="25.0" prefWidth="98.0" />
+   </children>
+</AnchorPane>

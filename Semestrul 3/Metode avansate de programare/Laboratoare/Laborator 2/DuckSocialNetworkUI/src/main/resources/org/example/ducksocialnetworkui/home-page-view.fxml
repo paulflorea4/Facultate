@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="426.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.ducksocialnetworkui.controller.HomePageController">
+   <children>
+      <HBox alignment="CENTER" prefHeight="160.0" prefWidth="600.0">
+         <children>
+            <Label fx:id="welcomeUserLabel" onMouseClicked="#openProfileWindow" prefHeight="51.0" prefWidth="181.0" text="Welcome, Username!">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Label>
+         </children>
+      </HBox>
+      <HBox prefHeight="357.0" prefWidth="600.0">
+         <children>
+            <VBox prefHeight="348.0" prefWidth="296.0">
+               <children>
+                  <Label fx:id="friendLabel" text="Friend">
+                     <VBox.margin>
+                        <Insets left="10.0" />
+                     </VBox.margin>
+                  </Label>
+                  <ListView fx:id="listMessages" prefHeight="214.0" prefWidth="276.0">
+                     <VBox.margin>
+                        <Insets left="10.0" right="10.0" top="10.0" />
+                     </VBox.margin>
+                  </ListView>
+                  <Label fx:id="typingLabel">
+                     <VBox.margin>
+                        <Insets left="10.0" />
+                     </VBox.margin>
+                  </Label>
+                  <HBox prefHeight="35.0" prefWidth="296.0">
+                     <children>
+                        <TextField fx:id="sendField">
+                           <HBox.margin>
+                              <Insets left="20.0" top="5.0" />
+                           </HBox.margin>
+                        </TextField>
+                        <Button fx:id="sendButton" mnemonicParsing="false" onAction="#onSend" text="Send">
+                           <HBox.margin>
+                              <Insets left="10.0" top="5.0" />
+                           </HBox.margin>
+                        </Button>
+                     </children>
+                  </HBox>
+               </children></VBox>
+            <VBox prefHeight="348.0" prefWidth="288.0">
+               <children>
+                  <Label text="Friends">
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                     <font>
+                        <Font name="System Bold" size="16.0" />
+                     </font>
+                  </Label>
+                  <HBox prefHeight="26.0" prefWidth="288.0">
+                     <children>
+                        <TextField fx:id="addFriendField">
+                           <HBox.margin>
+                              <Insets left="5.0" right="10.0" />
+                           </HBox.margin>
+                        </TextField>
+                        <Button mnemonicParsing="false" onAction="#onAddFriend" text="Add Friend" />
+                     </children></HBox>
+                  <TableView fx:id="friendsTable" prefHeight="168.0" prefWidth="288.0">
+                    <columns>
+                      <TableColumn fx:id="tableColumnId" prefWidth="84.0" text="Id" />
+                        <TableColumn fx:id="tableColumnUsername" prefWidth="223.0" text="Username" />
+                    </columns>
+                     <VBox.margin>
+                        <Insets top="10.0" />
+                     </VBox.margin>
+                  </TableView>
+                  <HBox prefHeight="28.0" prefWidth="303.0" spacing="40.0">
+                     <children>
+                        <Button fx:id="buttonPrevious" mnemonicParsing="false" onAction="#onPreviousPage" prefHeight="25.0" prefWidth="75.0" text="Previous" />
+                        <Label fx:id="labelPage" alignment="CENTER" text="Page 0 of 0">
+                           <HBox.margin>
+                              <Insets top="5.0" />
+                           </HBox.margin>
+                        </Label>
+                        <Button fx:id="buttonNext" alignment="CENTER" mnemonicParsing="false" onAction="#onNextPage" prefHeight="25.0" prefWidth="74.0" text="Next">
+                           <HBox.margin>
+                              <Insets />
+                           </HBox.margin>
+                        </Button>
+                     </children>
+                  </HBox>
+                  <HBox prefHeight="42.0" prefWidth="288.0">
+                     <children>
+                        <Button fx:id="notificationsButton" alignment="TOP_LEFT" contentDisplay="BOTTOM" mnemonicParsing="false" onAction="#openNotifications" prefHeight="25.0" prefWidth="102.0" text="Notifications">
+                           <HBox.margin>
+                              <Insets />
+                           </HBox.margin>
+                        </Button>
+                        <Button mnemonicParsing="false" onAction="#openEvents" prefHeight="25.0" prefWidth="100.0" text="Events">
+                           <HBox.margin>
+                              <Insets left="120.0" />
+                           </HBox.margin>
+                        </Button>
+                     </children>
+                     <VBox.margin>
+                        <Insets top="10.0" />
+                     </VBox.margin>
+                  </HBox>
+               </children>
+               <HBox.margin>
+                  <Insets right="5.0" />
+               </HBox.margin>
+            </VBox>
+         </children>
+      </HBox>
+   </children>
+</VBox>

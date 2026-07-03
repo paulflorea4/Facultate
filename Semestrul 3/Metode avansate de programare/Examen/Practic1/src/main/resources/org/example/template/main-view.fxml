@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.template.ControllerUser">
+   <children>
+      <TableView fx:id="tableView" layoutX="63.0" layoutY="83.0" prefHeight="200.0" prefWidth="481.0">
+        <columns>
+          <TableColumn fx:id="nameColumn" prefWidth="75.0" text="Denumire" />
+          <TableColumn fx:id="descColumn" prefWidth="145.3333740234375" text="Descriere" />
+            <TableColumn fx:id="pretColumn" prefWidth="94.0" text="Pret(RON)" />
+            <TableColumn fx:id="statusColumn" prefWidth="150.33331298828125" text="Status" />
+        </columns>
+         <columnResizePolicy>
+            <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+         </columnResizePolicy>
+      </TableView>
+      <Label fx:id="rolLabel" layoutX="286.0" layoutY="33.0" text="Label" />
+      <Button fx:id="details" layoutX="278.0" layoutY="310.0" mnemonicParsing="false" onAction="#onDetails" text="Detalii" />
+      <Label fx:id="notifications" layoutX="286.0" layoutY="354.0" />
+       <Button fx:id="aproveBtn" layoutX="192.0" layoutY="282.0" mnemonicParsing="false" text="Approve" onAction="#onAccept"/>
+       <Button fx:id="rejectBtn" layoutX="345.0" layoutY="282.0" mnemonicParsing="false" text="Reject" onAction="#onReject"/>
+   </children>
+</AnchorPane>

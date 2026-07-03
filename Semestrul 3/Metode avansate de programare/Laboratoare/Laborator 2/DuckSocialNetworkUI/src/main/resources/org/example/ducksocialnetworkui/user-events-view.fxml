@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="304.0" prefWidth="569.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.ducksocialnetworkui.controller.UserEventsController">
+    <children>
+        <TableView fx:id="eventsTable" layoutX="18.0" layoutY="67.0" prefHeight="210.0" prefWidth="533.0">
+            <columns>
+                <TableColumn fx:id="tableColumnId" prefWidth="74.0" resizable="false" text="Id" />
+                <TableColumn fx:id="tableColumnName" minWidth="0.0" prefWidth="112.0" text="Name" />
+                <TableColumn fx:id="tableColumnType" prefWidth="101.0" text="Type" />
+                <TableColumn fx:id="tableColumnStatus" prefWidth="123.0" text="Status" />
+                <TableColumn fx:id="tableColumnAction" text="Action" />
+            </columns>
+        </TableView>
+      <Label layoutX="230.0" layoutY="14.0" text="Evenimente">
+         <font>
+            <Font name="System Bold" size="20.0" />
+         </font></Label>
+    </children>
+</AnchorPane>

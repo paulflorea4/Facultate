@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.ducksocialnetworkui.controller.AdminMenuController">
+   <children>
+      <TabPane fx:id="menuTabPane" prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE">
+        <tabs>
+          <Tab text="Meniu">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <Button layoutX="254.0" layoutY="122.0" mnemonicParsing="false" onAction="#switchToUsersTab" prefHeight="21.0" prefWidth="92.0" text="Utilizatori" />
+                        <Button layoutX="252.0" layoutY="186.0" mnemonicParsing="false" onAction="#switchToComunityTab" prefHeight="21.0" prefWidth="97.0" text="Comunitati" />
+                        <Button layoutX="252.0" layoutY="246.0" mnemonicParsing="false" onAction="#switchToEventsTab" prefHeight="21.0" prefWidth="97.0" text="Evenimente" />
+                        <Label layoutX="208.0" layoutY="48.0" text="DuckSocialNetwork">
+                           <font>
+                              <Font name="System Bold" size="20.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
+          <Tab fx:id="usersTab" text="Utilizatori">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <Button layoutX="249.0" layoutY="117.0" mnemonicParsing="false" onAction="#onEditUsers" prefHeight="25.0" prefWidth="103.0" text="Add/Delete" />
+                        <Button layoutX="249.0" layoutY="173.0" mnemonicParsing="false" onAction="#showPersons" text="Afisare Persoane" />
+                        <Button layoutX="251.0" layoutY="228.0" mnemonicParsing="false" onAction="#showDucks" prefHeight="25.0" prefWidth="104.0" text="Afisare Rate" />
+                        <Label layoutX="249.0" layoutY="45.0" text="Utilizatori">
+                           <font>
+                              <Font name="System Bold" size="22.0" />
+                           </font>
+                        </Label>
+                     </children></AnchorPane>
+            </content>
+          </Tab>
+            <Tab fx:id="comunityTab" text="Comunitati">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <Label layoutX="234.0" layoutY="50.0" text="Comunitati">
+                           <font>
+                              <Font name="System Bold" size="22.0" />
+                           </font>
+                        </Label>
+                        <Button layoutX="206.0" layoutY="192.0" mnemonicParsing="false" onAction="#numberOfComunities" prefHeight="25.0" prefWidth="172.0" text="Numarul de comunitati" />
+                        <Button layoutX="207.0" layoutY="253.0" mnemonicParsing="false" onAction="#mostSociableComunity" text="Cea mai sociabila comunitate" />
+                        <Button layoutX="206.0" layoutY="132.0" mnemonicParsing="false" onAction="#onEditFriendships" prefHeight="25.0" prefWidth="172.0" text="Add/Delete" />
+                     </children></AnchorPane>
+               </content>
+            </Tab>
+            <Tab fx:id="eventsTab" text="Evenimente">
+                <content>
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                        <children>
+                            <Label layoutX="234.0" layoutY="50.0" text="Evenimente">
+                                <font>
+                                    <Font name="System Bold" size="22.0" />
+                                </font>
+                            </Label>
+                            <Button layoutX="206.0" layoutY="132.0" mnemonicParsing="false" onAction="#onEditEvents" prefHeight="25.0" prefWidth="172.0" text="Manage" />
+                        </children>
+                    </AnchorPane>
+                </content>
+            </Tab>
+        </tabs>
+      </TabPane>
+   </children>
+</StackPane>

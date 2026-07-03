@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.effect.Blend?>
+<?import javafx.scene.effect.Glow?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="444.0" prefWidth="638.0" style="-fx-background-color: #464646;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.ducksocialnetworkui.controller.DuckController">
+
+    <children>
+        <TableView fx:id="tableView" layoutX="83.0" layoutY="100.0" prefHeight="200.0" prefWidth="472.0">
+            <columns>
+                <TableColumn fx:id="tableColumnId" text="Id" />
+                <TableColumn fx:id="tableColumnName" text="Username" />
+                <TableColumn fx:id="tableColumnTip" text="Tip" />
+                <TableColumn fx:id="tableColumnViteza" text="Viteza" />
+                <TableColumn fx:id="tableColumnRezistenta" text="Rezistenta" />
+                <TableColumn fx:id="tableColumnCardId" text="Card Id" />
+            </columns>
+        </TableView>
+
+        <Button fx:id="buttonNext" layoutX="482.0" layoutY="299.0" onAction="#onNextPage" prefHeight="25.0" prefWidth="73.0" style="-fx-background-color: blue;" text="Next" textFill="WHITE" />
+
+        <Button fx:id="buttonPrevious" layoutX="83.0" layoutY="299.0" onAction="#onPreviousPage" prefHeight="25.0" prefWidth="73.0" style="-fx-background-color: blue;" text="Previous" textFill="WHITE" />
+
+        <Label fx:id="labelPage" layoutX="289.0" layoutY="303.0" text="Page 0 of 0" textFill="WHITE" />
+        <ComboBox fx:id="comboBoxDuckType" layoutX="244.0" layoutY="359.0" prefWidth="150.0" promptText="tip">
+            <effect>
+                <Blend>
+                    <topInput>
+                        <Glow />
+                    </topInput>
+                </Blend>
+            </effect>
+        </ComboBox>
+    </children>
+</AnchorPane>

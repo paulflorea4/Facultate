@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="scs.map.sem9_paging.controller.EditMovieController">
+    <!-- ID -->
+    <Label layoutX="40" layoutY="40" text="Id:"/>
+    <TextField fx:id="textFieldId" layoutX="140" layoutY="35" prefWidth="300"/>
+
+    <!-- Title -->
+    <Label layoutX="40" layoutY="90" text="Title:"/>
+    <TextField fx:id="textFieldTitle" layoutX="140" layoutY="85" prefWidth="300"/>
+
+    <!-- Director -->
+    <Label layoutX="40" layoutY="140" text="Director:"/>
+    <TextField fx:id="textFieldDirector" layoutX="140" layoutY="135" prefWidth="300"/>
+
+    <!-- Year -->
+    <Label layoutX="40" layoutY="190" text="Year:"/>
+    <TextField fx:id="textFieldYear" layoutX="140" layoutY="185" prefWidth="300"/>
+
+    <!-- Buttons -->
+    <Button layoutX="140" layoutY="300" text="Save" onAction="#onSave"/>
+    <Button layoutX="260" layoutY="300" text="Cancel" onAction="#onCancel"/>
+</AnchorPane>

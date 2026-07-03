@@ -1,0 +1,1 @@
+rootProject.name = "S06_MAP"

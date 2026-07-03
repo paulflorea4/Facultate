@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="475.0" prefWidth="472.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.ducksocialnetworkui.controller.EditUsersController">
+   <children>
+      <Button layoutX="204.0" layoutY="342.0" mnemonicParsing="false" onAction="#onSave" prefHeight="25.0" prefWidth="64.0" text="Add" />
+      <Button layoutX="204.0" layoutY="425.0" mnemonicParsing="false" onAction="#onDelete" prefHeight="25.0" prefWidth="64.0" text="Delete" />
+      <Label layoutX="16.0" layoutY="74.0" text="Username:" />
+      <Label layoutX="26.0" layoutY="143.0" text="Parola:" />
+      <Label layoutX="26.0" layoutY="106.0" prefHeight="17.0" prefWidth="36.0" text="Email:" />
+      <CheckBox fx:id="checkBoxPerson" layoutX="33.0" layoutY="23.0" mnemonicParsing="false" text="Person" />
+      <CheckBox fx:id="checkBoxDuck" layoutX="33.0" layoutY="44.0" mnemonicParsing="false" text="Duck" />
+      <Label fx:id="Info1" layoutX="19.0" layoutY="180.0" text="Label" />
+      <Label fx:id="Info2" layoutX="19.0" layoutY="217.0" text="Label" />
+      <Label fx:id="Info3" layoutX="19.0" layoutY="259.0" text="Label" />
+      <Label fx:id="Info4" layoutX="16.0" layoutY="301.0" text="Label" />
+      <DatePicker fx:id="datePicker" layoutX="263.0" layoutY="213.0" />
+      <ComboBox fx:id="duckType" layoutX="275.0" layoutY="213.0" prefHeight="25.0" prefWidth="149.0" />
+      <TextField fx:id="textEmail" layoutX="102.0" layoutY="102.0" />
+      <TextField fx:id="textParola" layoutX="102.0" layoutY="139.0" />
+      <TextField fx:id="textInfo1" layoutX="102.0" layoutY="176.0" />
+      <TextField fx:id="textInfo2" layoutX="102.0" layoutY="213.0" />
+      <TextField fx:id="textInfo3" layoutX="102.0" layoutY="255.0" prefHeight="25.0" prefWidth="149.0" />
+      <TextField fx:id="textInfo4" layoutX="102.0" layoutY="297.0" />
+      <TextField fx:id="textUsername" layoutX="102.0" layoutY="70.0" />
+      <Label alignment="TOP_RIGHT" layoutX="169.0" layoutY="390.0" prefHeight="17.0" prefWidth="28.0" text="Id:" />
+      <TextField fx:id="idText" layoutX="212.0" layoutY="386.0" prefHeight="25.0" prefWidth="48.0" />
+   </children>
+</AnchorPane>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="345.0" prefWidth="240.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.laboratorGUI.controller.FriendsController">
+    <Label layoutX="61.0" layoutY="14.0" text="Friends">
+        <font>
+            <Font name="System Bold" size="36.0" />
+        </font>
+    </Label>
+    <Label layoutX="23.0" layoutY="274.0" text="Friend's Username" />
+    <TextField fx:id="usernameTxt" layoutX="23.0" layoutY="292.0" prefHeight="26.0" prefWidth="130.0" />
+    <Button fx:id="addFriendBtn" layoutX="165.0" layoutY="292.0" mnemonicParsing="false" text="Add" />
+    <Button fx:id="prevBtn" layoutX="20.0" layoutY="233.0" mnemonicParsing="false" prefWidth="70.0" text="Previous" />
+    <Button fx:id="nextBtn" layoutX="149.0" layoutY="233.0" mnemonicParsing="false" prefWidth="70.0" text="Next" />
+    <TableView fx:id="tableView" layoutX="20.0" layoutY="68.0" prefHeight="160.0" prefWidth="200.0">
+        <columns>
+            <TableColumn fx:id="tableColumnUsername" prefWidth="75.0" text="Username" />
+            <TableColumn fx:id="tableColumnAction" prefWidth="75.0" text="Action" />
+        </columns>
+        <columnResizePolicy>
+            <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+        </columnResizePolicy>
+    </TableView>
+</AnchorPane>

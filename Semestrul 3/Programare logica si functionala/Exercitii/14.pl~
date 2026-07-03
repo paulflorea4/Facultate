@@ -1,0 +1,12 @@
+apare([H|_],H):-!.
+apare([_|T],E):-
+	apare(T,E).
+
+verif([],_):-!.
+verif([H|T],L):-
+	apare(L,H),!,
+	verif(T,L).
+
+main(L1,L2):-
+	verif(L1,L2),
+	verif(L2,L1).

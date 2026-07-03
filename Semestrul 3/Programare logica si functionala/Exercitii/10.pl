@@ -1,0 +1,13 @@
+cmmdc(X,X,X):-!.
+cmmdc(X,Y,R):-
+	X>Y,!,
+	X1 is X-Y,
+	cmmdc(X1,Y,R).
+cmmdc(X,Y,R):-
+	Y1 is Y-X,
+	cmmdc(X,Y1,R).
+
+cmmdc_lista([X],X):-!.
+cmmdc_lista([X|T],R):-
+	cmmdc_lista(T,R1),
+	cmmdc(X,R1,R).

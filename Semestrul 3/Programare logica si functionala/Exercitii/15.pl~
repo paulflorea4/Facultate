@@ -1,0 +1,8 @@
+pare([],0):-!.
+pare([_|T],0):-!,
+	pare(T,1).
+pare([_|T],1):-
+	pare(T,0).
+
+main(L):-
+	pare(L,1).

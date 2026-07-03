@@ -1,0 +1,42 @@
+/*
+a.
+exista(l1...ln,x)= - fals, n=0
+                   - adv , l1=x
+		   - exista(l2...ln,x), altfel
+
+diferenta(a1...an,b1...bm)= - [] , daca n=0
+			    - a1 (+) diferenta(a2...an,b1...bm),daca exista(b1...bm,a1) e fals
+			    - diferenta(a2...an,b1...bm),altfel
+*/
+
+
+exista([H|_],X):-
+	H=:=X,!.
+
+exista([_|T],X):-
+	exista(T,X).
+
+diferenta([],_,[]):-!.
+
+diferenta([H|T],L,[H|Rez]):-
+	\+ exista(L,H),!,
+	diferenta(T,L,Rez).
+diferenta([_|T],L,Rez):-
+	diferenta(T,L,Rez).
+
+/*
+b.
+adauga1(l1...ln)= -[] , daca n=0
+		  -l1 (+) 1 (+) adauga1(l2...ln),daca l1 e par
+		  -l1 (+) adauga1(l2...ln), altfel
+
+*/
+
+adauga1([],[]):-!.
+
+adauga1([H|T],[H,1|Rez]):-
+	0 is H mod 2,!,
+	adauga1(T,Rez).
+
+adauga1([H|T],[H|Rez]):-
+	adauga1(T,Rez).

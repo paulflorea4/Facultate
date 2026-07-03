@@ -1,0 +1,9 @@
+12
+a. substituie(l1,...,ln, e, eNou)= - lista vida , daca  n=0
+				   - eNou (+) substituie(l2,...,ln , e, eNou), daca l1=e
+				   - l1 (+) substituie(l2,...,ln, e , eNou), altfel
+
+b. sublista(l1,...,lk, m, n) = - lista vida , k=0
+			       - lista vida , m > n
+			       - sublista(l2,...,lk,m-1,n-1), daca m>1
+			       - l1 (+) sublista(l2,...,lk,1,n-1), altfel

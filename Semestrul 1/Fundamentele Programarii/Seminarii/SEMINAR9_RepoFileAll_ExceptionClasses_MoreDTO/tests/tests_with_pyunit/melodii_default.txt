@@ -1,0 +1,40 @@
+1,Stairway to Heaven,Led Zeppelin,rock,8.21
+2,Bohemian Rhapsody,Queen,rock,5.48
+3,Hotel California,Eagles,rock,6.11
+4,Smoke on the Water,Deep Purple,rock,7.37
+5,Free Bird,Lynyrd Skynyrd,rock,9.52
+6,Comfortably Numb,Pink Floyd,rock,6.43
+7,Dream On,Aerosmith,rock,4.15
+8,Sweet Child O' Mine,Guns N' Roses,rock,5.27
+9,Paranoid,Black Sabbath,rock,3.42
+10,Born to Run,Bruce Springsteen,rock,4.33
+11,Thriller,Michael Jackson,pop,5.58
+12,Like a Prayer,Madonna,pop,5.42
+13,Rolling in the Deep,Adele,pop,3.48
+14,Firework,Katy Perry,pop,4.23
+15,Shape of You,Ed Sheeran,pop,3.34
+16,Uptown Funk,Mark Ronson ft. Bruno Mars,pop,4.3
+17,Call Me Maybe,Carly Rae Jepsen,pop,3.14
+18,Bad Romance,Lady Gaga,pop,4.55
+19,Happy,Pharrell Williams,pop,3.53
+20,Blinding Lights,The Weeknd,pop,3.22
+41,Without Me,Eminem,Hip-Hop,4.5
+42,The Real Slim Shady,Eminem,Hip-Hop,4.44
+43,Stan,Eminem ft. Dido,Hip-Hop,6.44
+44,Mockingbird,Eminem,Hip-Hop,4.11
+45,Many Men (Wish Death),50 Cent,Hip-Hop,4.17
+46,Candy Shop,50 Cent ft. Olivia,Hip-Hop,3.29
+47,Drop It Like It's Hot,Snoop Dogg ft. Pharrell,Hip-Hop,4.26
+49,Gangsta's Paradise,Coolio ft. L.V.,Hip-Hop,4.03
+71,Andrii Popa,Phoenix,folk,3.45
+72,Mugur de Fluier,Phoenix,folk,4.12
+73,Canarul,Pasărea Colibri,folk,3.56
+74,În Umbra Marelui Urs,Phoenix,folk,5.04
+75,Vinovații Fără Vină,Pasărea Colibri,folk,4.23
+76,Strunga,Phoenix,folk,3.48
+77,Dealul cu Dor,Pasărea Colibri,folk,3.5
+78,Nunta,Phoenix,folk,5.17
+80,Vremuri,Phoenix,folk,2.54
+23874,fjdsg,fs,rock,3.4
+3435,hfdkg,fd,rock,4.4
+2243,hfsdh,fkhsd,rock,3.3

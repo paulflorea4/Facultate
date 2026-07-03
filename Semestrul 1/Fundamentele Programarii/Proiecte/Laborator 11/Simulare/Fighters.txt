@@ -1,0 +1,8 @@
+1,knight,90,25,Black Army
+2,archer,41,20,Red Army
+3,catapult,85,55,Black Army
+4,archer,100,25,Black Army
+5,knight,100,22,Red Army
+6,knight,80,24,Red Army
+7,archer,92,27,Black Army
+8,catapult,75,60,Red Army

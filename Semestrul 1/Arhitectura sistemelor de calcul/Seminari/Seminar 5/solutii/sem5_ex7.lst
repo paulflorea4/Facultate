@@ -1,0 +1,85 @@
+     1                                  bits 32
+     2                                  global start
+     3                                  
+     4                                  extern exit,fopen,fread,fclose,printf
+     5                                  import exit msvcrt.dll
+     6                                  import fopen msvcrt.dll
+     7                                  import fread msvcrt.dll
+     8                                  import fclose msvcrt.dll
+     9                                  import printf msvcrt.dll
+    10                                  
+    11                                  segment data use32 class=data
+    12 00000000 776F7264732E747874-         file_name db "words.txt",0
+    12 00000009 00                 
+    13 0000000A 7200                        mod_access db "r",0
+    14 0000000C 00000000                    file_descriptor dd 0
+    15                                      
+    16                                      max equ 100
+    17 00000010 00<rept>                    buffer times max db 0
+    18 00000074 00000000                    len dd 0
+    19 00000078 4E756D6172756C2064-         output_format db "Numarul de cuvinte este %d",0
+    19 00000081 6520637576696E7465-
+    19 0000008A 206573746520256400 
+    20                                     
+    21                                  ; 7. Se dă un nume de fișier (definit în segmentul de date).
+    22                                  ; Fișierul conține cuvinte (șiruri de caractere separate prin spații).
+    23                                  ; Să se determine și să se afișeze numărul de cuvinte din fișier.
+    24                                  segment code use32 class=code
+    25                                      start:
+    26                                          ; deschid fisierul
+    27                                          ; EAX = fopen(nume_fisier, mod_acces)
+    28 00000000 68[0A000000]                    push dword mod_access
+    29 00000005 68[00000000]                    push dword file_name
+    30 0000000A FF15[00000000]                  call [fopen]
+    31 00000010 83C408                          add esp,4*2
+    32                                          
+    33 00000013 83F800                          cmp eax,0
+    34 00000016 7478                            je file_error
+    35 00000018 A3[0C000000]                    mov [file_descriptor],eax
+    36                                          
+    37                                          ; citesc continutul intregului fisier
+    38                                          ; EAX = fread(void* buffer, int size, int count, FILE* stream)
+    39 0000001D FF35[0C000000]                  push dword [file_descriptor]
+    40 00000023 6A64                            push dword max
+    41 00000025 6A01                            push dword 1
+    42 00000027 68[10000000]                    push buffer
+    43 0000002C FF15[00000000]                  call [fread]
+    44 00000032 83C410                          add esp,4*4
+    45                                          
+    46 00000035 BB00000000                      mov ebx,0
+    47 0000003A BE[10000000]                    mov esi,buffer
+    48 0000003F BA00000000                      mov edx,0
+    49                                      loop1:
+    50 00000044 AC                              lodsb
+    51 00000045 3C00                            cmp al,0
+    52 00000047 7418                            je last_word
+    53 00000049 3C20                            cmp al,' '
+    54 0000004B 750D                            jne is_word
+    55 0000004D 83FA00                          cmp edx,0
+    56 00000050 740D                            je next
+    57 00000052 43                              inc ebx
+    58 00000053 BA00000000                      mov edx,0
+    59 00000058 EB05                            jmp next
+    60                                      is_word:
+    61 0000005A BA01000000                      mov edx,1
+    62                                      next:
+    63 0000005F EBE3                            jmp loop1
+    64                                  
+    65                                      last_word:
+    66 00000061 83FA01                          cmp edx,1
+    67 00000064 7501                            jne write
+    68 00000066 43                              inc ebx
+    69                                      write:
+    70 00000067 891D[74000000]                  mov [len],ebx
+    71 0000006D FF35[74000000]                  push dword [len]
+    72 00000073 68[78000000]                    push dword output_format
+    73 00000078 FF15[00000000]                  call [printf]
+    74 0000007E 83C408                          add esp,4*2
+    75                                          
+    76 00000081 FF35[0C000000]                  push dword [file_descriptor]
+    77 00000087 FF15[00000000]                  call [fclose]
+    78 0000008D 83C408                          add esp,4*2
+    79                                          
+    80                                      file_error:
+    81 00000090 6A00                            push dword 0
+    82 00000092 FF15[00000000]                  call [exit]

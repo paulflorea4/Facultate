@@ -1,0 +1,109 @@
+     1                                  bits 32
+     2                                  
+     3                                  global start
+     4                                  
+     5                                  extern exit,fopen,fclose,fprintf,scanf,printf,fread
+     6                                  import exit msvcrt.dll
+     7                                  import fopen msvcrt.dll
+     8                                  import fclose msvcrt.dll
+     9                                  import fprintf msvcrt.dll
+    10                                  import scanf msvcrt.dll
+    11                                  import printf msvcrt.dll
+    12                                  import fread msvcrt.dll
+    13                                  
+    14                                  segment data use32 class=data
+    15 00000000 00<rept>                    file_name times 20 db 0
+    16 00000014 00000000                    c dd 0
+    17 00000018 00000000                    n dd 0
+    18 0000001C FFFFFFFF                    descriptor_file dd -1
+    19 00000020 7200                        mod_acces db "r",0
+    20 00000022 436974697469206E75-         msg db "Cititi numele fisierului,un caracter si un numar:",0
+    20 0000002B 6D656C652066697369-
+    20 00000034 6572756C75692C756E-
+    20 0000003D 206361726163746572-
+    20 00000046 20736920756E206E75-
+    20 0000004F 6D61723A00         
+    21 00000054 257320256320256400          format db "%s %c %d",0
+    22 0000005D 01000000                    ok dd 1
+    23                                      max equ 100
+    24 00000061 00<rept>                    text times max db 0
+    25 000000C5 4E756D6172756C2064-         output_format_true db "Numarul de aparitii al caracterului %c este egal cu numarul %d citit.",0
+    25 000000CE 652061706172697469-
+    25 000000D7 6920616C2063617261-
+    25 000000E0 63746572756C756920-
+    25 000000E9 256320657374652065-
+    25 000000F2 67616C206375206E75-
+    25 000000FB 6D6172756C20256420-
+    25 00000104 63697469742E00     
+    26 0000010B 4E756D6172756C2064-         output_format_false db "Numarul de aparitii al caracterului %c nu este egal cu numarul %d citit.",0
+    26 00000114 652061706172697469-
+    26 0000011D 6920616C2063617261-
+    26 00000126 63746572756C756920-
+    26 0000012F 2563206E7520657374-
+    26 00000138 65206567616C206375-
+    26 00000141 206E756D6172756C20-
+    26 0000014A 25642063697469742E-
+    26 00000153 00                 
+    27                                  segment code use32 class=code
+    28                                      start:
+    29 00000000 68[22000000]                    push dword msg
+    30 00000005 FF15[00000000]                  call [printf]
+    31 0000000B 83C404                          add esp,4
+    32                                          
+    33 0000000E 68[18000000]                    push dword n
+    34 00000013 68[14000000]                    push dword c
+    35 00000018 68[00000000]                    push dword file_name
+    36 0000001D 68[54000000]                    push dword format
+    37 00000022 FF15[00000000]                  call [scanf]
+    38 00000028 83C410                          add esp,4*4
+    39                                          
+    40 0000002B 68[20000000]                    push dword mod_acces
+    41 00000030 68[00000000]                    push dword file_name
+    42 00000035 FF15[00000000]                  call [fopen]
+    43 0000003B 83C408                          add esp,4*2
+    44                                          
+    45 0000003E A3[1C000000]                    mov [descriptor_file],eax
+    46 00000043 83F800                          cmp eax,0
+    47 00000046 747D                            je final
+    48                                          
+    49 00000048 FF35[1C000000]                  push dword [descriptor_file]
+    50 0000004E 6A64                            push dword 100
+    51 00000050 6A01                            push dword 1
+    52 00000052 68[61000000]                    push dword text
+    53 00000057 FF15[00000000]                  call [fread]
+    54 0000005D 83C410                          add esp,4*4
+    55                                          
+    56 00000060 BE[61000000]                    mov esi,text
+    57 00000065 FC                              cld
+    58 00000066 31DB                            xor ebx,ebx
+    59                                      repeta:
+    60 00000068 AC                              lodsb
+    61 00000069 3C00                            cmp al,0
+    62 0000006B 740B                            je sfarsit
+    63 0000006D 3A05[14000000]                  cmp al,byte [c]
+    64 00000073 7501                            jne urmatorul
+    65 00000075 43                              inc ebx
+    66                                      urmatorul:
+    67 00000076 EBF0                            jmp repeta
+    68                                      sfarsit: 
+    69 00000078 3B1D[18000000]                  cmp ebx,[n]
+    70 0000007E 741C                            je afisare
+    71 00000080 FF35[18000000]                  push dword [n]
+    72 00000086 FF35[14000000]                  push dword [c]
+    73 0000008C 68[0B010000]                    push dword output_format_false
+    74 00000091 FF15[00000000]                  call [printf]
+    75 00000097 83C40C                          add esp,4*3
+    76 0000009A EB1A                            jmp peste
+    77                                      afisare:
+    78 0000009C FF35[18000000]                  push dword [n]
+    79 000000A2 FF35[14000000]                  push dword [c]
+    80 000000A8 68[C5000000]                    push dword output_format_true
+    81 000000AD FF15[00000000]                  call [printf]
+    82 000000B3 83C40C                          add esp,4*3
+    83                                      peste:
+    84 000000B6 FF35[1C000000]                  push dword [descriptor_file]
+    85 000000BC FF15[00000000]                  call [fclose]
+    86 000000C2 83C404                          add esp,4
+    87                                      final:
+    88 000000C5 6A00                            push dword 0
+    89 000000C7 FF15[00000000]                  call [exit]

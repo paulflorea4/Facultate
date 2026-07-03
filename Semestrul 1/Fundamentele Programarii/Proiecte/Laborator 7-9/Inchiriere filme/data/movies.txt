@@ -1,0 +1,7 @@
+1,Titlu1,Descriere1,Actiune
+2,Titlu2,Descriere2,Horror
+3,Titlu3,Descriere3,Drama
+4,Titlu4,Descriere4,Actiune
+5,Titlu5,Descriere5,Comedie
+6,Titlu6,Descriere6,Horror
+7,Titlu7,Descriere7,Actiune

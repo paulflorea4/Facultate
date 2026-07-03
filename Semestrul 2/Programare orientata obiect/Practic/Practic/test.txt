@@ -1,0 +1,5 @@
+gheorgheni 3 2 XX-X-XX--
+buna-ziua 2 4 XXX
+gradinilor 3 3 XX-XX-X--
+zorilor 3 4 XX-X--X-X
+eroilor 1 3 XXX

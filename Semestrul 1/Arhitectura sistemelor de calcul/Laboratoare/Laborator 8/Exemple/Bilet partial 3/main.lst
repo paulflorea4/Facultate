@@ -1,0 +1,78 @@
+     1                                  bits 32
+     2                                  
+     3                                  global start
+     4                                  
+     5                                  extern exit,fopen,fclose,fprintf,scanf,printf
+     6                                  import exit msvcrt.dll
+     7                                  import fopen msvcrt.dll
+     8                                  import fclose msvcrt.dll
+     9                                  import fprintf msvcrt.dll
+    10                                  import scanf msvcrt.dll
+    11                                  import printf msvcrt.dll
+    12                                  
+    13                                  segment data use32 class=data
+    14 00000000 6F75747075742E7478-         file_name db "output.txt",0
+    14 00000009 7400               
+    15 0000000B 7700                        access_mode db "w",0
+    16 0000000D FFFFFFFF                    descriptor_file dd -1
+    17 00000011 <res 00000004>              n resd 1
+    18 00000015 2564203D202578203D-         output_format db "%d = %x = %s",13,10,0
+    18 0000001E 2025730D0A00       
+    19 00000024 256400                      input_format db "%d",0
+    20 00000027 4461746920756E206E-         message db "Dati un numar in baza 10:",0
+    20 00000030 756D617220696E2062-
+    20 00000039 617A612031303A00   
+    21 00000041 00<rept>                    biti times 32 db 0
+    22                                  segment code use32 class=code
+    23                                      start:
+    24 00000000 68[0B000000]                    push dword access_mode
+    25 00000005 68[00000000]                    push dword file_name
+    26 0000000A FF15[00000000]                  call [fopen]
+    27 00000010 83C408                          add esp,4*2
+    28                                          
+    29 00000013 A3[0D000000]                    mov [descriptor_file],eax
+    30 00000018 83F800                          cmp eax,0
+    31 0000001B 7476                            je final
+    32                                          
+    33                                      repeta:
+    34 0000001D 68[27000000]                    push dword message
+    35 00000022 FF15[00000000]                  call [printf]
+    36 00000028 83C404                          add esp,4
+    37                                          
+    38 0000002B 68[11000000]                    push dword n
+    39 00000030 68[24000000]                    push dword input_format
+    40 00000035 FF15[00000000]                  call [scanf]
+    41 0000003B 83C408                          add esp,4*2
+    42                                          
+    43 0000003E 8B1D[11000000]                  mov ebx,[n]
+    44 00000044 83FB00                          cmp ebx,0
+    45 00000047 743B                            je afara
+    46                                          
+    47 00000049 BF[41000000]                    mov edi,biti
+    48 0000004E FC                              cld
+    49 0000004F B920000000                      mov ecx,32
+    50                                          repeta2:
+    51 00000054 30C0                                xor al,al
+    52 00000056 D1E3                                shl ebx,1
+    53 00000058 1430                                adc al,'0'
+    54 0000005A AA                                  stosb
+    55 0000005B E2F7                                loop repeta2
+    56                                              
+    57 0000005D 68[41000000]                    push dword biti
+    58 00000062 FF35[11000000]                  push dword [n]
+    59 00000068 FF35[11000000]                  push dword [n]
+    60 0000006E 68[15000000]                    push dword output_format
+    61 00000073 FF35[0D000000]                  push dword [descriptor_file]
+    62 00000079 FF15[00000000]                  call [fprintf]
+    63 0000007F 83C410                          add esp,4*4
+    64                                          
+    65 00000082 EB99                            jmp repeta
+    66                                      afara:
+    67                                      
+    68 00000084 FF35[0D000000]                  push dword [descriptor_file]
+    69 0000008A FF15[00000000]                  call [fclose]
+    70 00000090 83C404                          add esp,4
+    71                                          
+    72                                      final:
+    73 00000093 6A00                            push dword 0
+    74 00000095 FF15[00000000]                  call [exit]

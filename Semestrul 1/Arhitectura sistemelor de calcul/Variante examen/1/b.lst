@@ -1,0 +1,24 @@
+     1                                  bits 32
+     2                                  
+     3                                  global formare_sir
+     4                                  
+     5                                  segment code use32 class=code
+     6                                      formare_sir:
+     7 00000000 8B4C240C                        mov ecx,[esp+12]
+     8 00000004 8B742404                        mov esi,[esp+4]
+     9 00000008 8B7C2408                        mov edi,[esp+8]
+    10 0000000C FC                              cld
+    11                                      repeta:
+    12 0000000D B300                            mov bl,0
+    13 0000000F AD                              lodsd
+    14                                          calculare_suma:
+    15 00000010 89C2                                mov edx,eax
+    16 00000012 83E20F                              and edx,0fh
+    17 00000015 00D3                                add bl,dl
+    18 00000017 C1E804                              shr eax,4
+    19 0000001A 83F800                              cmp eax,0
+    20 0000001D 75F1                                jne calculare_suma
+    21 0000001F 88D8                            mov al,bl
+    22 00000021 AA                              stosb
+    23 00000022 E2E9                            loop repeta
+    24 00000024 C3                              ret

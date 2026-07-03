@@ -1,0 +1,143 @@
+     1                                  bits 32
+     2                                  
+     3                                  global start
+     4                                  
+     5                                  extern exit,fopen,fclose,fread,printf
+     6                                  import exit msvcrt.dll
+     7                                  import fopen msvcrt.dll
+     8                                  import fclose msvcrt.dll
+     9                                  import fread msvcrt.dll
+    10                                  import printf msvcrt.dll
+    11                                  
+    12                                  segment data use32 class=data
+    13 00000000 696E7075742E747874-         file_name db "input.txt",0
+    13 00000009 00                 
+    14 0000000A 7200                        mod_acces db "r",0
+    15 0000000C FFFFFFFF                    descriptor_file dd -1
+    16                                      max equ 100
+    17 00000010 00<rept>                    text times max db 0
+    18                                      
+    19 00000074 00<rept>                    propozitie times max db 0
+    20 000000D8 00000000                    contor_propozitie dd 0
+    21 000000DC 01000000                    sfarsit_propozitie dd 1
+    22 000000E0 00<rept>                    cuvant_inversat times 50 db 0
+    23 00000112 00000000                    primul_cuvant dd 0
+    24 00000116 00000000                    inceput_cuvant dd 0
+    25 0000011A 50726F706F7A697469-         output_format db "Propozitia %d:%s Nr cuvinte: %d, Primul cuvant %s are %d litere",13,10,0
+    25 00000123 612025643A2573204E-
+    25 0000012C 7220637576696E7465-
+    25 00000135 3A2025642C20507269-
+    25 0000013E 6D756C20637576616E-
+    25 00000147 742025732061726520-
+    25 00000150 2564206C6974657265-
+    25 00000159 0D0A00             
+    26 0000015C E9(32000000)                jmp start
+    27                                  segment code use32 class=code
+    28                                      inversare: 
+    29 00000000 89D1                            mov ecx,edx
+    30 00000002 8B35[16010000]                  mov esi,[inceput_cuvant]
+    31 00000008 BF[E0000000]                    mov edi,cuvant_inversat
+    32 0000000D 01D7                            add edi,edx
+    33 0000000F 4F                              dec edi
+    34                                          inverseaza:
+    35 00000010 FC                                  cld
+    36 00000011 AC                                  lodsb
+    37 00000012 FD                                  std
+    38 00000013 AA                                  stosb
+    39 00000014 E2FA                                loop inverseaza
+    40 00000016 E9D9000000                      jmp inapoi
+    41                                      clear:
+    42 0000001B B919000000                      mov ecx,25
+    43 00000020 BF[74000000]                    mov edi,propozitie
+    44                                          repeta3:
+    45 00000025 B800000000                          mov eax,0
+    46 0000002A AB                                  stosd
+    47 0000002B E2F8                                loop repeta3
+    48 0000002D E9A0000000                      jmp inapoi2
+    49                                      start:
+    50 00000032 68[0A000000]                    push dword mod_acces
+    51 00000037 68[00000000]                    push dword file_name
+    52 0000003C FF15[00000000]                  call [fopen]
+    53 00000042 83C408                          add esp,4*2
+    54                                          
+    55 00000045 A3[0C000000]                    mov [descriptor_file],eax
+    56 0000004A 83F800                          cmp eax,0
+    57 0000004D 0F84E6000000                    je final
+    58                                          
+    59 00000053 FF35[0C000000]                  push dword [descriptor_file]
+    60 00000059 6A64                            push dword max
+    61 0000005B 6A01                            push dword 1
+    62 0000005D 68[10000000]                    push dword text
+    63 00000062 FF15[00000000]                  call [fread]
+    64 00000068 83C410                          add esp,4*4
+    65                                         
+    66 0000006B BE[10000000]                    mov esi,text
+    67 00000070 BF[74000000]                    mov edi,propozitie
+    68                                      repeta:
+    69 00000075 FC                              cld
+    70 00000076 AC                              lodsb
+    71 00000077 3C00                            cmp al,0
+    72 00000079 0F84AB000000                    je afara
+    73 0000007F AA                              stosb
+    74 00000080 833D[DC000000]01                cmp dword [sfarsit_propozitie],1
+    75 00000087 746F                            je egal
+    76 00000089 3C20                            cmp al,' '
+    77 0000008B 744C                            je e_spatiu
+    78 0000008D 3C2E                            cmp al,'.'
+    79 0000008F 740F                            je e_sfarsit
+    80 00000091 833D[12010000]01                cmp dword [primul_cuvant],1
+    81 00000098 755C                            jne nu_e_primul
+    82 0000009A 42                              inc edx
+    83 0000009B E985000000                      jmp next
+    84                                      e_sfarsit:
+    85 000000A0 C705[DC000000]0100-             mov dword [sfarsit_propozitie],1
+    85 000000A8 0000               
+    86 000000AA 43                              inc ebx
+    87 000000AB 52                              push edx
+    88 000000AC 68[E0000000]                    push dword cuvant_inversat
+    89 000000B1 53                              push ebx
+    90 000000B2 68[74000000]                    push dword propozitie
+    91 000000B7 FF35[D8000000]                  push dword [contor_propozitie]
+    92 000000BD 68[1A010000]                    push dword output_format
+    93 000000C2 FF15[00000000]                  call [printf]
+    94 000000C8 83C418                          add esp,4*6
+    95 000000CB 57                              push edi
+    96 000000CC E94AFFFFFF                      jmp clear
+    97 000000D1 5F                              pop edi
+    98                                      inapoi2:
+    99 000000D2 BF[74000000]                    mov edi,propozitie
+   100 000000D7 EB4C                            jmp next
+   101                                      e_spatiu:
+   102 000000D9 43                              inc ebx
+   103 000000DA 833D[12010000]01                cmp dword [primul_cuvant],1
+   104 000000E1 7513                            jne nu_e_primul
+   105 000000E3 C705[12010000]0000-             mov dword [primul_cuvant],0
+   105 000000EB 0000               
+   106 000000ED 57                              push edi
+   107 000000EE 56                              push esi
+   108 000000EF E90CFFFFFF                      jmp inversare
+   109                                      inapoi:
+   110 000000F4 5E                              pop esi
+   111 000000F5 5F                              pop edi
+   112                                      nu_e_primul:
+   113 000000F6 EB2D                            jmp next
+   114                                      egal:
+   115 000000F8 BB00000000                      mov ebx,0
+   116 000000FD 8305[D8000000]01                add dword [contor_propozitie],1
+   117 00000104 C705[12010000]0100-             mov dword [primul_cuvant],1
+   117 0000010C 0000               
+   118 0000010E C705[DC000000]0000-             mov dword [sfarsit_propozitie],0
+   118 00000116 0000               
+   119 00000118 BA01000000                      mov edx,1
+   120 0000011D 4E                              dec esi
+   121 0000011E 8935[16010000]                  mov [inceput_cuvant],esi
+   122 00000124 46                              inc esi
+   123                                      next:
+   124 00000125 E94BFFFFFF                      jmp repeta
+   125                                      afara:
+   126 0000012A FF35[0C000000]                  push dword [descriptor_file]
+   127 00000130 FF15[00000000]                  call [fclose]
+   128 00000136 83C404                          add esp,4
+   129                                      final:
+   130 00000139 6A00                            push dword 0
+   131 0000013B FF15[00000000]                  call [exit]

@@ -1,0 +1,536 @@
+Rezolvari SO
+
+RO:Dati 3 expresii regulare care accepta orice numer non-negativ multiplu de 5
+
+	"^[0-9]*[05]$"
+	"^[0-9]*0$|^[0-9]*5$"
+	"^(0|5|[0-9]+[05])$
+
+RO:Dati 5 comenzi GREP care afisaeaza toate liniile dintr-un fisier care contin litera "a" mare sau mic.
+
+	grep -E "[aA]"
+	grep -E -i "a"
+	grep -E -i "A"
+	grep -E "[aA]+"
+	grep -E -i "[a]+"
+
+RO:Scrieti o comanda AWK care afiseaza suma penultimului camp al tuturor liniilor
+
+	awk 'BEGIN { sum = 0 } {sum+=$(NF-1)} END { print sum }'
+
+RO:Cum puteti redirecta in linia de comada iesirea de eroare prin pipe inspre alt program?
+
+	comanda 2>&1 | programNou
+
+RO:Scrieti un script Shell UNIX care afiseaza toate argumentele din linia de comanda fara a folosi FOR.
+
+	echo "$@"
+
+	   sau
+
+	while [ $# -gt 0 ]; do
+		echo $0
+		shift 1
+	done
+
+RO:Desenati ierarhia proceselor create de codul de mai jos,incluzand procesul parinte
+	
+for(i=0;i<3;i++){
+	fork();
+	execlp("ls","ls","/",NULL);
+}
+
+	P->C1
+
+RO:Ce este o "sectiune critica"?
+
+	O sectiune critica este o sectiune de cod care este executata de mai multe threaduri/procese si care contine o resursa critica.Aceasta resursa poate fi modiciata de multiple threaduri/procese.Modificarea acestei resurse simultan poate conduce la rezultate eronate.
+
+
+RO:De ce un thread trebuie sa reverifice conditia la iesirea din apelul pthread_cond_wait?
+	Un fir de execuție trebuie să verifice din nou pentru a se asigura că firul de execuție poate intra corect și că condiția este încă adevărată din cauza semnalelor care ar fi putut apărea de la alt fir de execuție.
+
+
+RO:Care va fi efectul inlocuirii apelurilor la pthread_mutex_lock cu apeluri la pthread_rwlock_rdlock?
+	Daca inlocuim ... , resursa critica nu ar mai putea fi protejata de modificarile facute de threaduri , conducand la un raceconditon.Insa daca threadurile nu modifica resursa,atunci aceasta inlocuirea poate duce la o performanta mai buna datorita concurentei mai mare.
+
+RO:Care e efectul apelului la pthread_barrier_wait pentru o bariera initializata cu 1?
+	Niciunul.Threadul odata ajuns la bariera isi va continua executia.
+
+RO:Cum puteti incrementa valoarea unui semafor?
+	sem_post
+
+RO:Ce puteti face ca programator pentru a preveni deadlock-urile?
+	Impui o ordine de blocare a resurselor si patrezi aceasta ordine pentru deblocare.
+
+RO:Prin ce tranzitie de stare va trece un proces cand citeste dintr-un fisier?
+	
+	RUN->WAIT->READY
+
+RO:Ce contine superblocul unui disc Linux?
+
+	adrese
+
+
+RO:Se poate crea un link hard spre un fisier aflat pe o alta partitie?Justificati raspunsul.
+
+	
+
+
+RO: Daţi o expresie regulară care acceptă orice secvenţă de lungime pară de cuvinte (formate din litere) separate prin spaţii, cu condiţia ca pentru fiecare cuvânt să lungimea şi poziţia în secvenţă să fie ambele pare sau impare. Numărarea cuvintelor începe de la 1. Ex: al 5-lea cuvânt trebuie să aibă lungime impară, iar al 16-lea să aibă lungime pară.
+
+	"^((([a-zA-z]{2})*[a-zA-Z])( )+([a-zA-z]{2}+( )*))+$"
+
+RO: Daţi trei comenzi GREP care afişează dintr-un fişier liniile formate exclusiv dintr-o secvenţă nevidă de litere şi cifre alternativ (ex: a0g sau 1r5m).
+	
+	grep -E "^((([a-zA-Z][0-9])+[a-zA-Z]?)|(([0-9][a-zA-Z])+[0-9]?))$"
+	grep -E "^(([0-9][a-zA-Z])+[0-9]?))|((([a-zA-Z][0-9])+[a-zA-Z]?)$"
+	grep -E -i "^((([a-z][0-9])+[a-z]?)|(([0-9][a-z])+[0-9]?))$"
+	grep -E -i -v "[a-z][a-z]|[0-9][0-9]"  ? 
+	
+
+RO: Scrieţi două comenzi SED care afişează liniile unui fişier ştergând prima secvenţă nevidă de litere mici.
+
+	sed -E "s/\<[a-z]+\>//"
+	sed -E "s/\<[a-z][a-z]*\>//"
+
+
+RO: Scrieţi o comandă AWK care afişează suma tuturor numerelor dintr-un fişier text ale cărui linii sunt formate din secvenţe de cifre separate prin spaţii.
+	awk 'BEGIN { sum=0 } { for(i=0;i<$NF;i++){ sum+=$(i+1) } } END { print sum }'
+
+RO: Daţi trei moduri de a afla dimensiunea unui fişier în linia de comandă Linux.
+	du -b	du -h
+	stat
+	wc -c
+	ls -lh	ls-s
+
+RO: Scrieţi o condiţie Shell UNIX care verifică dacă un un fişier există şi utilizatorul curent are vreo permisiune asupra lui.
+	
+	test -e file && (test -w file || test -r file || test -x file)
+
+RO: Desenati ierarhia proceselor create de codul de mai jos, incluzand procesul parinte.
+
+	 for(i=0; i<3; i++) {
+        if(fork() > 0) {
+            wait(0);
+            wait(0);
+            exit(0);
+        }
+
+	P->C1->C2->C3
+
+RO: De ce descriptorul de fişier returnat de popen trebuie închis cu pclose şi nu cu fclose?
+
+	Pclose asteapta terminarea copilului,iar fclose nu.
+
+RO: Când aţi folosi execv în locul de execl?
+	
+	argv[1]="grep"
+	argv[2]="-E"
+	argv[3]="cataCatelu"
+	execv(argv[1],argv+1)
+
+	Cand dai din lista de argumente.	
+
+RO: Daţi trei apeluri de funcţii care asigură excludere mutuală.
+	
+	pthread_mutex_lock(&mutex)
+	sem_wait(&sem)
+	pthread_rwlock_wrlock(&rwlock)
+
+RO: Care va fi efectul înlocuirii apelurilor la pthread_mutex_lock cu apeluri la sem_post?
+	Efectul va fi unul haotic
+
+RO: Ce se poate întâmpla dacă funcţia f este rulată de mai multe thread-uri simultane? De ce?
+	pthread_mutex_t m[2];
+		void* f(void* p) {
+    		int id = (int)p;
+    		pthread_mutex_t* first = &m[id % 2];
+    		pthread_mutex_t* second = &m[(id+1) % 2];
+
+    		pthread_mutex_lock(first);
+    		pthread_mutex_lock(second);
+    		...
+    		pthread_mutex_unlock(second);
+    		pthread_mutex_unlock(first);
+	}
+
+	Deadlock
+
+RO: Prin ce tranziţie de stare va trece un prcess când apelează sem_wait şi în ce condiţii? Justificaţi răspunsul.
+	decrementare
+	daca sem>=0
+		continua
+	altfel
+		RUN->WAIT
+
+RO: Cand ati incarca in memorie paginile unui program care tocmai este pornit?
+
+	As incarca prima pagina si dupa pe baza principiului vecinatatii incarc paginile vecine,pentru ca sunt cele mai probabil sa fie folosite.
+
+	Avantaj:Viteza cu care poti sa accesa paginile odata ce sunt incarcate
+	Dezavantaj:Durata lunga de incarcare a procesului/Ocuparea memoriei
+
+RO: Scrieţi două comenzi SED care afişează dintr-un fişier doar liniile care nu conţin cifra 7.
+	
+	sed '/7/d'
+	sed 's/.*7.*//g'
+
+RO: Considerand ca dimensiunea unui bloc este B si dimensiunea unei adrese este A, cate blocuri de date sunt adresate de indirectarea dubla a unui i-nod?
+
+	(B/A)^2
+
+RO: Adăugaţi codul C necesar pentru ca fişierul b.txt să fie suprascris cu conţinutul fişierului a.txt din instrucţiunea de mai jos.
+
+	execlp("cat","cat","a.txt",">","b.txt",NULL)
+	
+
+RO: De ce nu e recomandat sa comunicaţi bidirecţional printr-un singur FIFO?
+
+	Se pot corupe datele.
+
+RO: Câte FIFO-uri poate deschide un process dacă nu sunt şi nici nu vor fi folosite vreodată de vreun alt proces?
+
+	Cate permite sistemul de operare.
+
+RO: Când aţi folosi un process în locul unui thread?
+
+	Daca vrem sa separam/protejam memoriile.
+	Un proces care se blocheaza nu cauzeaza ca programul sa se blocheze ca un thread bagamias pula n ele.
+
+RO: Se poate crea un link hard spre un fişier aflat pe o altă partiţie? Justificaţi răspunsul.
+	
+	Hard link-urile se fac pe baza unui i-nod.I-nod ul e unic pe partitie , dar nu e unic pe intreg sistemul.
+
+RO: Daţi patru comenzi care afişează numărul de linii goale dintr-un fişier.
+
+	grep -E -c "^$" file
+	grep -E "^$" file | wc -l
+	grep -E -v "^.+$" | wc -l
+	grep -E -v -c "^.+$"
+
+RO: Scrieţi o comandă SED care afişează liniile dintr-un fişier ştergând din ele primul, al treilea, al cincilea, al şaptelea, etc spaţii.
+
+	sed -E "s/( )([^ ]+)?( )?/\2\3/gi" test.txt
+
+RO: Scrieţi o comandă AWK care afişează produsul ultimului câmp al liniilor de pe poziţii impare care au număr impar de câmpuri.
+
+	awk 'BEGIN { prod=1 } NR%2==1 && NF%2==1 { prod*=$NF } END { print prod }'  
+
+RO: Daţi patru moduri prin care ieşirea standard a unui proces poate fi redirectată.
+
+	command > file
+	command >> file
+	command > file 2>&1
+	command | file
+
+RO: Scrieţi trei condiţii Shell UNIX care verifică existenţa unui fişier.
+
+	test -e file
+	[ -e file ]
+	find file
+
+RO: Adăugaţi codul C necesar pentru ca instrucţiunea de mai jos să nu se blocheze aşteptând la intrarea standard.
+
+	execlp("cat","cat","filename",NULL)
+
+RO: Schiţaţi o implementare a funcţiilor popen şi pclose, doar pentru cazul în care outputul comenzii e citit în codul C.
+
+	popen:
+		-create a pipe
+		-fork the process
+		-child: close read end of the pipes, redirect stdout to pipe and execute cmd with execlp
+		-parent: close write end of pipe, return file pointer for reading
+
+	pclose:
+		-wait for the child process
+		-close file pointer
+		-return child exit status
+
+RO: Când aţi folosi un FIFO în locul unui pipe?
+	
+	Cand trebuie sa faci relatie intre programe diferite.
+
+ RO: Când aţi folosi un mutex în locul unui rwlock?
+
+	In momentul in care toate threadurile vor sa modifice resursa critica.
+
+RO: Ce face pthread_cond_wait cu mutex-ul primit ca argument?
+
+	Deblocheaza mutex-ul si asteapta pana primeste semnal.
+
+RO: Schiţaţi o soluţie pentru problema producător-consumator.
+
+Resurse comune:
+
+	Buffer de dimensiune fixă (ex: 5 poziții).
+Două semafoare:
+	empty – numărul de locuri libere în buffer.
+	full – numărul de elemente disponibile.
+	Un mutex pentru protejarea accesului concurent la buffer.
+Fir de execuție - Producător:
+	Așteaptă un slot liber (sem_wait(empty)).
+	Intră în secțiunea critică (mutex lock).
+	Plasează un element în buffer.
+	Iese din secțiunea critică (mutex unlock).
+	Semnalează că un element e disponibil (sem_post(full)).
+Fir de execuție - Consumator:
+	Așteaptă un element disponibil (sem_wait(full)).
+	Intră în secțiunea critică (mutex lock).
+	Extrage un element din buffer.
+	Iese din secțiunea critică (mutex unlock).
+	Semnalează că un slot a devenit liber (sem_post(empty)).
+
+RO: Prin ce tranziţie de stare va trece un process când apelează pthread_cond_wait? Justificaţi răspunsul.
+	RUN->WAIT
+
+RO: Ce conţinue un fişier de tip director în sistemul de fişiere Linux?
+
+
+RO: Explicaţi diferenţa dintre un link simbolic şi un link hard.
+	Link simbolic - face legatura la o cale de fisier
+	Link hard - face legatura la un i-nod
+
+EN: Schedule the jobs below (Name/Duration/Deadline) so that the sum of their delays is minimized
+A/5/7 B/2/4 C/4/13 D/3/8
+	
+	B,A,D,C  intarziere 3
+
+EN: Considering that the size of a block is B and the size of an adress is A, how many data blocks are adressed by the triple indirect addressing of an inode?
+	(B/A)^3
+
+EN:Write a regular expression that accepts lines that contain "a", but not "b"
+	
+	"^[^b]*[a][^b]*$"
+
+EN:What is the maximum number of child processes, created by the code below, that can coexist simultaneously?
+
+	5
+
+RO: Ce conţinue un fişier de tip director în sistemul de fişiere Linux?
+
+	Numele fisierelor,i-numar(numarul inode-ului),(.),(..)
+
+EN:Give an advantage and a disadvantage of the First Fit placement policy versus the Worst-Fit placing policy
+
+	Avantaj:First-Fit e mai rapid
+	Dezavantaj:First-Fit produce fragmentara interna mai repede.
+
+EN:How many threads will you used for processing a milion files?
+
+	Cat permite calculator(=numarul de core-uri).
+
+
+EN:Why does an I/O operations cause a process to move from the running state to the waiting state?
+	
+	Pentru ca operatia de input/output poate sa dureze mult asa ca este mutata in WAIT pana este gata operatia pentru a nu ocupa procesorul.
+
+EN:How is the address calculation done in the absolute fixed partition-allocation?
+	
+	Adresa unei variabile este aceeasi cu adresa din memoria fizica.Nu se face calcul,adresa este prestabilita.
+
+EN:Processes A, B and C communicate through FIFOs X, Y and Z according to the diagram below. Sketch the code fragments that open the FIFOs in the three processes
+
+	A --X--> B
+    	B --Y--> C
+    	C --Z--> A
+
+	Procesul A
+		open(X,"w")
+		open(Z,"r")
+	Procesul B
+		open(X,"r")
+		open(Y,"w")
+	Procesul C
+		open(Z,"w")
+		open(Y,"r")
+
+
+RO:Dati un exemplu de valori pentru T, N1, N2 si N3 pentru care programul de mai jos se incheie
+
+	Valorile trebuie sa fie egale(ex 1)
+
+EN:How many processes will the code below create, excluding the parent process?
+	
+	for(i=0;i<4;i++)
+		if(fork() && i%2==1)
+			break
+
+	9 child processes
+
+i = 0
+	Creates C1 => 1 child process
+i = 1
+	P creates C2 => 2 child processes
+	P breaks
+	C1 creates C3 => 3 child processes
+	C1 breaks
+i = 2
+	C2 creates C4 => 4 child processes
+	C3 creates C5 => 5 child processes
+i = 3
+	C2 creates C6 => 6 child processes
+	C2 breaks
+	C3 creates C7 => 7 child processes
+	C3 breaks
+	C4 creates C8 => 8 child processes
+	C4 breaks
+	C5 creates C9 => 9 child processes
+	C5 breaks
+
+EN: What will the code fragment below display in the console, considering that the threads are created without problems? Justify your answer.
+
+	Valorile afisate vor fi haotice deoarece threadului ii este transmisa adresa lui i,care pe parcursul for-ului isi poate schimba valoarea pana threadul face afisarea,asa ca nu se va obtine rezultatul dorit(0 1 2 3 4 5 6 7 8 9) si un rezultat eronat.
+
+EN:Schedule the jobs below (given as Name/Duration/Deadline) so that the sum of their delays is minimized.
+A/3/8, B/10/15, C/3/5
+
+	C,A,B (3+3+10=16>15 -> delay 1)
+
+EN:Given two set-associative caches, one with 2 sets of 4 pages and one with 4 sets of 2 pages, which would perform better for the sequence of page requests below? Justify your answer.
+	17, 2, 37, 6, 9
+
+	2 set uri de 4 pagini
+		0:2,6
+		1:17,37,9
+
+	4 set uri de 2 pagini
+		0:
+		1:17,37 (9%4==1 -> memoria cache ar trebui sa inlocuiasca o pagina)
+		2:2,6
+		3:
+
+	Primul cache e mai eficient deoarece nu trebuie sa inlocuiasca vreo pagina.
+
+
+EN:Considering that a block can contain N addresses towards other blocks, how many data blocks are addressed by an i-node's double and triple indirections together?
+	N * N + N * N * N
+
+EN:Give an advantage and a disadvantage of fixed partition allocation compared to relocatable partition allocation.
+
+	Avantaj:Nu exista calcul de adresa
+	Dezavantaj:Nu poti rula pe un alt sistem deoarece adresesele sunt prestabilite si nu vor corespunde pe celalalt sistem.
+
+EN:Give an advantage and a disadvantage of loading all the pages of a process in memory at once compared to loading them on demand.
+	
+	Avantaj:Rularea programului nu este ingreunata atunci cand trebuie accesate pagini diferite deoarece sunt toate incarcate odata.
+	Dezavantaj:Incarcarea lenta a procesului.
+
+EN:Give an advantage and a disadvantage of direct access cache compared to associative cache.
+	
+	Avantaj:E mai rapida accesarea unei pagini deoarece stim exact unde se afla.
+	Dezavantaj:Aparitia frecventa a coliziunilor(trashing)
+
+EN:When does a process changes its state from WAIT to RUN?
+	
+	Un proces nu poate sa si schimbe starea direct din WAIT in RUN.Acesta trebuie sa treaca prin faza de READY de unde va primi el candva procesor.
+
+EN:Why a hard-link can be created towards files on the same partition, but not towards files on different partitions?
+
+	Un hard-link creeaza un i-nod la un fisier.Acel i-nod poate sa faca referire la un bloc fisier din interiorul partitiei din care face parte.
+
+EN:Add the necessary source code to the fragment below so that the printf displays in the console
+
+	int p[2];
+	pipe(p);
+    ->	int copie=dup(1);
+	dup2(p[1],1);
+    ->	dup2(copie,1);
+	printf("asdf\n");
+
+	
+EN:What are the elements of a virtual address in the page-segmented allocation, and what tables are involved in calculating the physical address?
+	
+	Segmentul,pagina,offset.
+	Pentru a calcula adresa reala ai nevoie de tabela de segmente si tabela de pagini.
+
+EN:Give 4 regular expressions that specify the number of times the previous expression should appear
+a* -> 0 or more times
+a+ -> 1 or more times
+a? -> 0 or 1 times
+a{x.y} -> at least x times,max y times
+
+EN:A process is opening a FIFO for writing and is the only process in the system that is using or will ever be using that fifo. When will the process finish its execution?
+	Procesul nu isi va termina executia.Acesta va fi blocat pana un alt proces va deschide FIFO pentru citire.
+	
+EN: 4 rules for regexp's that show how many times the previous expression to be repeated:
+* - 0 sau mai multe
++ - 1 sau mai multe
+? - 0 sau 1
+{x,y} - minim x,maxim y
+
+RO: Un proces deschide fifo pt citire si e singurul proces ce va folosi vreodata acel fifo, cand isi va incheia executia?
+	Niciodata, pentru ca acesta asteapta un alt proces pe cealalta parte a fifo-ului sa citeasca ce scrie, dar acesta nu va exista.
+
+RO:scrieti un grep care ia grupurile de cate 2 cuvinte, separate de un singur spatiu, care sunt formate doar din litere mici si fiecare cuvant contine cel putin 2 vocale
+
+	grep -E "([a-z]*[aeiou][aeiou][a-z]* ){2}+"
+		"</[a-z]*[aeiou][a-z]*[aeiou][a-z]*/> </[a-z]*[aeiou][a-z]*[aeiou][a-z]*/>"
+
+RO:scrieti 2 grep uri care iau liniile care nu au numarul de caractere multiplu al lui 3
+	
+	grep -E -v "^.{3}*$"
+	grep -E -v "^(...)*$"
+
+RO:scrieti un sed care inlocuieste prima aparitie a caracterului A cu caracterul B
+
+	sed -E "s/A/B/"
+
+RO:scrieti un awk care afiseaza liniile care au primul cuvant identic cu ultimul cuvant si al caror penultim cuvant are numar par de caractere
+
+	awk 'NF>1 && $1 == $NF && length($(NF-1))%2==0 { print $0 }'
+
+RO:scrieti 3 moduri de a crea un fisier gol
+
+	echo > file
+	touch file
+	> file
+	nano file
+	vi/vim file
+
+RO:scrieti 5 moduri de a verifica daca un string este gol(cu test)
+
+	if test -Z "$string"
+	if test "$string"=""		"${#string}" -numarul de caractere al stringului
+	if ! test -n "$string"
+	if test ${#string} -eq 0
+	if test ${#string} -lt 1
+
+RO:afisati ierarhia proceselor a urmatorului cod:
+	for(int i = 0; i < 3; i++)
+    		if (fork() != 0)
+        		wait();
+
+
+		P->C1->C2->C3
+
+RO:scrieti ce afiseaza codul:
+	execlp("expr","expr","a","+","1");
+	printf("xyz\n");
+
+	Eroare de sintaxa,lipseste NULL de la final ?
+	a nu este intreg ?
+
+RO:care sunt consecintele inlocuirii lui pthread_mutex_lock cu sem_post in cod?
+	
+	Ele nu corespunde astfel resursa critica nu va mai fi protejata,ajungandu-se la un race condition.
+
+
+RO:Considerand ca dimensiunea unui bloc este B si dimensiunea unei adrese este A, cate blocuri de date sunt adresate de indirectarea dubla a unui i-nod?
+	
+	B blocuri
+	A dim adresa  -> B/A adrese
+	
+	indirectare dubla -> (B/A)^2
+
+
+RO:definiti un semafor binar si explicati cum functioneaza
+	
+	Comportamentul este similar unui mutex deoarece un semafor binar permite doar unui thread sa treaca.Semaforul este initializat cu 1.Are doar 2 stari 0 sau 1.Sem_wait ... .Sem_post ... .
+			
+
+RO:prin ce stare(gen ready, wait, swap, etc) trece un proces cand apelam pthread_join?
+	
+	RUNNING->WAIT->READY
+	
+

@@ -1,0 +1,9 @@
+7,Alin,901
+8,Stefan,912
+1,Andrei,123
+2,Mihai,423
+3,Cristian,431
+4,Tudor,543
+5,Alexandru,873
+10,Mihai,390
+11,Mircea,3213

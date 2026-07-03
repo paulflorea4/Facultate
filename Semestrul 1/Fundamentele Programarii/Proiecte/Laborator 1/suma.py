@@ -1,0 +1,9 @@
+n=int(input())
+i=0
+s=0
+while i<n:
+    x=int(input())
+    s=s+x
+    i=i+1
+print(s)
+      

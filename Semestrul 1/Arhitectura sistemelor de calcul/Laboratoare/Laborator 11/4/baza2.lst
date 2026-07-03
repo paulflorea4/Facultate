@@ -1,0 +1,17 @@
+     1                                  %ifndef _BAZA2_ASM_
+     2                                  %define _BAZA2_ASM_
+     3                                  
+     4                                      base2:
+     5 00000000 66B920000000                    mov ecx,32
+     6 00000006 66678B7C2404                    mov edi,[esp+4]
+     7                                          repeta:
+     8 0000000C 30C0                                xor al,al
+     9 0000000E 66D1E2                              shl edx,1
+    10 00000011 1430                                adc al,'0'
+    11 00000013 AA                                  stosb
+    12 00000014 E2F6                                loop repeta
+    13                                          
+    14 00000016 C20400                          ret 4
+    15                                  
+    16                                  
+    17                                  %endif

@@ -1,0 +1,42 @@
+[
+  {
+    "directory": "C:\\Facultate\\Semestrul 2\\Programare orientata obiect\\Laboratoare\\lab6-7\\Planificarea activitatilor\\Planificarea activitatilor",
+    "command": "\"C:\\WINDOWS\\system32\\CL.exe\" \/c \/nologo \/W4 \/WX \/diagnostics:column \/Od \/D CODE_ANALYSIS \/D _DEBUG \/D _CONSOLE \/D _UNICODE \/D UNICODE \/EHsc \/RTC1 \/MDd \/GS \/fp:precise \/permissive- \/Fo\"x64\\Debug\\\\\" \/Gd \/TP --target=amd64-pc-windows-msvc   \"C:\\Facultate\\Semestrul 2\\Programare orientata obiect\\Laboratoare\\lab6-7\\Planificarea activitatilor\\Planificarea activitatilor\\Activity.cpp\"",
+    "file": "C:\\Facultate\\Semestrul 2\\Programare orientata obiect\\Laboratoare\\lab6-7\\Planificarea activitatilor\\Planificarea activitatilor\\Activity.cpp"
+  },
+  {
+    "directory": "C:\\Facultate\\Semestrul 2\\Programare orientata obiect\\Laboratoare\\lab6-7\\Planificarea activitatilor\\Planificarea activitatilor",
+    "command": "\"C:\\WINDOWS\\system32\\CL.exe\" \/c \/nologo \/W4 \/WX \/diagnostics:column \/Od \/D CODE_ANALYSIS \/D _DEBUG \/D _CONSOLE \/D _UNICODE \/D UNICODE \/EHsc \/RTC1 \/MDd \/GS \/fp:precise \/permissive- \/Fo\"x64\\Debug\\\\\" \/Gd \/TP --target=amd64-pc-windows-msvc   \"C:\\Facultate\\Semestrul 2\\Programare orientata obiect\\Laboratoare\\lab6-7\\Planificarea activitatilor\\Planificarea activitatilor\\ActivityList.cpp\"",
+    "file": "C:\\Facultate\\Semestrul 2\\Programare orientata obiect\\Laboratoare\\lab6-7\\Planificarea activitatilor\\Planificarea activitatilor\\ActivityList.cpp"
+  },
+  {
+    "directory": "C:\\Facultate\\Semestrul 2\\Programare orientata obiect\\Laboratoare\\lab6-7\\Planificarea activitatilor\\Planificarea activitatilor",
+    "command": "\"C:\\WINDOWS\\system32\\CL.exe\" \/c \/nologo \/W4 \/WX \/diagnostics:column \/Od \/D CODE_ANALYSIS \/D _DEBUG \/D _CONSOLE \/D _UNICODE \/D UNICODE \/EHsc \/RTC1 \/MDd \/GS \/fp:precise \/permissive- \/Fo\"x64\\Debug\\\\\" \/Gd \/TP --target=amd64-pc-windows-msvc   \"C:\\Facultate\\Semestrul 2\\Programare orientata obiect\\Laboratoare\\lab6-7\\Planificarea activitatilor\\Planificarea activitatilor\\main.cpp\"",
+    "file": "C:\\Facultate\\Semestrul 2\\Programare orientata obiect\\Laboratoare\\lab6-7\\Planificarea activitatilor\\Planificarea activitatilor\\main.cpp"
+  },
+  {
+    "directory": "C:\\Facultate\\Semestrul 2\\Programare orientata obiect\\Laboratoare\\lab6-7\\Planificarea activitatilor\\Planificarea activitatilor",
+    "command": "\"C:\\WINDOWS\\system32\\CL.exe\" \/c \/nologo \/W4 \/WX \/diagnostics:column \/Od \/D CODE_ANALYSIS \/D _DEBUG \/D _CONSOLE \/D _UNICODE \/D UNICODE \/EHsc \/RTC1 \/MDd \/GS \/fp:precise \/permissive- \/Fo\"x64\\Debug\\\\\" \/Gd \/TP --target=amd64-pc-windows-msvc   \"C:\\Facultate\\Semestrul 2\\Programare orientata obiect\\Laboratoare\\lab6-7\\Planificarea activitatilor\\Planificarea activitatilor\\Repository.cpp\"",
+    "file": "C:\\Facultate\\Semestrul 2\\Programare orientata obiect\\Laboratoare\\lab6-7\\Planificarea activitatilor\\Planificarea activitatilor\\Repository.cpp"
+  },
+  {
+    "directory": "C:\\Facultate\\Semestrul 2\\Programare orientata obiect\\Laboratoare\\lab6-7\\Planificarea activitatilor\\Planificarea activitatilor",
+    "command": "\"C:\\WINDOWS\\system32\\CL.exe\" \/c \/nologo \/W4 \/WX \/diagnostics:column \/Od \/D CODE_ANALYSIS \/D _DEBUG \/D _CONSOLE \/D _UNICODE \/D UNICODE \/EHsc \/RTC1 \/MDd \/GS \/fp:precise \/permissive- \/Fo\"x64\\Debug\\\\\" \/Gd \/TP --target=amd64-pc-windows-msvc   \"C:\\Facultate\\Semestrul 2\\Programare orientata obiect\\Laboratoare\\lab6-7\\Planificarea activitatilor\\Planificarea activitatilor\\Service.cpp\"",
+    "file": "C:\\Facultate\\Semestrul 2\\Programare orientata obiect\\Laboratoare\\lab6-7\\Planificarea activitatilor\\Planificarea activitatilor\\Service.cpp"
+  },
+  {
+    "directory": "C:\\Facultate\\Semestrul 2\\Programare orientata obiect\\Laboratoare\\lab6-7\\Planificarea activitatilor\\Planificarea activitatilor",
+    "command": "\"C:\\WINDOWS\\system32\\CL.exe\" \/c \/nologo \/W4 \/WX \/diagnostics:column \/Od \/D CODE_ANALYSIS \/D _DEBUG \/D _CONSOLE \/D _UNICODE \/D UNICODE \/EHsc \/RTC1 \/MDd \/GS \/fp:precise \/permissive- \/Fo\"x64\\Debug\\\\\" \/Gd \/TP --target=amd64-pc-windows-msvc   \"C:\\Facultate\\Semestrul 2\\Programare orientata obiect\\Laboratoare\\lab6-7\\Planificarea activitatilor\\Planificarea activitatilor\\Tests.cpp\"",
+    "file": "C:\\Facultate\\Semestrul 2\\Programare orientata obiect\\Laboratoare\\lab6-7\\Planificarea activitatilor\\Planificarea activitatilor\\Tests.cpp"
+  },
+  {
+    "directory": "C:\\Facultate\\Semestrul 2\\Programare orientata obiect\\Laboratoare\\lab6-7\\Planificarea activitatilor\\Planificarea activitatilor",
+    "command": "\"C:\\WINDOWS\\system32\\CL.exe\" \/c \/nologo \/W4 \/WX \/diagnostics:column \/Od \/D CODE_ANALYSIS \/D _DEBUG \/D _CONSOLE \/D _UNICODE \/D UNICODE \/EHsc \/RTC1 \/MDd \/GS \/fp:precise \/permissive- \/Fo\"x64\\Debug\\\\\" \/Gd \/TP --target=amd64-pc-windows-msvc   \"C:\\Facultate\\Semestrul 2\\Programare orientata obiect\\Laboratoare\\lab6-7\\Planificarea activitatilor\\Planificarea activitatilor\\UI.cpp\"",
+    "file": "C:\\Facultate\\Semestrul 2\\Programare orientata obiect\\Laboratoare\\lab6-7\\Planificarea activitatilor\\Planificarea activitatilor\\UI.cpp"
+  },
+  {
+    "directory": "C:\\Facultate\\Semestrul 2\\Programare orientata obiect\\Laboratoare\\lab6-7\\Planificarea activitatilor\\Planificarea activitatilor",
+    "command": "\"C:\\WINDOWS\\system32\\CL.exe\" \/c \/nologo \/W4 \/WX \/diagnostics:column \/Od \/D CODE_ANALYSIS \/D _DEBUG \/D _CONSOLE \/D _UNICODE \/D UNICODE \/EHsc \/RTC1 \/MDd \/GS \/fp:precise \/permissive- \/Fo\"x64\\Debug\\\\\" \/Gd \/TP --target=amd64-pc-windows-msvc   \"C:\\Facultate\\Semestrul 2\\Programare orientata obiect\\Laboratoare\\lab6-7\\Planificarea activitatilor\\Planificarea activitatilor\\Validator.cpp\"",
+    "file": "C:\\Facultate\\Semestrul 2\\Programare orientata obiect\\Laboratoare\\lab6-7\\Planificarea activitatilor\\Planificarea activitatilor\\Validator.cpp"
+  }
+]

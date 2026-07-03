@@ -1,0 +1,7 @@
+strada 3 1 --X
+gheorgheni 3 2 XX-X-X
+buna-ziua 3 2 XXX-XX
+poiana 3 3 -XXXXX---
+gradinilor 3 3 -X-XX-X--
+zorilor 3 4 XX-X--X-XX-X
+eroilor 4 4 X-XXXXXX-XX-XX-X

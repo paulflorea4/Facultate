@@ -1,0 +1,88 @@
+     1                                  bits 32
+     2                                  global start
+     3                                  
+     4                                  extern exit,scanf,printf
+     5                                  import exit msvcrt.dll
+     6                                  import scanf msvcrt.dll
+     7                                  import printf msvcrt.dll
+     8                                  
+     9                                  %include "ex3_modul.asm"
+     1                              <1> %ifndef _EX3_MODUL_ASM_
+     2                              <1> %define _EX3_MODUL_ASM_
+     3                              <1>     concatenare:
+     4 00000000 8B742404            <1>         mov esi,[esp+4]
+     5 00000004 8B7C240C            <1>         mov edi,[esp+12]
+     6                              <1>     repeta1:
+     7 00000008 AC                  <1>         lodsb
+     8 00000009 3C00                <1>         cmp al,0
+     9 0000000B 7403                <1>         je afara1
+    10 0000000D AA                  <1>         stosb
+    11 0000000E EBF8                <1>         jmp repeta1
+    12                              <1>     afara1:
+    13                              <1>     
+    14 00000010 8B742408            <1>         mov esi,[esp+8]
+    15                              <1>     repeta2:
+    16 00000014 AC                  <1>         lodsb
+    17 00000015 3C00                <1>         cmp al,0
+    18 00000017 7403                <1>         je afara2
+    19 00000019 AA                  <1>         stosb
+    20 0000001A EBF8                <1>         jmp repeta2
+    21                              <1>     afara2:
+    22                              <1>     
+    23 0000001C C3                  <1>         ret
+    24                              <1> %endif
+    25                              <1>     
+    26                              <1>     
+    10                                  segment data use32 class=data
+    11                                      max equ 50
+    12 0000001D 00<rept>                    s1 times max+1 db 0
+    13 00000050 00<rept>                    s2 times max+1 db 0
+    14 00000083 00<rept>                    d times 2*max+1 db 0
+    15                                      
+    16 000000E8 257300                      format_r db "%s", 0
+    17 000000EB 5369722066696E616C-         format_p db "Sir final: %s", 13, 10, 0
+    17 000000F4 3A2025730D0A00     
+    18 000000FB 44617469207072696D-         text_1 db "Dati primul sir: ", 0
+    18 00000104 756C207369723A2000 
+    19 0000010D 4461746920616C2064-         text_2 db "Dati al doilea sir: ", 0
+    19 00000116 6F696C656120736972-
+    19 0000011F 3A2000             
+    20                                      
+    21                                  ; 3. Scrieți un program care concatenează două șiruri de caractere citite de la tastatură.
+    22                                  segment code use32 class=code       
+    23                                      start:
+    24                                          ; citesc primul sir
+    25 00000000 68[FB000000]                    push dword text_1
+    26 00000005 FF15[00000000]                  call [printf]
+    27 0000000B 83C404                          add esp,4*1
+    28                                          
+    29 0000000E 68[1D000000]                    push dword s1
+    30 00000013 68[E8000000]                    push dword format_r
+    31 00000018 FF15[00000000]                  call [scanf]
+    32 0000001E 83C408                          add esp,4*2
+    33                                  
+    34                                          ;citesc al doilea sir
+    35 00000021 68[0D010000]                    push dword text_2
+    36 00000026 FF15[00000000]                  call [printf]
+    37 0000002C 83C404                          add esp,4*1
+    38                                          
+    39 0000002F 68[50000000]                    push dword s2
+    40 00000034 68[E8000000]                    push dword format_r
+    41 00000039 FF15[00000000]                  call [scanf]
+    42 0000003F 83C408                          add esp,4*2
+    43                                          
+    44                                          ; concatenez sirurile
+    45 00000042 68[83000000]                    push dword d
+    46 00000047 68[50000000]                    push dword s2
+    47 0000004C 68[1D000000]                    push dword s1
+    48 00000051 E8(00000000)                    call concatenare
+    49 00000056 83C40C                          add esp,4*3
+    50                                          
+    51                                          ; afisez rezultatul
+    52 00000059 68[83000000]                    push dword d
+    53 0000005E 68[EB000000]                    push dword format_p
+    54 00000063 FF15[00000000]                  call [printf]
+    55 00000069 83C408                          add esp,4*2
+    56                                          
+    57 0000006C 6A00                            push dword 0
+    58 0000006E FF15[00000000]                  call [exit]

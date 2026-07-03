@@ -1,0 +1,107 @@
+{
+  "version": "2.1.0",
+  "$schema": "https://schemastore.azurewebsites.net/schemas/json/sarif-2.1.0-rtm.5.json",
+  "runs": [
+    {
+      "results": [],
+      "tool": {
+        "driver": {
+          "name": "PREfast",
+          "fullName": "PREfast Code Analysis",
+          "version": "14.43.34808.0",
+          "informationUri": "https://aka.ms/cpp/ca"
+        }
+      },
+      "invocations": [
+        {
+          "executionSuccessful": true
+        }
+      ],
+      "artifacts": [
+        {
+          "location": {
+            "uri": "file:///c:/facultate/semestrul 2/programare orientata obiect/laboratoare/lab10-11/planificareaactivitatilorgui/planificareaactivitatilorgui/ui.cpp"
+          },
+          "roles": [
+            "analysisTarget"
+          ],
+          "hashes": {
+            "sha-256": "a8ebb4c8137dae4acddc949d1ed3fa41281aaa52a3d4da281cf69f58f791a2bd"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/facultate/semestrul 2/programare orientata obiect/laboratoare/lab10-11/planificareaactivitatilorgui/planificareaactivitatilorgui/ui.h"
+          },
+          "hashes": {
+            "sha-256": "374dfac2be14277103fecba603c0d38c4999941f218a1b8c8e1ed86cae7be5e4"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/facultate/semestrul 2/programare orientata obiect/laboratoare/lab10-11/planificareaactivitatilorgui/planificareaactivitatilorgui/service.h"
+          },
+          "hashes": {
+            "sha-256": "b87eed90e80698731b9ac286ccf39134a305855d99a675c00648d5ecbef4db37"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/facultate/semestrul 2/programare orientata obiect/laboratoare/lab10-11/planificareaactivitatilorgui/planificareaactivitatilorgui/repository.h"
+          },
+          "hashes": {
+            "sha-256": "67b5003b266eee9c2a1cc46d93004b3530c48e7138c713115d4ae0d3dadac3d9"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/facultate/semestrul 2/programare orientata obiect/laboratoare/lab10-11/planificareaactivitatilorgui/planificareaactivitatilorgui/activity.h"
+          },
+          "hashes": {
+            "sha-256": "04134ad5aad6ea815334473b6100dd73515206983c22ae32f6c66ae67ce11153"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/facultate/semestrul 2/programare orientata obiect/laboratoare/lab10-11/planificareaactivitatilorgui/planificareaactivitatilorgui/exception.h"
+          },
+          "hashes": {
+            "sha-256": "3ccd941e977132ea43dc6aa3170d3d45fa22d24727a68f955a3a0a5ed430b0b9"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/facultate/semestrul 2/programare orientata obiect/laboratoare/lab10-11/planificareaactivitatilorgui/planificareaactivitatilorgui/validator.h"
+          },
+          "hashes": {
+            "sha-256": "34f5b224eb64e4fda358df1f00298610833e7b8cc7f33d546cf7d45bf0246c69"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/facultate/semestrul 2/programare orientata obiect/laboratoare/lab10-11/planificareaactivitatilorgui/planificareaactivitatilorgui/dto.h"
+          },
+          "hashes": {
+            "sha-256": "62813076ab16661043bd824eb5ed29a6f82dba5c28d4efe9a33bed6f6cfa776e"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/facultate/semestrul 2/programare orientata obiect/laboratoare/lab10-11/planificareaactivitatilorgui/planificareaactivitatilorgui/activitylist.h"
+          },
+          "hashes": {
+            "sha-256": "2d91a62edd8c60183db008ba2339327e95d42adca31bff5e0f8112aad09ed2e4"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/facultate/semestrul 2/programare orientata obiect/laboratoare/lab10-11/planificareaactivitatilorgui/planificareaactivitatilorgui/undo.h"
+          },
+          "hashes": {
+            "sha-256": "fcba75e683f5210dfd61460419e87fdfa2d7b1a07a245691a576fb2f7f75e1b2"
+          }
+        }
+      ]
+    }
+  ]
+}

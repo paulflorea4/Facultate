@@ -1,0 +1,18 @@
+     1                                  bits 32
+     2                                  
+     3                                  global start
+     4                                  extern cerinta
+     5                                  extern exit
+     6                                  import exit msvcrt.dll
+     7                                  
+     8                                  segment data use32 class=data
+     9 00000000 00791361CD26                octeti db 00h,79h,13h,61h,0cdh,26h
+    10                                      len equ $-octeti
+    11                                  segment code use32 class=code
+    12                                      start:
+    13 00000000 68[00000000]                    push dword octeti
+    14 00000005 6A06                            push dword len
+    15 00000007 E8(00000000)                    call cerinta
+    16 0000000C 83C408                          add esp,4*2
+    17 0000000F 6A00                            push dword 0
+    18 00000011 FF15[00000000]                  call [exit]

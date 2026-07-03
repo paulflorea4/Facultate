@@ -1,0 +1,83 @@
+     1                                  ;a,b-byte; c-word; e-doubleword; x-qword
+     2                                  ;(a+b*c+2/c)/(2+a)+e+x
+     3                                  bits 32 ; assembling for the 32 bits architecture
+     4                                  
+     5                                  ; declare the EntryPoint (a label defining the very first instruction of the program)
+     6                                  global start        
+     7                                  
+     8                                  ; declare external functions needed by our program
+     9                                  extern exit               ; tell nasm that exit exists even if we won't be defining it
+    10                                  import exit msvcrt.dll    ; exit is a function that ends the calling process. It is defined in msvcrt.dll
+    11                                                            ; msvcrt.dll contains exit, printf and all the other important C-runtime specific functions
+    12                                  
+    13                                  ; our data is declared here (the variables needed by our program)
+    14                                  segment data use32 class=data
+    15 00000000 <res 00000001>                 a resb 1
+    16 00000001 <res 00000001>                 b resb 1
+    17 00000002 <res 00000002>                 c resw 1
+    18 00000004 <res 00000004>                 e resd 1
+    19 00000008 <res 00000008>                 x resq 1
+    20                                  
+    21                                  ; our code starts here
+    22                                  segment code use32 class=code
+    23                                      start:
+    24                                          ;b*c->cx:bx
+    25 00000000 A0[01000000]                    mov al,[b]
+    26 00000005 6698                            cbw
+    27 00000007 66F72D[02000000]                imul word [c]
+    28 0000000E 6689C3                          mov bx,ax
+    29 00000011 6689D1                          mov cx,dx
+    30                                          
+    31                                          ;2/c->dx:ax
+    32 00000014 66B80200                        mov ax,2
+    33 00000018 6699                            cwd
+    34 0000001A 66F73D[02000000]                idiv word [c]
+    35 00000021 6699                            cwd
+    36                                          
+    37                                          ;b*c+2/c->cx:bx
+    38 00000023 6601C3                          add bx,ax
+    39 00000026 6611D1                          adc cx,dx
+    40                                          
+    41                                          ;a->dx:ax
+    42 00000029 A0[00000000]                    mov al,[a]
+    43 0000002E 6698                            cbw
+    44 00000030 6699                            cwd
+    45                                          
+    46                                          ;a+b*c+2/c->cx:bx
+    47 00000032 6601C3                          add bx,ax
+    48 00000035 6611D1                          adc cx,dx
+    49                                          
+    50                                          ;2+a->stiva
+    51 00000038 A0[00000000]                    mov al,[a]
+    52 0000003D 6698                            cbw
+    53 0000003F 6683C002                        add ax,2
+    54 00000043 6650                            push ax
+    55                                          
+    56                                          ;(a+b*c+2/c)/(2+a)->ecx:ebx
+    57 00000045 6689CA                          mov dx,cx
+    58 00000048 6689D8                          mov ax,bx
+    59 0000004B 665B                            pop bx
+    60 0000004D 66F7FB                          idiv bx
+    61 00000050 98                              cwde
+    62 00000051 99                              cdq
+    63 00000052 89C3                            mov ebx,eax
+    64 00000054 89D1                            mov ecx,edx
+    65                                          
+    66                                          ;e->edx:eax
+    67 00000056 A1[04000000]                    mov eax,[e]
+    68 0000005B 99                              cdq
+    69                                          
+    70                                          ;(a+b*c+2/c)/(2+a)+e->ecx:ebx
+    71 0000005C 01C3                            add ebx,eax
+    72 0000005E 11D1                            adc ecx,edx
+    73                                          
+    74                                          ;x->edx:eax
+    75 00000060 A1[08000000]                    mov eax,[x]
+    76 00000065 8B15[0C000000]                  mov edx,[x+4]
+    77                                          
+    78                                          ;(a+b*c+2/c)/(2+a)+e+x->ecx:ebx
+    79 0000006B 01C3                            add ebx,eax
+    80 0000006D 11D1                            adc ecx,edx
+    81                                          ; exit(0)
+    82 0000006F 6A00                            push    dword 0      ; push the parameter for exit onto the stack
+    83 00000071 FF15[00000000]                  call    [exit]       ; call exit to terminate the program

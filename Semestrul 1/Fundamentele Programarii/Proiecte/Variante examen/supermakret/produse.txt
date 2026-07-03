@@ -1,0 +1,16 @@
+101,Laptop,3500
+102,Telefon,2500
+103,Televizor,2800
+104,Frigider,4200
+105,Mașină de spălat,3300
+106,Aspirator,1200
+107,Cuptor cu microunde,800
+108,Blender,600
+109,Router Wi-Fi,300
+110,Cameră foto,2700
+111,Consolă de jocuri,2300
+112,Tabletă,1800
+113,Boxe portabile,700
+114,Ceas inteligent,1500
+115,Aer condiționat,4000
+999,ashwaganda,555

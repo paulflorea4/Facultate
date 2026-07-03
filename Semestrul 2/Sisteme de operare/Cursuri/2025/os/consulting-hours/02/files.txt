@@ -1,0 +1,5 @@
+./files.txt
+./a.txt
+./checksums.txt
+./b.sh
+./a.sh

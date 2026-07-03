@@ -1,0 +1,103 @@
+     1                                  bits 32 
+     2                                  
+     3                                  global start        
+     4                                  
+     5                                  extern exit,printf,scanf              
+     6                                  import exit msvcrt.dll  
+     7                                  import printf msvcrt.dll
+     8                                  import scanf msvcrt.dll  
+     9                                  
+    10                                  %include "concatenare.asm"
+     1                              <1> %ifndef _CONCATENARE_ASM_
+     2                              <1> %define _CONCATENARE_ASM_
+     3                              <1> 
+     4                              <1> concatenare:
+     5 00000000 8B742404            <1>         mov esi,[esp+4]
+     6 00000004 8B7C240C            <1>         mov edi,[esp+12]
+     7                              <1>         
+     8                              <1>         repeta:
+     9 00000008 AC                  <1>             lodsb
+    10 00000009 3C30                <1>             cmp al,'0'
+    11 0000000B 7D02                <1>             jge si1
+    12 0000000D EB05                <1>             jmp continua
+    13                              <1>         si1:
+    14 0000000F 3C39                <1>             cmp al,'9'
+    15 00000011 7F01                <1>             jg continua
+    16 00000013 AA                  <1>                 stosb
+    17                              <1>             continua:
+    18 00000014 3C00                <1>             cmp al,0
+    19 00000016 7402                <1>             je afara
+    20 00000018 EBEE                <1>             jmp repeta
+    21                              <1>             
+    22                              <1>         afara:
+    23                              <1>         
+    24 0000001A 8B742408            <1>         mov esi,[esp+8]
+    25                              <1>         
+    26                              <1>         repeta2:
+    27 0000001E AC                  <1>             lodsb
+    28 0000001F 3C30                <1>             cmp al,'0'
+    29 00000021 7D02                <1>             jge si2
+    30 00000023 EB05                <1>             jmp continua2
+    31                              <1>         si2:
+    32 00000025 3C39                <1>             cmp al,'9'
+    33 00000027 7F01                <1>             jg continua2
+    34 00000029 AA                  <1>                 stosb
+    35                              <1>             continua2:
+    36 0000002A 3C00                <1>             cmp al,0
+    37 0000002C 7402                <1>             je afara2
+    38 0000002E EBEE                <1>             jmp repeta2
+    39                              <1>             
+    40                              <1>         afara2:
+    41                              <1>         
+    42 00000030 C3                  <1>         ret
+    43                              <1>         
+    44                              <1> %endif 
+    11                                  ;3.Se dau doua siruri continand caractere. Sa se calculeze si sa se afiseze rezultatul concatenarii tuturor caracterelor tip cifra zecimala din cel de-al doilea sir dupa cele din primul sir si invers, rezultatul con
+    12                                  segment data use32 class=data
+    13 00000031 00<rept>                    s1 times 100 db 0
+    14 00000095 00<rept>                    s2 times 100 db 0
+    15 000000F9 257300                      format db "%s",0
+    16 000000FC 00<rept>                    Rez1 times 200 db 0
+    17 000001C4 00<rept>                    Rez2 times 200 db 0
+    18 0000028C 436600                      mesaj db "Cf",0
+    19 0000028F 0A00                        spatiu db 10,0
+    20                                  segment code use32 class=code
+    21                                          
+    22                                      start:
+    23 00000000 68[31000000]                    push dword s1
+    24 00000005 68[F9000000]                    push dword format
+    25 0000000A FF15[00000000]                  call [scanf]
+    26 00000010 83C408                          add esp,4*2
+    27                                          
+    28 00000013 68[95000000]                    push dword s2
+    29 00000018 68[F9000000]                    push dword format
+    30 0000001D FF15[00000000]                  call [scanf]
+    31 00000023 83C408                          add esp,4*2
+    32                                          
+    33 00000026 68[FC000000]                    push dword Rez1
+    34 0000002B 68[95000000]                    push dword s2
+    35 00000030 68[31000000]                    push dword s1
+    36 00000035 E8(00000000)                    call concatenare
+    37 0000003A 83C40C                          add esp,4*3
+    38                                          
+    39 0000003D 68[C4010000]                    push dword Rez2
+    40 00000042 68[31000000]                    push dword s1
+    41 00000047 68[95000000]                    push dword s2
+    42 0000004C E8(00000000)                    call concatenare
+    43 00000051 83C40C                          add esp,4*3
+    44                                          
+    45 00000054 68[FC000000]                    push dword Rez1
+    46 00000059 FF15[00000000]                  call [printf]
+    47 0000005F 83C404                          add esp,4
+    48                                          
+    49 00000062 68[8F020000]                    push dword spatiu
+    50 00000067 FF15[00000000]                  call [printf]
+    51 0000006D 83C404                          add esp,4
+    52                                          
+    53 00000070 68[C4010000]                    push dword Rez2
+    54 00000075 FF15[00000000]                  call [printf]
+    55 0000007B 83C404                          add esp,4
+    56                                         
+    57                                          ; exit(0)
+    58 0000007E 6A00                            push    dword 0      
+    59 00000080 FF15[00000000]                  call    [exit]       

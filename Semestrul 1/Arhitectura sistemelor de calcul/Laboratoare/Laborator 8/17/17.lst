@@ -1,0 +1,65 @@
+     1                                  bits 32
+     2                                  
+     3                                  global start
+     4                                  
+     5                                  extern exit,fopen,fprintf,fclose,scanf,printf
+     6                                  import exit msvcrt.dll
+     7                                  import fopen msvcrt.dll
+     8                                  import fprintf msvcrt.dll
+     9                                  import fclose msvcrt.dll
+    10                                  import scanf msvcrt.dll
+    11                                  import printf msvcrt.dll
+    12                                  ;17.Se da un nume de fisier (definit in segmentul de date). Sa se creeze un fisier cu numele dat, apoi sa se citeasca de la tastatura numere si sa se scrie din valorile citite in fisier numerele divizibile cu 7, pan
+    13                                  segment data use32 class=data
+    14 00000000 6F75747075742E7478-         file_name db "output.txt",0
+    14 00000009 7400               
+    15 0000000B 7700                        mod_access db "w",0
+    16 0000000D FFFFFFFF                    descriptor_file dd -1 
+    17 00000011 256400                      format db "%d",0
+    18 00000014 25642000                    output_format db "%d ",0
+    19 00000018 44617469206F207661-         message db "Dati o valoare:",0
+    19 00000021 6C6F6172653A00     
+    20 00000028 <res 00000004>              n resd 1
+    21                                  segment code use32 class=code
+    22                                      start:
+    23 00000000 68[0B000000]                    push dword mod_access
+    24 00000005 68[00000000]                    push dword file_name
+    25 0000000A FF15[00000000]                  call [fopen]
+    26 00000010 83C408                          add esp,4*2
+    27                                          
+    28 00000013 A3[0D000000]                    mov [descriptor_file],eax
+    29 00000018 83F800                          cmp eax,0
+    30 0000001B 7467                            je final
+    31                                          
+    32                                      repeta:
+    33 0000001D 68[18000000]                    push dword message
+    34 00000022 FF15[00000000]                  call [printf]
+    35 00000028 83C404                          add esp,4
+    36                                          
+    37 0000002B 68[28000000]                    push dword n
+    38 00000030 68[11000000]                    push dword format
+    39 00000035 FF15[00000000]                  call [scanf]
+    40 0000003B 83C408                          add esp,4*2
+    41                                          
+    42 0000003E A1[28000000]                    mov eax,[n]
+    43 00000043 BA00000000                      mov edx,0
+    44 00000048 83F800                          cmp eax,0
+    45 0000004B 7428                            je afara
+    46 0000004D BB07000000                      mov ebx,7
+    47 00000052 F7F3                            div ebx
+    48 00000054 83FA00                          cmp edx,0
+    49 00000057 751A                            jne next
+    50 00000059 FF35[28000000]                  push dword [n]
+    51 0000005F 68[14000000]                    push dword output_format
+    52 00000064 FF35[0D000000]                  push dword [descriptor_file]
+    53 0000006A FF15[00000000]                  call [fprintf]
+    54 00000070 83C408                          add esp,4*2
+    55                                      next:
+    56 00000073 EBA8                            jmp repeta
+    57                                      afara:
+    58 00000075 FF35[0D000000]                  push dword [descriptor_file]
+    59 0000007B FF15[00000000]                  call [fclose]
+    60 00000081 83C404                          add esp,4
+    61                                      final:
+    62 00000084 6A00                            push dword 0
+    63 00000086 FF15[00000000]                  call [exit]

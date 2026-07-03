@@ -1,0 +1,57 @@
+# Build directories
+cmake-build-debug/
+cmake-build-release/
+build/
+out/
+
+# CLion / JetBrains project files
+.idea/
+
+# Compiler output
+*.obj
+*.o
+*.a
+*.so
+*.exe
+*.dll
+*.lib
+*.pdb
+
+# Logs and temporary files
+*.log
+*.tmp
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+*.zip
+.vs/
+
+# ===== Java =====
+*.class
+*.jar
+*.war
+*.ear
+target/
+out/
+
+# ===== IDEs =====
+.idea/
+.vscode/
+*.iml
+*.classpath
+*.project
+.settings/
+
+# ===== Build tools =====
+.gradle/
+build/
+
+# ===== OS files =====
+.DS_Store
+Thumbs.db
+
+# ===== Logs =====
+*.log

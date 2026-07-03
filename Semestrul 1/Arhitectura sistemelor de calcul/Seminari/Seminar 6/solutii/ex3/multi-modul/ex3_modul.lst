@@ -1,0 +1,26 @@
+     1                                  %ifndef _EX3_MODUL_ASM_
+     2                                  %define _EX3_MODUL_ASM_
+     3                                      concatenare:
+     4 00000000 66678B742404                    mov esi,[esp+4]
+     5 00000006 66678B7C240C                    mov edi,[esp+12]
+     6                                      repeta1:
+     7 0000000C AC                              lodsb
+     8 0000000D 3C00                            cmp al,0
+     9 0000000F 7403                            je afara1
+    10 00000011 AA                              stosb
+    11 00000012 EBF8                            jmp repeta1
+    12                                      afara1:
+    13                                      
+    14 00000014 66678B742408                    mov esi,[esp+8]
+    15                                      repeta2:
+    16 0000001A AC                              lodsb
+    17 0000001B 3C00                            cmp al,0
+    18 0000001D 7403                            je afara2
+    19 0000001F AA                              stosb
+    20 00000020 EBF8                            jmp repeta2
+    21                                      afara2:
+    22                                      
+    23 00000022 C3                              ret
+    24                                  %endif
+    25                                      
+    26                                      

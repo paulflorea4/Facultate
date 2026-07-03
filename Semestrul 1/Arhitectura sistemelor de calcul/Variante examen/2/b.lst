@@ -1,0 +1,62 @@
+     1                                  bits 32
+     2                                  
+     3                                  global cerinta
+     4                                  extern printf
+     5                                  import printf msvcrt.dll
+     6                                  
+     7                                  segment data use32 class=data
+     8 00000000 00000000                    lungime dd 0
+     9 00000004 <res 00000002>              cuvant_curent resw 1
+    10 00000006 2578682000                  format_afisare db "%xh ",0
+    11 0000000B 0B                          d db 11
+    12                                  segment code use32 class=code
+    13                                      cerinta:
+    14 00000000 8B4C2404                        mov ecx,[esp+4]
+    15 00000004 890D[00000000]                  mov [lungime],ecx
+    16 0000000A 8B7C2408                        mov edi,[esp+8]         
+    17 0000000E 89FE                            mov esi,edi
+    18 00000010 BB00000000                      mov ebx,0
+    19 00000015 FC                              cld
+    20                                          repeta1:
+    21 00000016 AC                                  lodsb
+    22 00000017 A2[05000000]                        mov [cuvant_curent+1],al
+    23                                              
+    24 0000001C BA00000000                          mov edx,0
+    25 00000021 51                                  push ecx
+    26 00000022 56                                  push esi
+    27 00000023 89FE                                mov esi,edi
+    28 00000025 8B0D[00000000]                      mov ecx,[lungime]
+    29                                              
+    30                                              repeta2:
+    31 0000002B 8A25[05000000]                          mov ah,[cuvant_curent+1]
+    32 00000031 AC                                      lodsb
+    33 00000032 39D3                                    cmp ebx,edx             ;comparam sa nu fie acelasi octet
+    34 00000034 7438                                    je egale
+    35                                                  
+    36 00000036 A2[04000000]                            mov [cuvant_curent],al
+    37 0000003B 6683E001                                and ax,1                ;verificare impar
+    38 0000003F 742D                                    jz egale    
+    39                                                  
+    40 00000041 66A1[04000000]                          mov ax,[cuvant_curent]
+    41 00000047 F635[0B000000]                          div byte [d]            ;verificare divizibil cu 11
+    42 0000004D 80FC00                                  cmp ah,0
+    43 00000050 751C                                    jne egale
+    44                                                  
+    45 00000052 60                                      pushad                  ;afisare
+    46 00000053 B800000000                              mov eax,0
+    47 00000058 66A1[04000000]                          mov ax,[cuvant_curent]
+    48 0000005E 50                                      push eax
+    49 0000005F 68[06000000]                            push dword format_afisare
+    50 00000064 FF15[00000000]                          call [printf]
+    51 0000006A 83C408                                  add esp,4*2
+    52 0000006D 61                                      popad
+    53                                              egale:
+    54 0000006E 42                                      inc edx
+    55 0000006F E2BA                                loop repeta2  
+    56                                              
+    57 00000071 5E                                  pop esi
+    58 00000072 59                                  pop ecx
+    59 00000073 43                                  inc ebx
+    60 00000074 E2A0                            loop repeta1
+    61                                          
+    62 00000076 C3                              ret 

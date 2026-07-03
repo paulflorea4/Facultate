@@ -1,0 +1,12 @@
+1,Andrei,123,3,Titlu3,Descriere3,Drama
+2,Mihai,423,4,Titlu4,Descriere4,Actiune
+3,Cristian,431,4,Titlu4,Descriere4,Actiune
+4,Tudor,543,2,Titlu2,Descriere2,Horror
+5,Alexandru,873,3,Titlu3,Descriere3,Drama
+7,Alin,901,6,Titlu6,Descriere6,Horror
+11,Mircea,3213,3,Titlu3,Descriere3,Drama
+4,Tudor,543,1,Titlu1,Descriere1,Actiune
+7,Alin,901,4,Titlu4,Descriere4,Actiune
+5,Alexandru,873,6,Titlu6,Descriere6,Horror
+7,Alin,901,1,Titlu1,Descriere1,Actiune
+1,Andrei,123,1,Titlu1,Descriere1,Actiune

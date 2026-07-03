@@ -1,0 +1,32 @@
+     1                                  bits 32 ; assembling for the 32 bits architecture
+     2                                  
+     3                                  ; declare the EntryPoint (a label defining the very first instruction of the program)
+     4                                  global start        
+     5                                  extern printf
+     6                                  ; declare external functions needed by our program
+     7                                  extern exit               ; tell nasm that exit exists even if we won't be defining it
+     8                                  import exit msvcrt.dll
+     9                                  import printf msvcrt.dll    ; exit is a function that ends the calling process. It is defined in msvcrt.dll
+    10                                                            ; msvcrt.dll contains exit, printf and all the other important C-runtime specific functions
+    11                                  
+    12                                  ; our data is declared here (the variables needed by our program)
+    13                                  segment data use32 class=data
+    14                                      ; ...
+    15                                      ; x dw -256,256h
+    16                                      ; y dw 256|-256,256h&256
+    17                                      ; z db $-z,y-x
+    18                                        ; db 'y'-'x','y-x'
+    19                                      ; a db 512>>2,-512<<2
+    20                                      ; b dw z-a,!(z-a)
+    21                                      ; c dd ($-b)+(d-$)
+    22                                      ; d db -128,128^(~128)
+    23                                      ; times 2 resw 6
+    24                                      ; times 2 dd 1234h,5678h
+    25                                  ; our code starts here
+    26                                  segment code use32 class=code
+    27                                      start:
+    28                                          movzx eax,[6+ebp*2]
+    28          ******************       error: operation size not specified
+    29                                          ; exit(0)
+    30 00000000 6A00                            push    dword 0      ; push the parameter for exit onto the stack
+    31 00000002 FF15[00000000]                  call    [exit]       ; call exit to terminate the program

@@ -1,0 +1,10 @@
+<NotepadPlus>
+    <Session activeView="0">
+        <mainView activeIndex="2">
+            <File firstVisibleLine="0" xOffset="0" scrollWidth="1" startPos="0" endPos="0" selMode="0" lang="Assembly" encoding="-1" filename="C:\Facultate\Arhitectura sistemelor de calcul\Variante examen\2\a.asm" backupFilePath="" originalFileLastModifTimestamp="1738239714" mapFirstVisibleDisplayLine="-1" mapFirstVisibleDocLine="-1" mapLastVisibleDocLine="-1" mapNbLine="-1" mapHigherPos="-1" mapWidth="-1" mapHeight="-1" mapKByteInDoc="3211318" mapWrapIndentMode="-1" mapIsWrap="no" />
+            <File firstVisibleLine="0" xOffset="0" scrollWidth="730" startPos="359" endPos="359" selMode="0" lang="Assembly" encoding="-1" filename="C:\Facultate\Arhitectura sistemelor de calcul\Variante examen\2\b.asm" backupFilePath="" originalFileLastModifTimestamp="1738239771" mapFirstVisibleDisplayLine="-1" mapFirstVisibleDocLine="-1" mapLastVisibleDocLine="-1" mapNbLine="-1" mapHigherPos="-1" mapWidth="-1" mapHeight="-1" mapKByteInDoc="3014698" mapWrapIndentMode="-1" mapIsWrap="no" />
+            <File firstVisibleLine="0" xOffset="0" scrollWidth="1170" startPos="770" endPos="618" selMode="0" lang="Assembly" encoding="-1" filename="C:\Facultate\Arhitectura sistemelor de calcul\Variante examen\2\1.asm" backupFilePath="" originalFileLastModifTimestamp="1738598847" mapFirstVisibleDisplayLine="-1" mapFirstVisibleDocLine="-1" mapLastVisibleDocLine="-1" mapNbLine="-1" mapHigherPos="-1" mapWidth="-1" mapHeight="-1" mapKByteInDoc="6619247" mapWrapIndentMode="-1" mapIsWrap="no" />
+        </mainView>
+        <subView activeIndex="0" />
+    </Session>
+</NotepadPlus>

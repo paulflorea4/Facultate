@@ -1,0 +1,51 @@
+{
+  "version": "2.1.0",
+  "$schema": "https://schemastore.azurewebsites.net/schemas/json/sarif-2.1.0-rtm.5.json",
+  "runs": [
+    {
+      "results": [],
+      "tool": {
+        "driver": {
+          "name": "PREfast",
+          "fullName": "PREfast Code Analysis",
+          "version": "14.43.34808.0",
+          "informationUri": "https://aka.ms/cpp/ca"
+        }
+      },
+      "invocations": [
+        {
+          "executionSuccessful": true
+        }
+      ],
+      "artifacts": [
+        {
+          "location": {
+            "uri": "file:///c:/facultate/semestrul 2/programare orientata obiect/laboratoare/lab10-11/planificareaactivitatilorgui/planificareaactivitatilorgui/activitylist.cpp"
+          },
+          "roles": [
+            "analysisTarget"
+          ],
+          "hashes": {
+            "sha-256": "d48be286fff7a533a595c3164ceac543c9df54344c0eb243800e8db4094cc377"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/facultate/semestrul 2/programare orientata obiect/laboratoare/lab10-11/planificareaactivitatilorgui/planificareaactivitatilorgui/activitylist.h"
+          },
+          "hashes": {
+            "sha-256": "2d91a62edd8c60183db008ba2339327e95d42adca31bff5e0f8112aad09ed2e4"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/facultate/semestrul 2/programare orientata obiect/laboratoare/lab10-11/planificareaactivitatilorgui/planificareaactivitatilorgui/activity.h"
+          },
+          "hashes": {
+            "sha-256": "04134ad5aad6ea815334473b6100dd73515206983c22ae32f6c66ae67ce11153"
+          }
+        }
+      ]
+    }
+  ]
+}

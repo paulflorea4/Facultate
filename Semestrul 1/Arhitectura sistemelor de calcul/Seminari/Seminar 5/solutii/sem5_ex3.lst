@@ -1,0 +1,120 @@
+     1                                  bits 32
+     2                                  global start
+     3                                  
+     4                                  extern exit, scanf, printf
+     5                                  import exit msvcrt.dll
+     6                                  import scanf msvcrt.dll
+     7                                  import printf msvcrt.dll
+     8                                  
+     9                                  segment data use32 class=data
+    10                                      max equ 10
+    11 00000000 0000000000000000-           sir times max dd 0, 0
+    11 00000000 <rept>             
+    12                                      
+    13 00000050 256400                      format_citire db "%d", 0
+    14 00000053 4461746920656C656D-         msg db "Dati elementele sirului (maxim 100): ", 0
+    14 0000005C 656E74656C65207369-
+    14 00000065 72756C756920286D61-
+    14 0000006E 78696D20313030293A-
+    14 00000077 2000               
+    15 00000079 00000000                    n dd 0                                              ; numarul curent
+    16 0000007D 00000000                    len dd 0                                            ; numarul de elemente citite
+    17                                      
+    18 00000081 536972756C3A2000            text db "Sirul: ", 0
+    19 00000089 25642000                    format_afisare db "%d ", 0
+    20                                  
+    21                                  ; 3. Scrieți un program care citește de la tastatură un șir de numere întregi și îl afișează în ordine crescătoare/descrescătoare.
+    22                                  segment code use32 class=code
+    23                                      sortare:
+    24 00000000 8B0D[7D000000]                  mov ecx, [len]              ; ECX = numarul de elemente
+    25 00000006 83F900                          cmp ecx, 0
+    26 00000009 0F84AF000000                    je final
+    27 0000000F 49                              dec ecx                     ; 0 <= i < len-1
+    28 00000010 BE00000000                      mov esi, 0                  ; i = 0
+    29                                      loop_1:
+    30 00000015 8B04B5[00000000]                mov eax, [sir+4*esi]        ; EAX = s[i]
+    31                                          
+    32 0000001C 89F3                            mov ebx, esi
+    33 0000001E 43                              inc ebx                     ; i+1 <= j < len
+    34                                          loop_2:
+    35 0000001F 8B149D[00000000]                    mov edx, [sir+4*ebx]    ; EDX = s[j]
+    36                                              
+    37 00000026 39D0                                cmp eax, edx
+    38 00000028 7710                                ja no_swap
+    39                                              
+    40                                              ; daca sir[i] >= sir[j], interschimb elementele
+    41 0000002A 89049D[00000000]                    mov [sir+4*ebx], eax
+    42 00000031 8914B5[00000000]                    mov [sir+4*esi], edx
+    43 00000038 89D0                                mov eax, edx
+    44                                              
+    45                                              ; daca sir[i] < sir[j], nu interschimb elementele
+    46                                          no_swap:
+    47 0000003A 43                                  inc ebx                 ; j++
+    48 0000003B 3B1D[7D000000]                      cmp ebx, [len]          ; verific daca am ajuns la ultimul element
+    49 00000041 72DC                                jb loop_2               ; daca j < len, reiau ciclul
+    50                                  
+    51                                      next:
+    52 00000043 46                              inc esi                     ; i++
+    53 00000044 E2CF                            loop loop_1
+    54                                          
+    55 00000046 C3                              ret
+    56                                  
+    57                                      start:
+    58                                          ; afisez mesaj
+    59                                          ; printf(msg)
+    60 00000047 68[53000000]                    push dword msg
+    61 0000004C FF15[00000000]                  call [printf]
+    62 00000052 83C404                          add esp, 1*4
+    63                                          
+    64                                          ; citesc elementele
+    65 00000055 FC                              cld
+    66 00000056 BB00000000                      mov ebx, 0      ; numarul de elemente
+    67 0000005B BF[00000000]                    mov edi, sir
+    68                                      citire:
+    69                                          ; scanf(format_citire, &n)
+    70 00000060 68[79000000]                    push dword n
+    71 00000065 68[50000000]                    push dword format_citire
+    72 0000006A FF15[00000000]                  call [scanf]
+    73 00000070 83C408                          add esp, 2*4
+    74                                          
+    75 00000073 A1[79000000]                    mov eax, [n]
+    76 00000078 83F820                          cmp eax, ' '
+    77 0000007B 7407                            je e_spatiu
+    78 0000007D 83F800                          cmp eax, 0
+    79 00000080 7404                            je mai_departe
+    80                                          
+    81 00000082 AB                              stosd           ; stochez numarul citit
+    82 00000083 43                              inc ebx         ; incrementez numarul de elemente
+    83                                          
+    84                                      e_spatiu:
+    85 00000084 EBDA                            jmp citire
+    86                                          
+    87                                      mai_departe:
+    88 00000086 891D[7D000000]                  mov [len], ebx
+    89 0000008C E86FFFFFFF                      call sortare
+    90                                      
+    91                                          ; afisez text
+    92                                          ; printf(text)
+    93 00000091 68[53000000]                    push dword msg
+    94 00000096 FF15[00000000]                  call [printf]
+    95 0000009C 83C404                          add esp, 1*4
+    96                                          
+    97                                          ; afisez fiecare element
+    98 0000009F 8B0D[7D000000]                  mov ecx, [len]
+    99 000000A5 BE[00000000]                    mov esi, sir
+   100                                      afisare:
+   101 000000AA 51                              push ecx
+   102 000000AB AD                              lodsd
+   103                                          
+   104                                          ; printf(format, eax)
+   105 000000AC 50                              push eax
+   106 000000AD 68[89000000]                    push dword format_afisare
+   107 000000B2 FF15[00000000]                  call [printf]
+   108 000000B8 83C408                          add esp, 2*4
+   109                                          
+   110 000000BB 59                              pop ecx
+   111 000000BC E2EC                            loop afisare
+   112                                      
+   113                                      final:
+   114 000000BE 6A00                            push dword 0
+   115 000000C0 FF15[00000000]                  call [exit]

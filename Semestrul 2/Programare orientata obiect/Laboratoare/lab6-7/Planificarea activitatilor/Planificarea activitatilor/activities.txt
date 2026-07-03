@@ -1,0 +1,9 @@
+8,Pictura,Imaginatie,Timp,4
+11,Desen,Programare,Arta,7
+91,Film,Design,Arta,1
+94,Curs,Distractie,Timp,7
+96,Scris,Distractie,Timp,4
+79,Curs,Muzica,Timp,10
+17,Pictura,Stiinta,Creatie,5
+23,Scris,Distractie,Hobby,5
+13,Film,Creativitate,Relaxare,4

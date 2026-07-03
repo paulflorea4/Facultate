@@ -1,0 +1,71 @@
+     1                                  bits 32
+     2                                  global start
+     3                                  
+     4                                  extern exit, printf, fopen, fclose, fscanf
+     5                                  import exit msvcrt.dll
+     6                                  import printf msvcrt.dll
+     7                                  import fopen msvcrt.dll
+     8                                  import fclose msvcrt.dll
+     9                                  import fscanf msvcrt.dll
+    10                                  
+    11                                  segment data use32 class=data
+    12 00000000 6E756D6572652E7478-     	nume_fisier db "numere.txt", 0
+    12 00000009 7400               
+    13 0000000B 7200                        mod_acces db "r", 0
+    14 0000000D 00000000                    descriptor_fisier dd 0
+    15                                      
+    16 00000011 00000000                    n dd 0
+    17 00000015 256400                      format_citire db "%d", 0
+    18 00000018 53756D613A20256400          format_afisare db "Suma: %d", 0
+    19                                      
+    20                                  ; 5. Se dă un nume de fișier (definit în segmentul de date).
+    21                                  ; Fișierul conține numerele întregi cu semn separate prin spații.
+    22                                  ; Să se calculeze și să se afișeze suma numerelor din fișier.
+    23                                  segment code use32 class=code
+    24                                      start:
+    25                                          ; deschid fisierul
+    26                                          ; EAX = fopen(nume_fisier, mod_acces)
+    27 00000000 68[0B000000]                    push dword mod_acces
+    28 00000005 68[00000000]                    push dword nume_fisier
+    29 0000000A FF15[00000000]                  call [fopen]
+    30 00000010 83C408                          add esp, 2*4
+    31                                          
+    32                                          ; verific daca fisierul a fost deschis
+    33 00000013 83F800                          cmp eax, 0
+    34 00000016 744B                            je eroare
+    35 00000018 A3[0D000000]                    mov [descriptor_fisier], eax
+    36                                          
+    37                                          ; citesc continutul fisierului
+    38 0000001D 31DB                            xor ebx, ebx    ; suma = 0
+    39                                      citire:
+    40                                          ; citesc numarul
+    41                                          ; EAX = fscanf(descriptor_fisier, format_citire, &n)
+    42 0000001F 68[11000000]                    push dword n
+    43 00000024 68[15000000]                    push dword format_citire
+    44 00000029 FF35[0D000000]                  push dword [descriptor_fisier]
+    45 0000002F FF15[00000000]                  call [fscanf]
+    46 00000035 83C40C                          add esp, 3*4
+    47                                          
+    48 00000038 83F801                          cmp eax, 1
+    49 0000003B 7508                            jne afisare
+    50                                          
+    51                                          ; adun numarul curent
+    52 0000003D 031D[11000000]                  add ebx, [n]
+    53 00000043 EBDA                            jmp citire
+    54                                     
+    55                                     afisare:
+    56                                          ; printf(format_afisare, EBX)
+    57 00000045 53                              push dword ebx
+    58 00000046 68[18000000]                    push dword format_afisare
+    59 0000004B FF15[00000000]                  call [printf]
+    60 00000051 83C408                          add esp, 2*4
+    61                                     
+    62                                          ; inchid fisierul
+    63                                          ; fclose(descriptor_fisier)
+    64 00000054 FF35[0D000000]                  push dword [descriptor_fisier]
+    65 0000005A FF15[00000000]                  call [fclose]
+    66 00000060 83C404                          add esp, 1*4
+    67                                          
+    68                                      eroare:
+    69 00000063 6A00                            push dword 0
+    70 00000065 FF15[00000000]                  call [exit]

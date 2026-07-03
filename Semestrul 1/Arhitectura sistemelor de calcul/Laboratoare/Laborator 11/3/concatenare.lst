@@ -1,0 +1,44 @@
+     1                                  %ifndef _CONCATENARE_ASM_
+     2                                  %define _CONCATENARE_ASM_
+     3                                  
+     4                                  concatenare:
+     5 00000000 66678B742404                    mov esi,[esp+4]
+     6 00000006 66678B7C240C                    mov edi,[esp+12]
+     7                                          
+     8                                          repeta:
+     9 0000000C AC                                  lodsb
+    10 0000000D 3C30                                cmp al,'0'
+    11 0000000F 7D02                                jge si1
+    12 00000011 EB05                                jmp continua
+    13                                          si1:
+    14 00000013 3C39                                cmp al,'9'
+    15 00000015 7F01                                jg continua
+    16 00000017 AA                                      stosb
+    17                                              continua:
+    18 00000018 3C00                                cmp al,0
+    19 0000001A 7402                                je afara
+    20 0000001C EBEE                                jmp repeta
+    21                                              
+    22                                          afara:
+    23                                          
+    24 0000001E 66678B742408                    mov esi,[esp+8]
+    25                                          
+    26                                          repeta2:
+    27 00000024 AC                                  lodsb
+    28 00000025 3C30                                cmp al,'0'
+    29 00000027 7D02                                jge si2
+    30 00000029 EB05                                jmp continua2
+    31                                          si2:
+    32 0000002B 3C39                                cmp al,'9'
+    33 0000002D 7F01                                jg continua2
+    34 0000002F AA                                      stosb
+    35                                              continua2:
+    36 00000030 3C00                                cmp al,0
+    37 00000032 7402                                je afara2
+    38 00000034 EBEE                                jmp repeta2
+    39                                              
+    40                                          afara2:
+    41                                          
+    42 00000036 C3                              ret
+    43                                          
+    44                                  %endif 

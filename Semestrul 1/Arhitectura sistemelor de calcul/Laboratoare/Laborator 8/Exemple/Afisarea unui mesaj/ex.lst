@@ -1,0 +1,28 @@
+     1                                  ; Codul de mai jos va afisa mesajul "Ana are 17 mere"
+     2                                  bits 32
+     3                                  global start        
+     4                                  
+     5                                  ; declararea functiilor externe folosite de program
+     6                                  extern exit, printf         ; adaugam printf ca functie externa            
+     7                                  import exit msvcrt.dll    
+     8                                  import printf msvcrt.dll    ; indicam asamblorului ca functia printf se gaseste in libraria msvcrt.dll
+     9                                                            
+    10                                  segment data use32 class=data
+    11                                  ; sirurile de caractere sunt de tip byte
+    12 00000000 416E61206172652025-     format db "Ana are %d mere", 0  ; %d va fi inlocuit cu un numar
+    12 00000009 64206D65726500     
+    13                                  				; sirurile de caractere pt functiile C trebuie terminate cu valoarea 0
+    14                                  segment  code use32 class=code
+    15                                      start:
+    16 00000000 B811000000                      mov eax, 17
+    17                                          
+    18                                          ; vom apela printf(format, 17) => se va afisa: „Ana are 17 mere”
+    19                                          ; punem parametrii pe stiva de la dreapta la stanga
+    20 00000005 50                              push dword eax
+    21 00000006 68[00000000]                    push dword format ; ! pe stiva se pune adresa string-ului, nu valoarea
+    22 0000000B FF15[00000000]                  call [printf]      ; apelam functia printf pentru afisare
+    23 00000011 83C408                          add esp, 4 * 2     ; eliberam parametrii de pe stiva; 4 = dimensiunea unui dword; 2 = nr de parametri
+    24                                  
+    25                                          ; exit(0)
+    26 00000014 6A00                            push dword 0      ; punem pe stiva parametrul pentru exit
+    27 00000016 FF15[00000000]                  call [exit]       ; apelam exit pentru a incheia programul

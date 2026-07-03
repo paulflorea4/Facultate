@@ -1,0 +1,107 @@
+{
+  "version": "2.1.0",
+  "$schema": "https://schemastore.azurewebsites.net/schemas/json/sarif-2.1.0-rtm.5.json",
+  "runs": [
+    {
+      "results": [],
+      "tool": {
+        "driver": {
+          "name": "PREfast",
+          "fullName": "PREfast Code Analysis",
+          "version": "14.43.34808.0",
+          "informationUri": "https://aka.ms/cpp/ca"
+        }
+      },
+      "invocations": [
+        {
+          "executionSuccessful": true
+        }
+      ],
+      "artifacts": [
+        {
+          "location": {
+            "uri": "file:///c:/facultate/semestrul 2/programare orientata obiect/laboratoare/lab6-7/planificarea activitatilor/planificarea activitatilor/tests.cpp"
+          },
+          "roles": [
+            "analysisTarget"
+          ],
+          "hashes": {
+            "sha-256": "96541c6a2c8fe53c08fbf2f8382d7661025f10a404308bc300457cdeedfc52d3"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/facultate/semestrul 2/programare orientata obiect/laboratoare/lab6-7/planificarea activitatilor/planificarea activitatilor/tests.h"
+          },
+          "hashes": {
+            "sha-256": "4a07ba13928297730f13a897f03b7774a7aa8483e3fa9cd92d32fff00ed7d193"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/facultate/semestrul 2/programare orientata obiect/laboratoare/lab6-7/planificarea activitatilor/planificarea activitatilor/activity.h"
+          },
+          "hashes": {
+            "sha-256": "04134ad5aad6ea815334473b6100dd73515206983c22ae32f6c66ae67ce11153"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/facultate/semestrul 2/programare orientata obiect/laboratoare/lab6-7/planificarea activitatilor/planificarea activitatilor/repository.h"
+          },
+          "hashes": {
+            "sha-256": "07e43925adec406f18575e82e4003369baf75c335a189744c114b345b83ee55e"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/facultate/semestrul 2/programare orientata obiect/laboratoare/lab6-7/planificarea activitatilor/planificarea activitatilor/exception.h"
+          },
+          "hashes": {
+            "sha-256": "3ccd941e977132ea43dc6aa3170d3d45fa22d24727a68f955a3a0a5ed430b0b9"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/facultate/semestrul 2/programare orientata obiect/laboratoare/lab6-7/planificarea activitatilor/planificarea activitatilor/service.h"
+          },
+          "hashes": {
+            "sha-256": "cf80752181a8bdb7be70d03f765efd44823a14fc128172ac0df953bfef17ef45"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/facultate/semestrul 2/programare orientata obiect/laboratoare/lab6-7/planificarea activitatilor/planificarea activitatilor/validator.h"
+          },
+          "hashes": {
+            "sha-256": "34f5b224eb64e4fda358df1f00298610833e7b8cc7f33d546cf7d45bf0246c69"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/facultate/semestrul 2/programare orientata obiect/laboratoare/lab6-7/planificarea activitatilor/planificarea activitatilor/dto.h"
+          },
+          "hashes": {
+            "sha-256": "62813076ab16661043bd824eb5ed29a6f82dba5c28d4efe9a33bed6f6cfa776e"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/facultate/semestrul 2/programare orientata obiect/laboratoare/lab6-7/planificarea activitatilor/planificarea activitatilor/activitylist.h"
+          },
+          "hashes": {
+            "sha-256": "2d91a62edd8c60183db008ba2339327e95d42adca31bff5e0f8112aad09ed2e4"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/facultate/semestrul 2/programare orientata obiect/laboratoare/lab6-7/planificarea activitatilor/planificarea activitatilor/undo.h"
+          },
+          "hashes": {
+            "sha-256": "016d0e18b9c7fa011f3d8318eb239c58ae6d73c159649393134863696614843c"
+          }
+        }
+      ]
+    }
+  ]
+}

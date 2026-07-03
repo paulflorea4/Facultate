@@ -1,0 +1,80 @@
+     1                                  bits 32 ; assembling for the 32 bits architecture
+     2                                  
+     3                                  ; declare the EntryPoint (a label defining the very first instruction of the program)
+     4                                  global start        
+     5                                  
+     6                                  ; declare external functions needed by our program
+     7                                  extern exit               ; tell nasm that exit exists even if we won't be defining it
+     8                                  import exit msvcrt.dll    ; exit is a function that ends the calling process. It is defined in msvcrt.dll
+     9                                                            ; msvcrt.dll contains exit, printf and all the other important C-runtime specific functions
+    10                                  
+    11                                  ; our data is declared here (the variables needed by our program)
+    12                                  segment data use32 class=data
+    13                                      
+    14 00000000 01                          a db 1h
+    15 00000001 02                          b db 2h
+    16 00000002 03                          c db 3h
+    17 00000003 1000                        d dw 10h
+    18                                  
+    19                                  ; our code starts here
+    20                                  segment code use32 class=code
+    21                                      start:
+    22                                          ;1. ((a+b-c)*2 + d-5)*d
+    23                                          ; mov AL,[a]
+    24                                          ; add AL,[b]
+    25                                          ; sub AL,[c]
+    26                                          ; mov BL,2
+    27                                          ; mul BL
+    28                                          ; add AX,[d]
+    29                                          ; sub AX,5
+    30                                          ; mov BX,[d]
+    31                                          ; mul BX
+    32                                          
+    33                                          ;2. d*(d+2*a)/(b*c)
+    34                                          ; mov AL,[a]
+    35                                          ; mov BL,2
+    36                                          ; mul BL
+    37                                          ; add AX,[d]
+    38                                          ; mov BX,[d]
+    39                                          ; mul BX
+    40                                          ; mov BX,AX
+    41                                          ; mov AL,[b]
+    42                                          ; mul BYTE [c]
+    43                                          ; mov CX,AX
+    44                                          ; mov AX,BX
+    45                                          ; div CX
+    46                                          
+    47                                          ;4. –a*a + 2*(b-1) – d
+    48                                          ; mov AL,[b]
+    49                                          ; sub AL,1
+    50                                          ; mov AH,2
+    51                                          ; mul AH
+    52                                          ; mov BX,AX
+    53                                          ; mov AL,[a]
+    54                                          ; mul BYTE [a]
+    55                                          ; sub BX,AX
+    56                                          ; sub BX,[d]
+    57                                          
+    58                                          ;27. d/[(a+b)-(c+c)]
+    59                                          ; mov BL, [a] 
+    60                                          ; add BL, [b] 
+    61                                          ; mov BH, [c] 
+    62                                          ; add BH, [c] 
+    63                                          ; sub BL, BH  
+    64                                          ; mov AX, [d] 
+    65                                          ; div BL 
+    66                                          
+    67                                          ;29. [d-(a+b)*2]/c
+    68 00000000 B002                            mov AL,2
+    69 00000002 8A25[00000000]                  mov AH,[a]
+    70 00000008 0225[01000000]                  add AH,[b]
+    71 0000000E F6E4                            mul AH
+    72 00000010 6689C3                          mov BX,AX
+    73 00000013 66A1[03000000]                  mov AX,[d]
+    74 00000019 6629D8                          sub AX,BX
+    75 0000001C 8A1D[02000000]                  mov BL,[c]
+    76 00000022 F6F3                            div BL
+    77                                       
+    78                                          ; exit(0)
+    79 00000024 6A00                            push    dword 0      ; push the parameter for exit onto the stack
+    80 00000026 FF15[00000000]                  call    [exit]       ; call exit to terminate the program

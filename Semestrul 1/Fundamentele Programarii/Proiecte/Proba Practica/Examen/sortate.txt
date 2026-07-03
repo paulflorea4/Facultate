@@ -1,0 +1,9 @@
+dsa,abc,Comedie,3
+yyabicuyit,bkaduzofohup,Comedie,6
+gfgf,dsa,Balet,5
+fsfds,dsads,Comedie,3
+dsag,dsap,Comedie,3
+fsf,dsfds,Comedie,21
+avf,gkgfd,Concert,3
+dsad,titlu,Comedie,4
+artist,titlu,Altele,2

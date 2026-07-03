@@ -1,0 +1,73 @@
+     1                                  bits 32
+     2                                  global start
+     3                                  
+     4                                  extern exit, scanf, printf
+     5                                  import exit msvcrt.dll
+     6                                  import scanf msvcrt.dll
+     7                                  import printf msvcrt.dll
+     8                                  
+     9                                  segment data use32 class=data
+    10 00000000 00000000                	a dd 0
+    11 00000004 4461746920756E2069-         mesaj db 'Dati un intreg: ', 0
+    11 0000000D 6E747265673A2000   
+    12 00000015 256400                      format db "%d", 0
+    13                                      
+    14 00000018 0A000000                    zece dd 10
+    15 0000001C 43696672653A202564-         format_afisare db "Cifre: %d", 13, 10, 0
+    15 00000025 0D0A00             
+    16                                      
+    17                                  ; 2. Scrieți un program care citește de la tastatură un număr întreg
+    18                                  ; și afișează câte cifre are numărul citit în baza 10.
+    19                                  segment code use32 class=code
+    20                                      start:
+    21                                      citire:
+    22                                          ; afisez mesaj
+    23                                          ; printf(mesaj)
+    24 00000000 68[04000000]                    push dword mesaj
+    25 00000005 FF15[00000000]                  call [printf]
+    26 0000000B 83C404                          add esp, 1*4
+    27                                          
+    28                                          ; citesc numarul
+    29                                          ; scanf(format, &a)
+    30 0000000E 68[00000000]                    push dword a
+    31 00000013 68[15000000]                    push dword format
+    32 00000018 FF15[00000000]                  call [scanf]
+    33 0000001E 83C408                          add esp, 2*4
+    34                                          
+    35                                          ; verific daca s-a introdus valoarea 0
+    36 00000021 8B15[00000000]                  mov edx, [a]
+    37 00000027 83FA00                          cmp edx, 0
+    38 0000002A 743A                            je final
+    39                                          
+    40                                          ; verific daca numarul e pozitiv/negativ
+    41 0000002C A1[00000000]                    mov eax, [a]
+    42 00000031 83F800                          cmp eax, 0
+    43 00000034 7F02                            jg pozitiv
+    44                                          
+    45 00000036 F7D8                            neg eax         ; e negativ, il negam
+    46                                          
+    47                                      pozitiv:
+    48                                          ; determin numarul de cifre in baza 10
+    49 00000038 BA00000000                      mov edx, 0      ; edx:eax = a
+    50 0000003D BB01000000                      mov ebx, 1      ; contor
+    51                                      repeta:
+    52 00000042 F735[18000000]                  div dword [zece]
+    53 00000048 83F800                          cmp eax, 0
+    54 0000004B 7408                            je afisare
+    55 0000004D 43                              inc ebx
+    56 0000004E BA00000000                      mov edx, 0
+    57 00000053 EBED                            jmp repeta
+    58                                          
+    59                                      afisare:
+    60                                          ; afisez numarul de cifre
+    61                                          ; printf(format_afisare, EBX)
+    62 00000055 53                              push dword ebx
+    63 00000056 68[1C000000]                    push dword format_afisare
+    64 0000005B FF15[00000000]                  call [printf]
+    65 00000061 83C408                          add esp, 2*4
+    66                                      
+    67 00000064 EB9A                            jmp citire
+    68                                  
+    69                                      final:
+    70 00000066 6A00                            push dword 0
+    71 00000068 FF15[00000000]                  call [exit]

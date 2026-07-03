@@ -1,0 +1,93 @@
+     1                                  bits 32 
+     2                                  
+     3                                  global start
+     4                                  
+     5                                  extern exit,fopen,fclose,scanf,fread,printf
+     6                                  import exit msvcrt.dll
+     7                                  import fopen msvcrt.dll
+     8                                  import fclose msvcrt.dll
+     9                                  import scanf msvcrt.dll
+    10                                  import fread msvcrt.dll
+    11                                  import printf msvcrt.dll
+    12                                  
+    13                                  segment data use32 class=data
+    14 00000000 637576696E74652E74-         file_name db "cuvinte.txt",0
+    14 00000009 787400             
+    15 0000000C 7200                        mod_acces db "r",0
+    16 0000000E FFFFFFFF                    descriptor_file dd -1
+    17 00000012 <res 00000004>              L resd 1
+    18 00000016 44617469206F207661-         message db "Dati o valoare:",0
+    18 0000001F 6C6F6172653A00     
+    19 00000026 256400                      input_format db "%d",0
+    20 00000029 4E756D6172756C2064-         output_format db "Numarul de cuvinte:%d",0
+    20 00000032 6520637576696E7465-
+    20 0000003B 3A256400           
+    21                                      max equ 100
+    22 0000003F 00<rept>                    text times max db 0
+    23                                  segment code use32 class=code
+    24                                      start:
+    25 00000000 68[0C000000]                    push dword mod_acces
+    26 00000005 68[00000000]                    push dword file_name
+    27 0000000A FF15[00000000]                  call [fopen]
+    28 00000010 83C408                          add esp,4*2
+    29                                          
+    30 00000013 A3[0E000000]                    mov [descriptor_file],eax
+    31 00000018 83F800                          cmp eax,0
+    32 0000001B 0F849C000000                    je final
+    33                                          
+    34 00000021 FF35[0E000000]                  push dword [descriptor_file]
+    35 00000027 6A64                            push dword max
+    36 00000029 6A01                            push dword 1
+    37 0000002B 68[3F000000]                    push dword text
+    38 00000030 FF15[00000000]                  call [fread]
+    39 00000036 83C410                          add esp,4*4
+    40                                          
+    41 00000039 68[16000000]                    push dword message
+    42 0000003E FF15[00000000]                  call [printf]
+    43 00000044 83C404                          add esp,4
+    44                                          
+    45 00000047 68[12000000]                    push dword L
+    46 0000004C 68[26000000]                    push dword input_format
+    47 00000051 FF15[00000000]                  call [scanf]
+    48 00000057 83C408                          add esp,4*2
+    49                                          
+    50 0000005A BE[3F000000]                    mov esi,text
+    51 0000005F FC                              cld
+    52 00000060 BB00000000                      mov ebx,0
+    53 00000065 BA00000000                      mov edx,0
+    54                                      repeta:
+    55 0000006A AC                              lodsb
+    56 0000006B 3C00                            cmp al,0
+    57 0000006D 741F                            je sfarsit
+    58 0000006F 3C20                            cmp al,' '
+    59 00000071 7403                            je e_spatiu
+    60 00000073 43                              inc ebx
+    61 00000074 EB16                            jmp next
+    62                                      e_spatiu:
+    63 00000076 F7C301000000                    test ebx,1
+    64 0000007C 7409                            jz par
+    65 0000007E 3B1D[12000000]                  cmp ebx,[L]
+    66 00000084 7301                            jae par
+    67 00000086 42                              inc edx
+    68                                      par:
+    69 00000087 BB00000000                      mov ebx,0
+    70                                      next:
+    71 0000008C EBDC                            jmp repeta
+    72                                      sfarsit:
+    73 0000008E F7C301000000                    test ebx,1
+    74 00000094 7409                            jz afisare
+    75 00000096 3B1D[12000000]                  cmp ebx,[L]
+    76 0000009C 7301                            jae afisare
+    77 0000009E 42                              inc edx
+    78                                      afisare:    
+    79 0000009F 52                              push edx
+    80 000000A0 68[29000000]                    push dword output_format
+    81 000000A5 FF15[00000000]                  call [printf]
+    82 000000AB 83C408                          add esp,4*2
+    83                                          
+    84 000000AE FF35[0E000000]                  push dword [descriptor_file]
+    85 000000B4 FF15[00000000]                  call [fclose]
+    86 000000BA 83C404                          add esp,4
+    87                                      final:
+    88 000000BD 6A00                            push dword 0
+    89 000000BF FF15[00000000]                  call [exit]

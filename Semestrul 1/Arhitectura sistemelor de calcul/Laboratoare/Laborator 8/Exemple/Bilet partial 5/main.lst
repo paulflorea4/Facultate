@@ -1,0 +1,87 @@
+     1                                  bits 32
+     2                                  
+     3                                  global start
+     4                                  
+     5                                  extern exit,fopen,fclose,fscanf,fprintf
+     6                                  import exit msvcrt.dll
+     7                                  import fopen msvcrt.dll
+     8                                  import fclose msvcrt.dll
+     9                                  import fscanf msvcrt.dll
+    10                                  import fprintf msvcrt.dll
+    11                                  
+    12                                  segment data use32 class=data
+    13 00000000 696E7075742E747874-         input_file db "input.txt",0
+    13 00000009 00                 
+    14 0000000A 6F75747075742D692E-         output_file db "output-i.txt",0
+    14 00000013 74787400           
+    15 00000017 FFFFFFFF                    descriptor_input_file dd -1
+    16 0000001B FFFFFFFF                    descriptor_output_file dd -1
+    17 0000001F 7200                        mod_acces_input db "r",0
+    18 00000021 7700                        mod_acces_output db "w",0
+    19 00000023 616263646566676800          string db "abcdefgh",0
+    20 0000002C 256400                      format_input db "%d",0
+    21 0000002F 25632000                    format_output db "%c ",0
+    22 00000033 00000000                    n dd 0
+    23                                  segment code use32 class=code
+    24                                      start:
+    25 00000000 68[1F000000]                    push dword mod_acces_input
+    26 00000005 68[00000000]                    push dword input_file
+    27 0000000A FF15[00000000]                  call [fopen]
+    28 00000010 83C408                          add esp,4*2
+    29                                          
+    30 00000013 A3[17000000]                    mov [descriptor_input_file],eax
+    31 00000018 83F800                          cmp eax,0
+    32 0000001B 0F848F000000                    je final
+    33                                          
+    34 00000021 68[33000000]                    push dword n
+    35 00000026 68[2C000000]                    push dword format_input
+    36 0000002B FF35[17000000]                  push dword [descriptor_input_file]
+    37 00000031 FF15[00000000]                  call [fscanf]
+    38 00000037 83C40C                          add esp,4*3
+    39                                          
+    40 0000003A FF35[17000000]                  push dword [descriptor_input_file]
+    41 00000040 FF15[00000000]                  call [fclose]
+    42 00000046 83C404                          add esp,4
+    43                                          
+    44 00000049 8B0D[33000000]                  mov ecx,[n]
+    45 0000004F 41                              inc ecx
+    46                                      repeta:
+    47 00000050 51                              push ecx
+    48 00000051 88CB                            mov bl,cl
+    49 00000053 80C330                          add bl,'0'
+    50 00000056 881D[11000000]                  mov [output_file+7],bl
+    51 0000005C 68[21000000]                    push dword mod_acces_output
+    52 00000061 68[0A000000]                    push dword output_file
+    53 00000066 FF15[00000000]                  call [fopen]
+    54 0000006C 83C408                          add esp,4*2
+    55                                          
+    56 0000006F A3[1B000000]                    mov [descriptor_output_file],eax
+    57 00000074 83F800                          cmp eax,0
+    58 00000077 7434                            je next
+    59                                          
+    60 00000079 59                              pop ecx
+    61 0000007A 51                              push ecx
+    62 0000007B BE[2A000000]                    mov esi,string+7
+    63                                          repeta2:
+    64 00000080 FD                                  std
+    65 00000081 51                                  push ecx
+    66 00000082 31C0                                xor eax,eax
+    67 00000084 AC                                  lodsb
+    68 00000085 FC                                  cld
+    69 00000086 50                                  push dword eax
+    70 00000087 68[2F000000]                        push dword format_output
+    71 0000008C FF35[1B000000]                      push dword [descriptor_output_file]
+    72 00000092 FF15[00000000]                      call [fprintf]
+    73 00000098 83C40C                              add esp,4*3
+    74 0000009B 59                                  pop ecx
+    75 0000009C E2E2                                loop repeta2 
+    76 0000009E FF35[1B000000]                  push dword [descriptor_output_file]
+    77 000000A4 FF15[00000000]                  call [fclose]
+    78 000000AA 83C404                          add esp,4
+    79                                      next:
+    80 000000AD 59                              pop ecx
+    81 000000AE E2A0                            loop repeta
+    82                                  
+    83                                      final:
+    84 000000B0 6A00                            push dword 0
+    85 000000B2 FF15[00000000]                  call [exit]

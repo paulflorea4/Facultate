@@ -1,0 +1,36 @@
+void f(int n) {
+    if(n > 0) {
+        if(fork() == 0) {
+            f(n-1);
+        }
+        wait(0);
+    }
+    exit(0);
+}
+
+f(3)
+
+            P
+            |
+            F3
+            |
+            F2
+            |
+            F1
+
+for(i=0; i<3; i++) {
+    if(fork() > 0) {
+        wait(0);
+        exit(0);
+    }
+}
+exit(0);
+
+P - F0 - F1 - F2
+
+
+
+
+
+
+

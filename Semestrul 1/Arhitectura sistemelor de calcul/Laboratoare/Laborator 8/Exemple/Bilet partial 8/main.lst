@@ -1,0 +1,91 @@
+     1                                  bits 32
+     2                                  
+     3                                  global start
+     4                                  
+     5                                  extern exit,fopen,fclose,scanf,fprintf,printf
+     6                                  import exit msvcrt.dll
+     7                                  import fopen msvcrt.dll
+     8                                  import fclose msvcrt.dll
+     9                                  import scanf msvcrt.dll
+    10                                  import fprintf msvcrt.dll
+    11                                  import printf msvcrt.dll
+    12                                  
+    13                                  segment data use32 class=data
+    14                                      max equ 100
+    15 00000000 4461746920756E206D-         print_message db "Dati un mesaj ascuns:",0
+    15 00000009 6573616A2061736375-
+    15 00000012 6E733A00           
+    16 00000016 00<rept>                    hidden_message times max db 0
+    17 0000007A 257300                      format db "%s",0
+    18 0000007D 6F75747075742E7478-         file_name db "output.txt",0
+    18 00000086 7400               
+    19 00000088 7700                        mod_acces db "w",0
+    20 0000008A FFFFFFFF                    descriptor_file dd -1
+    21 0000008E 00<rept>                    message times max/2 db 0
+    22                                  segment code use32 class=code
+    23                                      start:
+    24 00000000 68[88000000]                    push dword mod_acces
+    25 00000005 68[7D000000]                    push dword file_name
+    26 0000000A FF15[00000000]                  call [fopen]
+    27 00000010 83C408                          add esp,4*2
+    28                                          
+    29 00000013 A3[8A000000]                    mov [descriptor_file],eax
+    30 00000018 83F800                          cmp eax,0
+    31 0000001B 0F8497000000                    je final
+    32                                          
+    33 00000021 68[00000000]                    push dword print_message
+    34 00000026 FF15[00000000]                  call [printf]
+    35 0000002C 83C404                          add esp,4
+    36                                          
+    37 0000002F 68[16000000]                    push dword hidden_message
+    38 00000034 68[7A000000]                    push dword format
+    39 00000039 FF15[00000000]                  call [scanf]
+    40 0000003F 83C408                          add esp,4*2
+    41                                          
+    42 00000042 BB00000000                      mov ebx,0
+    43 00000047 BE[16000000]                    mov esi,hidden_message
+    44 0000004C FC                              cld
+    45 0000004D BF[8E000000]                    mov edi,message
+    46                                      parcurge_sir:
+    47 00000052 AC                              lodsb
+    48 00000053 3C00                            cmp al,0
+    49 00000055 741B                            je sfarsit
+    50 00000057 2C30                            sub al,'0'
+    51 00000059 B310                            mov bl,16
+    52 0000005B F6E3                            mul bl
+    53 0000005D 6689C3                          mov bx,ax
+    54 00000060 AC                              lodsb
+    55 00000061 3C41                            cmp al,'A'
+    56 00000063 7C06                            jl cifra
+    57 00000065 2C41                            sub al,'A'
+    58 00000067 040A                            add al,10
+    59 00000069 EB02                            jmp litera
+    60                                      cifra:
+    61 0000006B 2C30                            sub al,'0'
+    62                                      litera:
+    63 0000006D 00D8                            add al,bl
+    64 0000006F AA                              stosb
+    65 00000070 EBE0                            jmp parcurge_sir
+    66                                          
+    67                                      sfarsit:
+    68                                          
+    69 00000072 A0[8F000000]                    mov al,[message+1]
+    70 00000077 81EF[8E000000]                  sub edi,message
+    71 0000007D 4F                              dec edi
+    72 0000007E 8A9F[8E000000]                  mov bl,[message+edi]
+    73 00000084 881D[8F000000]                  mov [message+1],bl
+    74 0000008A 8887[8E000000]                  mov [message+edi],al
+    75                                          
+    76 00000090 68[8E000000]                    push dword message
+    77 00000095 68[7A000000]                    push dword format
+    78 0000009A FF35[8A000000]                  push dword [descriptor_file]
+    79 000000A0 FF15[00000000]                  call [fprintf]
+    80 000000A6 83C40C                          add esp,4*3
+    81                                          
+    82 000000A9 FF35[8A000000]                  push dword [descriptor_file]
+    83 000000AF FF15[00000000]                  call [fclose]
+    84 000000B5 83C404                          add esp,4
+    85                                          
+    86                                      final:    
+    87 000000B8 6A00                            push dword 0
+    88 000000BA FF15[00000000]                  call [exit]

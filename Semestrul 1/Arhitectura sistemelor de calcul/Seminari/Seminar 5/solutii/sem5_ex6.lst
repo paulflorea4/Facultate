@@ -1,0 +1,119 @@
+     1                                  bits 32
+     2                                  global start
+     3                                  
+     4                                  extern exit, fopen, fread, fwrite, fclose
+     5                                  import exit msvcrt.dll
+     6                                  import fopen msvcrt.dll
+     7                                  import fclose msvcrt.dll
+     8                                  import fread msvcrt.dll
+     9                                  import fwrite msvcrt.dll
+    10                                  
+    11                                  segment data use32 class=data
+    12 00000000 637576696E74652E74-     	nume_fisier db "cuvinte.txt", 0
+    12 00000009 787400             
+    13 0000000C 772B00                      mod_acces db "w+", 0
+    14 0000000F 00000000                    descriptor_fisier dd 0
+    15                                      
+    16                                      max equ 100
+    17 00000013 00<rept>                    buffer times max+1 db 0
+    18 00000078 00<rept>                    result times max+1 db 0
+    19 000000DD 00000000                    len dd 0
+    20                                      
+    21 000000E1 21402324255E262A28-         speciale db "!@#$%^&*()_+{}[]"
+    21 000000EA 295F2B7B7D5B5D     
+    22                                      len_s equ $-speciale
+    23                                      
+    24                                  ; 6. Se dă un nume de fișier (definit în segmentul de date).
+    25                                  ; Fișierul conține litere mici, litere mari, cifre și caractere speciale.
+    26                                  ; Să se înlocuiască toate caracterele speciale din fișier cu caracterul 'X'.
+    27                                  segment code use32 class=code
+    28                                      start:
+    29                                          ; deschid fisierul
+    30                                          ; EAX = fopen(nume_fisier, mod_acces)
+    31 00000000 68[0C000000]                    push dword mod_acces
+    32 00000005 68[00000000]                    push dword nume_fisier
+    33 0000000A FF15[00000000]                  call [fopen]
+    34 00000010 83C408                          add esp, 2*4
+    35                                          
+    36                                          ; verific daca fisierul a fost deschis
+    37 00000013 83F800                          cmp eax, 0
+    38 00000016 747D                            je eroare
+    39 00000018 A3[0F000000]                    mov [descriptor_fisier], eax
+    40                                          
+    41                                          ; citesc continutul intregului fisier
+    42                                          ; EAX = fread(void* buffer, int size, int count, FILE* stream)
+    43 0000001D FF35[0F000000]                  push dword [descriptor_fisier]
+    44 00000023 6A64                            push dword max
+    45 00000025 6A01                            push dword 1
+    46 00000027 68[13000000]                    push dword buffer
+    47 0000002C FF15[00000000]                  call [fread]
+    48 00000032 83C410                          add esp, 4*4
+    49                                  
+    50 00000035 BB00000000                      mov ebx, 0
+    51 0000003A BE00000000                      mov esi, 0
+    52                                      repeta:
+    53 0000003F 8A86[13000000]                  mov al, [buffer+esi]
+    54                                          
+    55 00000045 3C00                            cmp al, 0
+    56 00000047 741B                            je scrie
+    57                                          
+    58 00000049 8886[78000000]                  mov byte [result+esi], al
+    59                                          
+    60                                          ; verific daca e caracter special
+    61 0000004F E849000000                      call verifica
+    62 00000054 83FA01                          cmp edx, 1
+    63 00000057 7507                            jne nu_e_special
+    64                                          
+    65                                          ; inlocuiesc caracterul curent cu 'X'
+    66 00000059 C686[78000000]58                mov byte [result+esi], 'X'
+    67                                          
+    68                                      nu_e_special:
+    69 00000060 43                              inc ebx
+    70 00000061 46                              inc esi
+    71 00000062 EBDB                            jmp repeta
+    72                                          
+    73                                      scrie:
+    74 00000064 891D[DD000000]                  mov [len], ebx
+    75                                          
+    76                                          ; fwrite(void* buffer, int size, int count, FILE* stream)
+    77 0000006A FF35[0F000000]                  push dword [descriptor_fisier]
+    78 00000070 FF35[DD000000]                  push dword [len]
+    79 00000076 6A01                            push dword 1
+    80 00000078 68[78000000]                    push dword result
+    81 0000007D FF15[00000000]                  call [fwrite]
+    82 00000083 83C410                          add esp, 4*4
+    83                                          
+    84                                          ; inchid fisierul
+    85                                          ; fclose(descriptor_fisier)
+    86 00000086 FF35[0F000000]                  push dword [descriptor_fisier]
+    87 0000008C FF15[00000000]                  call [fclose]
+    88 00000092 83C404                          add esp, 1*4
+    89                                          
+    90                                      eroare:
+    91 00000095 6A00                            push dword 0
+    92 00000097 FF15[00000000]                  call [exit]
+    93                                      
+    94                                          ; AL = caracterul curent
+    95                                          ; verifica daca caracterul din AL e special
+    96                                      verifica:
+    97 0000009D 56                              push esi
+    98 0000009E B910000000                      mov ecx, len_s
+    99 000000A3 BE00000000                      mov esi, 0
+   100                                      cauta:
+   101 000000A8 8A96[E1000000]                  mov dl, [speciale+esi]
+   102                                          
+   103 000000AE 38D0                            cmp al, dl
+   104 000000B0 740A                            je e_special
+   105                                          
+   106 000000B2 46                              inc esi
+   107 000000B3 E2F3                            loop cauta
+   108                                          
+   109 000000B5 BA00000000                      mov edx, 0
+   110 000000BA EB05                            jmp nu_e
+   111                                          
+   112                                      e_special:
+   113 000000BC BA01000000                      mov edx, 1
+   114                                          
+   115                                      nu_e:
+   116 000000C1 5E                              pop esi
+   117 000000C2 C3                              ret

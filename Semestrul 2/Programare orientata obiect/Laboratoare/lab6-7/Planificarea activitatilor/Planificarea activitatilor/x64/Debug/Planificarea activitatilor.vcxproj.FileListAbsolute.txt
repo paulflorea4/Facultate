@@ -1,0 +1,2 @@
+C:\Facultate\Semestrul 2\Programare orientata obiect\Laboratoare\lab6-7\Planificarea activitatilor\x64\Debug\Planificarea activitatilor.exe.lastcodeanalysissucceeded
+C:\Facultate\Semestrul 2\Programare orientata obiect\Laboratoare\lab6-7\Planificarea activitatilor\Planificarea activitatilor\x64\Debug\NativeCodeAnalysis.read.1.tlog

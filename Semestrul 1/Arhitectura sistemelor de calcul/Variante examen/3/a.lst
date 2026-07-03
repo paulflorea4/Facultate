@@ -1,0 +1,82 @@
+     1                                  bits 32
+     2                                  
+     3                                  global start
+     4                                  
+     5                                  extern exit,formare_sir,printf
+     6                                  import exit msvcrt.dll
+     7                                  import printf msvcrt.dll
+     8                                  
+     9                                  segment data use32 class=data
+    10 00000000 FFFFFFFF40E20100FF-         s dd -1,123456,0xabcdeff,0xabcdeff,0xcbcdeff,0xdbcdeff,0111010101b
+    10 00000009 DEBC0AFFDEBC0AFFDE-
+    10 00000012 BC0CFFDEBC0DD50100-
+    10 0000001B 00                 
+    11                                      len equ ($-s)/4
+    12 0000001C 00<rept>                    rez times len db 0
+    13 00000023 00000000                    index dd 0
+    14 00000027 25782000                    format db "%x ",0
+    15 0000002B 0D0A00                      spatiu db 13,10,0
+    16                                  segment code use32 class=code
+    17                                      start:
+    18 00000000 6A07                            push len
+    19 00000002 68[00000000]                    push dword s
+    20 00000007 68[1C000000]                    push dword rez
+    21 0000000C E8(00000000)                    call formare_sir
+    22 00000011 83C40C                          add esp,4*3
+    23                                          
+    24 00000014 B201                            mov dl,1
+    25 00000016 BE[1C000000]                    mov esi,rez
+    26 0000001B B906000000                      mov ecx,len-1
+    27 00000020 FC                              cld
+    28 00000021 AC                              lodsb
+    29 00000022 88C3                            mov bl,al
+    30                                          repeta:
+    31 00000024 AC                                  lodsb
+    32 00000025 38C3                                cmp bl,al
+    33 00000027 7259                                jb urmator
+    34 00000029 80FA01                              cmp dl,1
+    35 0000002C 7458                                je nu_e_secv
+    36 0000002E 56                                  push esi
+    37 0000002F 8B35[23000000]                      mov esi,[index]
+    38 00000035 8D34B500000000                      lea esi,[4*esi]
+    39 0000003C 81C6[00000000]                      add esi,s
+    40 00000042 50                                  push eax
+    41 00000043 53                                  push ebx
+    42 00000044 51                                  push ecx
+    43 00000045 52                                  push edx
+    44 00000046 0FB6CA                              movzx ecx,dl
+    45                                              repeta2:
+    46 00000049 AD                                      lodsd
+    47 0000004A 51                                      push ecx
+    48 0000004B 50                                      push eax
+    49 0000004C 68[27000000]                            push dword format
+    50 00000051 FF15[00000000]                          call [printf]
+    51 00000057 83C408                                  add esp,4*2
+    52 0000005A 59                                      pop ecx
+    53 0000005B E2EC                                loop repeta2
+    54                                              
+    55 0000005D 68[2B000000]                        push dword spatiu
+    56 00000062 FF15[00000000]                      call [printf]
+    57 00000068 83C404                              add esp,4
+    58                                              
+    59 0000006B 5A                                  pop edx
+    60 0000006C 59                                  pop ecx
+    61 0000006D 5B                                  pop ebx
+    62 0000006E 58                                  pop eax
+    63 0000006F 5E                                  pop esi
+    64 00000070 B200                                mov dl,0
+    65 00000072 C705[23000000]0700-                 mov dword[index],len
+    65 0000007A 0000               
+    66 0000007C 290D[23000000]                      sub [index],ecx
+    67                                          urmator:
+    68 00000082 FEC2                                inc dl
+    69 00000084 EB10                                jmp urmator2
+    70                                          nu_e_secv:
+    71 00000086 C705[23000000]0700-                 mov dword [index],len
+    71 0000008E 0000               
+    72 00000090 290D[23000000]                      sub [index],ecx
+    73                                          urmator2:
+    74 00000096 88C3                                mov bl,al
+    75 00000098 E28A                            loop repeta
+    76 0000009A 6A00                            push dword 0
+    77 0000009C FF15[00000000]                  call [exit]

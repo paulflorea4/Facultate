@@ -1,3 +1,7 @@
+<?php
+require_once '../../back-end/config.php';
+require_once '../../back-end/nav-helper.php';
+?>
 <!DOCTYPE html>
 <html lang="ro">
 
@@ -11,15 +15,7 @@
     <header>
         <h1>Hotel Victoria</h1>
     </header>
-    <nav id="menu">
-        <ul>
-            <li><a class="menu-home" href="home.html"><span class="menu-icon" aria-hidden="true"></span>Acasă</a></li>
-            <li><a class="menu-rooms" href="rooms.html"><span class="menu-icon" aria-hidden="true"></span>Camere</a></li>
-            <li><a class="menu-reservation" href="reservation.html"><span class="menu-icon" aria-hidden="true"></span>Rezervare</a></li>
-            <li><a class="menu-dashboard" href="dashboard.html"><span class="menu-icon" aria-hidden="true"></span>Dashboard</a></li>
-            <li><a class="menu-contact" href="contact.html"><span class="menu-icon" aria-hidden="true"></span>Contact</a></li>
-        </ul>
-    </nav>
+    <?php echo getNavigation(); ?>
     <main>
         <section class="hotel-carousel-section" aria-label="Carousel hotelier">
             <div class="section-heading">
@@ -63,27 +59,26 @@
         <h3>Recenzii clienți</h3>
         <section class="review-widgets" aria-label="Recenzii clienți Hotel Victoria">
             <article class="review-widget">
-                <p class="review-text">„Servicii excelente, personal amabil și check-in foarte rapid.”</p>
+                <p class="review-text">„Servicii excelente, personal amabil și check-in foarte rapid."</p>
                 <p class="review-author">Maria D.</p>
             </article>
             <article class="review-widget">
-                <p class="review-text">„Camera a fost foarte curată, iar micul dejun variat.”</p>
+                <p class="review-text">„Camera a fost foarte curată, iar micul dejun variat."</p>
                 <p class="review-author">Alexandru P.</p>
             </article>
             <article class="review-widget">
-                <p class="review-text">„Locație bună, liniște și facilități foarte bune. Recomand!”</p>
+                <p class="review-text">„Locație bună, liniște și facilități foarte bune. Recomand!"</p>
                 <p class="review-author">Ioana M.</p>
             </article>
         </section>
 
-        <p><a href="reservation.html"><strong>Faceți o rezervare acum</strong></a></p>
+        <p><a href="reservation.php"><strong>Faceți o rezervare acum</strong></a></p>
     </main>
     <footer>
         <p>© 2026 Hotel Victoria</p>
     </footer>
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-    <script src="../Script/carousel-data.js"></script>
-    <script src="../Script/carousel.js"></script>
+    <script src="../Script/carousel-data.js?v=2"></script>
+    <script src="../Script/carousel.js?v=2"></script>
 </body>
 
 </html>

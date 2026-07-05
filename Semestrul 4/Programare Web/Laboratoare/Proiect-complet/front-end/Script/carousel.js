@@ -5,9 +5,17 @@
         const $track = $('[data-carousel-track]');
         const $prevButton = $('[data-carousel-prev]');
         const $nextButton = $('[data-carousel-next]');
-        const slides = window.HotelCarouselSlides || [];
+        // Normalize slide data: remove any dashboard slides and convert .html links to .php
+        let slides = (window.HotelCarouselSlides || []).slice();
+        slides = slides
+            .filter(s => s && !/dashboard\.(html|php)$/i.test(s.link || ''))
+            .map(s => ({
+                link: (s.link || '').replace(/\.html$/i, '.php'),
+                text: s.text || '',
+                image: s.image || ''
+            }));
 
-        if (!$carousel.length || !$track.length || slides.length < 4) {
+        if (!$carousel.length || !$track.length || slides.length < 1) {
             return;
         }
 

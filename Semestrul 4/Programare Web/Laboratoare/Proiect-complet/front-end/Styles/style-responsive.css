@@ -241,6 +241,19 @@ h1::after {
   box-shadow: 0 8px 18px rgba(0, 0, 0, 0.22);
 }
 
+/* Override display for auth buttons */
+.nav-auth .btn-auth {
+  display: inline-block;
+  padding: 8px 16px;
+  background-color: transparent;
+  color: white;
+}
+
+.nav-auth .btn-auth:hover {
+  transform: none;
+  box-shadow: none;
+}
+
 
 .table-container {
   overflow-x: auto;
@@ -965,5 +978,120 @@ img {
 
   button {
     width: 100%;
+  }
+}
+
+/* Authentication Navigation Styles */
+#menu li.nav-auth {
+  flex: 1;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.nav-auth {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+  padding: var(--spacing);
+  width: 100%;
+}
+
+.user-menu {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  width: 100%;
+}
+
+.user-greeting {
+  color: #fff;
+  font-size: 13px;
+  white-space: nowrap;
+  margin-right: 10px;
+}
+
+.btn-auth {
+  padding: 8px 16px;
+  border-radius: 4px;
+  text-decoration: none;
+  color: white;
+  font-weight: 600;
+  font-size: 13px;
+  transition: all 0.3s ease;
+  border: 2px solid transparent;
+  white-space: nowrap;
+  display: inline-block;
+}
+
+.btn-login {
+  background-color: #3498db;
+  border-color: #3498db;
+}
+
+.btn-login:hover {
+  background-color: #2980b9;
+  border-color: #2980b9;
+}
+
+.btn-register {
+  background-color: #27ae60;
+  border-color: #27ae60;
+}
+
+.btn-register:hover {
+  background-color: #229954;
+  border-color: #229954;
+}
+
+.btn-logout {
+  background-color: #e74c3c;
+  border-color: #e74c3c;
+}
+
+.btn-logout:hover {
+  background-color: #c0392b;
+  border-color: #c0392b;
+}
+
+/* Responsive auth buttons */
+@media (max-width: 1024px) {
+  .nav-auth {
+    flex-direction: column;
+    width: 100%;
+    padding: 10px;
+    gap: 5px;
+  }
+  
+  .user-menu {
+    flex-direction: column;
+    gap: 8px;
+  }
+  
+  .user-greeting {
+    margin-right: 0;
+  }
+  
+  .btn-auth {
+    width: 100%;
+    text-align: center;
+  }
+}
+
+@media (max-width: 768px) {
+  .nav-auth {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+  
+  .user-menu {
+    flex-direction: row;
+  }
+  
+  .btn-auth {
+    padding: 6px 12px;
+    font-size: 12px;
   }
 }

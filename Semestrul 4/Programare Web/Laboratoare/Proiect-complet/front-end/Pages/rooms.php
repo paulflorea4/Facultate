@@ -1,3 +1,7 @@
+<?php
+require_once '../../back-end/config.php';
+require_once '../../back-end/nav-helper.php';
+?>
 <!DOCTYPE html>
 <html lang="ro">
 
@@ -11,19 +15,7 @@
     <header>
         <h1>Facilități</h1>
     </header>
-    <nav id="menu">
-        <ul>
-            <li><a class="menu-home" href="home.html"><span class="menu-icon" aria-hidden="true"></span>Acasă</a></li>
-            <li><a class="menu-rooms" href="rooms.html"><span class="menu-icon" aria-hidden="true"></span>Camere</a>
-            </li>
-            <li><a class="menu-reservation" href="reservation.html"><span class="menu-icon"
-                        aria-hidden="true"></span>Rezervare</a></li>
-            <li><a class="menu-dashboard" href="dashboard.html"><span class="menu-icon"
-                        aria-hidden="true"></span>Dashboard</a></li>
-            <li><a class="menu-contact" href="contact.html"><span class="menu-icon"
-                        aria-hidden="true"></span>Contact</a></li>
-        </ul>
-    </nav>
+    <?php echo getNavigation(); ?>
 
     <main>
         <h2>Tipuri de camere și prețuri</h2>
@@ -168,7 +160,6 @@
     <footer>
         <p>© 2026 Hotel Victoria</p>
     </footer>
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script src="../Script/collapsible-list.js"></script>
 </body>
 

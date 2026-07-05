@@ -2,7 +2,7 @@
 (function ($) {
     $(function () {
         const data = window.HotelTablesData;
-        const $reservationsTable = $('[data-sortable-table="reservations"]');
+        const $reservationsTable = $('[data-sortable-table^="reservations"]');
         const $roomComparisonTable = $('[data-vertical-table="room-comparison"]');
 
         if ($reservationsTable.length && data && Array.isArray(data.reservations)) {
@@ -18,22 +18,25 @@
 // Sets up sorting and rendering for the classic reservations table.
 function initializeClassicTable($table, rows) {
     const $tbody = $table.find('tbody');
-    const $headers = $table.find('thead th[data-sort-key]');
+    let $headers = $table.find('thead th[data-sort-key]');
     let sortState = { key: '', direction: 'asc' };
 
     // Renders visible rows in the reservations table body.
     function render(sortedRows) {
         $tbody.empty();
 
-        // Creates a table row for each reservation record.
+        // Creates a table row for each reservation record. Preserve column order.
         sortedRows.forEach(function (row) {
             const rowHtml = `
-                <td>${row.name}</td>
-                <td>${row.email}</td>
-                <td>${row.roomType}</td>
+                <td>${row.name || ''}</td>
+                <td>${row.email || ''}</td>
+                <td>${row.roomNumber || ''}</td>
+                <td>${row.roomType || ''}</td>
                 <td>${formatDate(row.checkIn)}</td>
                 <td>${formatDate(row.checkOut)}</td>
-                <td>${row.status}</td>
+                <td>${row.guests != null ? row.guests : ''}</td>
+                <td>${row.status || ''}</td>
+                <td>${row.notes || ''}</td>
             `;
 
             $tbody.append($('<tr>').html(rowHtml));
@@ -78,6 +81,39 @@ function initializeClassicTable($table, rows) {
         }
 
         render(sorted);
+    }
+
+    // If there are no data-sort-key headers (server-rendered table), infer keys from column order
+    if (!$headers.length) {
+        const inferredKeys = ['name', 'email', 'roomNumber', 'roomType', 'checkIn', 'checkOut', 'guests', 'status', 'notes'];
+
+        // Extract existing DOM rows into a rows array
+        const domRows = [];
+        $tbody.find('tr').each(function () {
+            const $cells = $(this).find('td');
+            domRows.push({
+                name: $cells.eq(0).text().trim(),
+                email: $cells.eq(1).text().trim(),
+                roomNumber: $cells.eq(2).text().trim(),
+                roomType: $cells.eq(3).text().trim(),
+                checkIn: $cells.eq(4).text().trim(),
+                checkOut: $cells.eq(5).text().trim(),
+                guests: parseInt($cells.eq(6).text().trim()) || 0,
+                status: $cells.eq(7).text().trim(),
+                notes: $cells.eq(8).text().trim()
+            });
+        });
+
+        // Use extracted rows for sorting/rendering
+        rows = domRows;
+
+        // Ensure thead th elements have data-sort-key so UI updates work
+        $table.find('thead th').each(function (i) {
+            $(this).attr('data-sort-key', inferredKeys[i] || '');
+            $(this).addClass('sortable-header');
+        });
+
+        $headers = $table.find('thead th[data-sort-key]');
     }
 
     // Attaches click handlers to trigger sorting by header.
@@ -196,7 +232,10 @@ function normalizeValue(value) {
 
 // Formats ISO date text into day/month/year.
 function formatDate(value) {
-    const [year, month, day] = value.split('-');
+    if (!value) return '';
+    const parts = String(value).split('-');
+    if (parts.length < 3) return value;
+    const [year, month, day] = parts;
     return `${day}/${month}/${year}`;
 }
 
